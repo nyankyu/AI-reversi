@@ -3,8 +3,10 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 SRC = \
 	main.c \
-
+	board.c
 OBJS = $(SRC:.c=.o)
+
+.PHONY: all clean fclean re
 
 all: $(NAME)
 	./$(NAME)
