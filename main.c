@@ -9,8 +9,8 @@ int main(void) {
   puts("");
 
   Board *board = Board_new();
-
   board->print(board);
+  Board_delete(board);
 
   return EXIT_OK;
 }

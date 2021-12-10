@@ -56,3 +56,7 @@ Board *Board_new(void) {
 
   return board;
 }
+
+void Board_delete(Board *board) {
+  free(board);
+}
