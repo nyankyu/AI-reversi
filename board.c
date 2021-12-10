@@ -4,7 +4,30 @@
 #include "ai-reversi.h"
 #include "board.h"
 
-void  print_box(int box) {
+int other_color(int color) {
+  if (color == WHITE)
+    return BLACK;
+  if (color == BLACK)
+    return WHITE;
+  exit(EXIT_ERR);
+}
+
+int reverse_line(int box[], int color, int init_pos, int dir) {
+  int other = other_color(color);
+  int pos;
+  int count = 0;
+
+  for (pos = init_pos + dir; box[pos] == other; pos += dir);
+  if (box[pos] != color)
+    return 0;
+  for (pos -= dir; pos != init_pos; pos -= dir) {
+    box[pos] = color;
+    count++;
+  }
+  return count;
+}
+
+static void  print_box(int box) {
   if (box == EMPTY)
     printf(".");
   else if (box == WHITE)
@@ -29,7 +52,7 @@ void  print(Board *this) {
   }
 }
 
-int pos(int x, int y) {
+static int pos(int x, int y) {
   return (BOARD_SIZE + 1) * y + x;
 }
 
@@ -38,27 +61,30 @@ int pos(int x, int y) {
  * 1 <= y <= 8
  * v: EMPTY, WHITE, BLACK
  */
-void set_box(Board *this, int x, int y, int v) {
-  assert(1 <= x);
-  assert(x <= 8);
-  assert(1 <= y);
-  assert(y <= 8);
-  this->box[pos(x, y)] = v;
-}
+int set(Board *this, int x, int y, int color) {
+  int p = pos(x, y);
+  if (this->box[p] != EMPTY)
+    return 0;
 
-void reverse(Board *this, int x, int y) {
-  int color = this->box[pos(x, y)];
-  if (color == WHITE)
-    this->box[pos(x, y)] = BLACK;
-  if (color == BLACK)
-    this->box[pos(x, y)] = WHITE;
+  int count = 0;
+  count += reverse_line(this->box, color, p, DIR_UP_LEFT);
+  count += reverse_line(this->box, color, p, DIR_UP);
+  count += reverse_line(this->box, color, p, DIR_UP_RIGHT);
+  count += reverse_line(this->box, color, p, DIR_LEFT);
+  count += reverse_line(this->box, color, p, DIR_RIGHT);
+  count += reverse_line(this->box, color, p, DIR_DOWN_LEFT);
+  count += reverse_line(this->box, color, p, DIR_DOWN);
+  count += reverse_line(this->box, color, p, DIR_DOWN_RIGHT);
+  if (count == 0)
+    return 0;
+  this->box[p] = color;
+  return count;
 }
 
 void  Board_init(Board *board) {
   // set method
   board->print = print;
-  board->set_box = set_box;
-  board->reverse = reverse;
+  board->set = set;
 
   // init box
   for (int i = 0; i < BOX_SIZE; i++) {
@@ -67,10 +93,10 @@ void  Board_init(Board *board) {
     else
       board->box[i] = EMPTY;
   }
-  board->set_box(board, 4, 4, WHITE);
-  board->set_box(board, 5, 5, WHITE);
-  board->set_box(board, 4, 5, BLACK);
-  board->set_box(board, 5, 4, BLACK);
+  board->box[pos(4, 4)] = WHITE;
+  board->box[pos(5, 5)] = WHITE;
+  board->box[pos(4, 5)] = BLACK;
+  board->box[pos(5, 4)] = BLACK;
 }
 
 Board *Board_new(void) {
