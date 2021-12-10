@@ -11,7 +11,7 @@ int main(void) {
   Board board;
   Board_init(&board);
 
-  board.print();
+  board.print(&board);
 
   return EXIT_OK;
 }
