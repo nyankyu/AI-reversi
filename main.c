@@ -9,7 +9,10 @@ int main(void) {
   puts("");
 
   Board *board = Board_new();
+  board->set_box(board, 6, 4, WHITE);
+  board->reverse(board, 5, 4);
   board->print(board);
+
   Board_delete(board);
 
   return EXIT_OK;

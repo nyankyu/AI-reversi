@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "ai-reversi.h"
 #include "board.h"
 
@@ -28,7 +29,37 @@ void  print(Board *this) {
   }
 }
 
+int pos(int x, int y) {
+  return (BOARD_SIZE + 1) * y + x;
+}
+
+/*
+ * 1 <= x <= 8
+ * 1 <= y <= 8
+ * v: EMPTY, WHITE, BLACK
+ */
+void set_box(Board *this, int x, int y, int v) {
+  assert(1 <= x);
+  assert(x <= 8);
+  assert(1 <= y);
+  assert(y <= 8);
+  this->box[pos(x, y)] = v;
+}
+
+void reverse(Board *this, int x, int y) {
+  int color = this->box[pos(x, y)];
+  if (color == WHITE)
+    this->box[pos(x, y)] = BLACK;
+  if (color == BLACK)
+    this->box[pos(x, y)] = WHITE;
+}
+
 void  Board_init(Board *board) {
+  // set method
+  board->print = print;
+  board->set_box = set_box;
+  board->reverse = reverse;
+
   // init box
   for (int i = 0; i < BOX_SIZE; i++) {
     if (i <= BOARD_SIZE || i > (BOARD_SIZE + 2) * BOARD_SIZE || i % (BOARD_SIZE + 1) == 0)
@@ -36,13 +67,10 @@ void  Board_init(Board *board) {
     else
       board->box[i] = EMPTY;
   }
-  board->box[40] = WHITE;
-  board->box[50] = WHITE;
-  board->box[41] = BLACK;
-  board->box[49] = BLACK;
-
-  // set method
-  board->print = print;
+  board->set_box(board, 4, 4, WHITE);
+  board->set_box(board, 5, 5, WHITE);
+  board->set_box(board, 4, 5, BLACK);
+  board->set_box(board, 5, 4, BLACK);
 }
 
 Board *Board_new(void) {

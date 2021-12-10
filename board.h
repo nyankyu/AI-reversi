@@ -14,6 +14,8 @@ typedef struct board Board;
 typedef struct board {
   int box[BOX_SIZE];
   void (*print)(Board *this);
+  void (*set_box)(Board *this, int x, int y, int v);
+  void (*reverse)(Board *this, int x, int y);
 } Board;
 
 void  Board_init(Board *board);
