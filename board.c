@@ -4,7 +4,7 @@
 #include "ai-reversi.h"
 #include "board.h"
 
-int other_color(int color) {
+static int other_color(int color) {
   if (color == WHITE)
     return BLACK;
   if (color == BLACK)
@@ -12,7 +12,7 @@ int other_color(int color) {
   exit(EXIT_ERR);
 }
 
-int reverse_line(int box[], int color, int init_pos, int dir) {
+static int reverse_line(int box[], int color, int init_pos, int dir) {
   int other = other_color(color);
   int pos;
   int count = 0;
@@ -81,10 +81,47 @@ int set(Board *this, int x, int y, int color) {
   return count;
 }
 
+static int can_set_line(int box[], int color, int init_pos, int dir) {
+  int other = other_color(color);
+  int pos;
+
+  for (pos = init_pos + dir; box[pos] == other; pos += dir);
+  if (pos == init_pos + dir)
+    return NG;
+  if (box[pos] != color)
+    return NG;
+  return OK;
+}
+
+int can_set(Board *this, int x, int y, int color) {
+  int p = pos(x, y);
+  if (this->box[p] != EMPTY)
+    return NG;
+
+  if (can_set_line(this->box, color, p, DIR_UP_LEFT) == OK)
+    return OK;
+  if (can_set_line(this->box, color, p, DIR_UP) == OK)
+    return OK;
+  if (can_set_line(this->box, color, p, DIR_UP_RIGHT) == OK)
+    return OK;
+  if (can_set_line(this->box, color, p, DIR_LEFT) == OK)
+    return OK;
+  if (can_set_line(this->box, color, p, DIR_RIGHT) == OK)
+    return OK;
+  if (can_set_line(this->box, color, p, DIR_DOWN_LEFT) == OK)
+    return OK;
+  if (can_set_line(this->box, color, p, DIR_DOWN) == OK)
+    return OK;
+  if (can_set_line(this->box, color, p, DIR_DOWN_RIGHT) == OK)
+    return OK;
+  return NG;
+}
+
 void  Board_init(Board *board) {
   // set method
   board->print = print;
   board->set = set;
+  board->can_set = can_set;
 
   // init box
   for (int i = 0; i < BOX_SIZE; i++) {
