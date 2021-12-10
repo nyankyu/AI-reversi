@@ -8,10 +8,9 @@ int main(void) {
   puts("===== AI-reversi =====");
   puts("");
 
-  Board board;
-  Board_init(&board);
+  Board *board = Board_new();
 
-  board.print(&board);
+  board->print(board);
 
   return EXIT_OK;
 }

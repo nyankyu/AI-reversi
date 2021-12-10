@@ -6,15 +6,17 @@
 
 #define EMPTY 0
 #define WHITE 1
-#define BRACK 2
+#define BLACK 2
 #define WALL  3
 
 typedef struct board Board;
-void  Board_init(Board *board);
 
 typedef struct board {
   int box[BOX_SIZE];
   void (*print)(Board *this);
 } Board;
+
+void  Board_init(Board *board);
+Board *Board_new(void);
 
 #endif
