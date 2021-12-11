@@ -18,6 +18,7 @@ int main(void) {
   //board->set(board, 6, 7, WHITE);
   //board->set(board, 6, 3, WHITE);
   //board->set(board, 6, 5, WHITE);
+  board->print(board);
 
   for (int y = 1; y <= 8 ; y++) {
     printf("   ");
@@ -30,7 +31,6 @@ int main(void) {
     }
     printf("\n");
   }
-  board->print(board);
 
   Board_delete(board);
 

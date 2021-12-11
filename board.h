@@ -20,12 +20,12 @@
 
 typedef struct board Board;
 
-typedef struct board {
+struct board {
   int box[BOX_SIZE];
   void (*print)(Board *this);
   int (*set)(Board *this, int x, int y, int color);
   int (*can_set)(Board *this, int x, int y, int color);
-} Board;
+};
 
 void  Board_init(Board *board);
 Board *Board_new(void);
