@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
+#include <ctype.h>
 #include "ai-reversi.h"
 #include "board.h"
 
@@ -52,6 +54,7 @@ void  print(Board *this) {
     if (i % 9 == 8)
       printf("\n");
   }
+  printf("\n O: %d, X: %d, .: %d\n", this->white, this->black, this->empty);
   printf("\n %c > ", this->next_color == WHITE ? 'O' : 'X');
 }
 
@@ -79,9 +82,34 @@ int set(Board *this, int x, int y) {
   count += reverse_line(this->box, this->next_color, p, DIR_DOWN_RIGHT);
   if (count == 0)
     return 0;
+
   this->box[p] = this->next_color;
+  count++;
+  if (this->next_color == WHITE) {
+    this->white += count;
+    this->black -= count - 1;
+  } else {
+    this->white -= count - 1;
+    this->black += count;
+  }
+  this->empty--;
+
   this->next_color = other_color(this->next_color);
   return count;
+}
+
+int set_by_str(Board *this, char str[]) {
+  if (strlen(str) != 2)
+    return 0;
+  str[0] = toupper(str[0]);
+  if (str[0] < 'A' || 'H' < str[0])
+    return 0;
+  if (str[1] < '1' || '8' < str[1])
+    return 0;
+  int x = str[0] - 'A' + 1;
+  int y = str[1] - '1' + 1;
+
+  return set(this, x, y);
 }
 
 static int can_set_line(int box[], int color, int init_pos, int dir) {
@@ -124,9 +152,13 @@ void  Board_init(Board *board) {
   // set method
   board->print = print;
   board->set = set;
+  board->set_by_str = set_by_str;
   board->can_set = can_set;
 
   board->next_color = WHITE;
+  board->empty = BOARD_SIZE * BOARD_SIZE - 4;
+  board->white = 2;
+  board->black = 2;
 
   // init box
   for (int i = 0; i < BOX_SIZE; i++) {

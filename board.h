@@ -22,9 +22,13 @@ typedef struct board Board;
 
 struct board {
   int next_color;
+  int empty;
+  int white;
+  int black;
   int box[BOX_SIZE];
   void (*print)(Board *this);
   int (*set)(Board *this, int x, int y);
+  int (*set_by_str)(Board *this, char str[]);
   int (*can_set)(Board *this, int x, int y);
 };
 
