@@ -39,6 +39,8 @@ static void  print_box(int box) {
 }
 
 void  print(Board *this) {
+  printf("\033[H\033[2J");
+  printf("===== AI-reversi =====\n");
   printf("   A B C D E F G H\n");
   for (int i = BOARD_SIZE; i <= (BOARD_SIZE + 2) * BOARD_SIZE; i++) {
     if (i % (BOARD_SIZE + 1) == 0)
@@ -50,6 +52,7 @@ void  print(Board *this) {
     if (i % 9 == 8)
       printf("\n");
   }
+  printf("\n %c > ", this->next_color == WHITE ? 'O' : 'X');
 }
 
 static int pos(int x, int y) {
@@ -59,25 +62,25 @@ static int pos(int x, int y) {
 /*
  * 1 <= x <= 8
  * 1 <= y <= 8
- * v: EMPTY, WHITE, BLACK
  */
-int set(Board *this, int x, int y, int color) {
+int set(Board *this, int x, int y) {
   int p = pos(x, y);
   if (this->box[p] != EMPTY)
     return 0;
 
   int count = 0;
-  count += reverse_line(this->box, color, p, DIR_UP_LEFT);
-  count += reverse_line(this->box, color, p, DIR_UP);
-  count += reverse_line(this->box, color, p, DIR_UP_RIGHT);
-  count += reverse_line(this->box, color, p, DIR_LEFT);
-  count += reverse_line(this->box, color, p, DIR_RIGHT);
-  count += reverse_line(this->box, color, p, DIR_DOWN_LEFT);
-  count += reverse_line(this->box, color, p, DIR_DOWN);
-  count += reverse_line(this->box, color, p, DIR_DOWN_RIGHT);
+  count += reverse_line(this->box, this->next_color, p, DIR_UP_LEFT);
+  count += reverse_line(this->box, this->next_color, p, DIR_UP);
+  count += reverse_line(this->box, this->next_color, p, DIR_UP_RIGHT);
+  count += reverse_line(this->box, this->next_color, p, DIR_LEFT);
+  count += reverse_line(this->box, this->next_color, p, DIR_RIGHT);
+  count += reverse_line(this->box, this->next_color, p, DIR_DOWN_LEFT);
+  count += reverse_line(this->box, this->next_color, p, DIR_DOWN);
+  count += reverse_line(this->box, this->next_color, p, DIR_DOWN_RIGHT);
   if (count == 0)
     return 0;
-  this->box[p] = color;
+  this->box[p] = this->next_color;
+  this->next_color = other_color(this->next_color);
   return count;
 }
 
@@ -93,26 +96,26 @@ static int can_set_line(int box[], int color, int init_pos, int dir) {
   return OK;
 }
 
-int can_set(Board *this, int x, int y, int color) {
+int can_set(Board *this, int x, int y) {
   int p = pos(x, y);
   if (this->box[p] != EMPTY)
     return NG;
 
-  if (can_set_line(this->box, color, p, DIR_UP_LEFT) == OK)
+  if (can_set_line(this->box, this->next_color, p, DIR_UP_LEFT) == OK)
     return OK;
-  if (can_set_line(this->box, color, p, DIR_UP) == OK)
+  if (can_set_line(this->box, this->next_color, p, DIR_UP) == OK)
     return OK;
-  if (can_set_line(this->box, color, p, DIR_UP_RIGHT) == OK)
+  if (can_set_line(this->box, this->next_color, p, DIR_UP_RIGHT) == OK)
     return OK;
-  if (can_set_line(this->box, color, p, DIR_LEFT) == OK)
+  if (can_set_line(this->box, this->next_color, p, DIR_LEFT) == OK)
     return OK;
-  if (can_set_line(this->box, color, p, DIR_RIGHT) == OK)
+  if (can_set_line(this->box, this->next_color, p, DIR_RIGHT) == OK)
     return OK;
-  if (can_set_line(this->box, color, p, DIR_DOWN_LEFT) == OK)
+  if (can_set_line(this->box, this->next_color, p, DIR_DOWN_LEFT) == OK)
     return OK;
-  if (can_set_line(this->box, color, p, DIR_DOWN) == OK)
+  if (can_set_line(this->box, this->next_color, p, DIR_DOWN) == OK)
     return OK;
-  if (can_set_line(this->box, color, p, DIR_DOWN_RIGHT) == OK)
+  if (can_set_line(this->box, this->next_color, p, DIR_DOWN_RIGHT) == OK)
     return OK;
   return NG;
 }
@@ -122,6 +125,8 @@ void  Board_init(Board *board) {
   board->print = print;
   board->set = set;
   board->can_set = can_set;
+
+  board->next_color = WHITE;
 
   // init box
   for (int i = 0; i < BOX_SIZE; i++) {

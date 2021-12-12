@@ -21,10 +21,11 @@
 typedef struct board Board;
 
 struct board {
+  int next_color;
   int box[BOX_SIZE];
   void (*print)(Board *this);
-  int (*set)(Board *this, int x, int y, int color);
-  int (*can_set)(Board *this, int x, int y, int color);
+  int (*set)(Board *this, int x, int y);
+  int (*can_set)(Board *this, int x, int y);
 };
 
 void  Board_init(Board *board);

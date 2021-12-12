@@ -1,6 +1,6 @@
 NAME = ai-reversi
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 SRC = \
 	main.c \
 	board.c \
