@@ -112,6 +112,12 @@ int set_by_str(Board *this, char str[]) {
   return set(this, x, y);
 }
 
+int set_by_index(Board *this, int index) {
+  int x = index % 9;
+  int y = index / 9;
+  return set(this, x, y);
+}
+
 static int can_set_line(int box[], int color, int init_pos, int dir) {
   int other = other_color(color);
   int pos;
@@ -153,6 +159,7 @@ void  Board_init(Board *board) {
   board->print = print;
   board->set = set;
   board->set_by_str = set_by_str;
+  board->set_by_index = set_by_index;
   board->can_set = can_set;
 
   board->next_color = WHITE;

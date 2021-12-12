@@ -1,11 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "board.h"
 #include "com.h"
 #include "ai-reversi.h"
 
 static int next(Com *this, Board *board, int *eval_val) {
-  if (this->color)
-    *eval_val = board->box[0];
+  if (this == NULL)
+    return 0;
+  *eval_val = 0;
+  for (int y = 1; y <= BOARD_SIZE; y++) {
+    for (int x = 1; x <= BOARD_SIZE; x++) {
+      if (board->can_set(board, x, y) == OK)
+          return 9 * y + x;
+    }
+  }
   return 0;
 }
 

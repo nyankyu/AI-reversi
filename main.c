@@ -3,6 +3,7 @@
 #include <string.h>
 #include "ai-reversi.h"
 #include "board.h"
+#include "com.h"
 
 #define BUFF_SIZE 256
 
@@ -17,6 +18,8 @@ void get_input(char buff[]) {
 
 int main(void) {
   Board *board = Board_new();
+  Com *com = Com_new(BLACK);
+  int eval_val;
 
   char buff[BUFF_SIZE];
   while (1) {
@@ -25,7 +28,11 @@ int main(void) {
     get_input(buff);
     if (strcmp(buff, "q") == 0)
       exit(EXIT_OK);
-    board->set_by_str(board, buff);
+    if (board->set_by_str(board, buff) == 0)
+      continue;
+
+    int next = com->next(com, board, &eval_val);
+    board->set_by_index(board, next);
   }
 
   Board_delete(board);
