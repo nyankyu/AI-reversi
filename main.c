@@ -10,7 +10,9 @@ void get_input(char buff[]) {
   if (fgets(buff, BUFF_SIZE, stdin) == NULL) {
     exit(EXIT_ERR);
   }
-  *strchr(buff, '\n') = '\0';
+  char *p = strchr(buff, '\n');
+  if (p != NULL)
+    *p = '\0';
 }
 
 int main(void) {
