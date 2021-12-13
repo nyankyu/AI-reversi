@@ -27,10 +27,7 @@ struct board {
   int black;
   int box[BOX_SIZE];
   void (*print)(Board *this);
-  int (*set)(Board *this, int x, int y);
-  int (*set_by_str)(Board *this, char str[]);
-  int (*set_by_index)(Board *this, int index);
-  int (*can_set)(Board *this, int x, int y);
+  void (*print_counter)(Board *this);
 };
 
 void  Board_init(Board *board);
