@@ -4,7 +4,7 @@
 #include "ai-reversi.h"
 #include "board.h"
 #include "com.h"
-#include "game.h"
+#include "rule.h"
 
 #define BUFF_SIZE 256
 
@@ -18,9 +18,10 @@ void get_input(char buff[]) {
 }
 
 int main(void) {
-  Game *game = Game_new();
+  Rule *rule = Rule_new();
   Board *board = Board_new();
-  Com *com = Com_new(BLACK);
+  Com *com = Com_new(rule, BLACK);
+
   int eval_val;
   int pass_other = 0;
 
@@ -28,25 +29,25 @@ int main(void) {
   while (1) {
     board->print(board);
 
-    if (game->can_pass(game, board) == NG) {
+    if (rule->can_pass(rule, board) == NG) {
       get_input(buff);
       if (strcmp(buff, "q") == 0)
         exit(EXIT_OK);
-      if (game->set_by_str(game, board, buff) == 0)
+      if (rule->set_by_str(rule, board, buff) == 0)
         continue;
       pass_other = 0;
     } else {
       pass_other = 1;
     }
 
-    int next = com->next(com, game, board, &eval_val);
+    int next = com->next(com, board, &eval_val);
     if (next == 0) {
       if (pass_other == 1)
         exit(EXIT_OK);
       pass_other = 1;
       continue;
     }
-    game->set_by_index(game, board, next);
+    rule->set_by_index(rule, board, next);
     pass_other = 0;
   }
 

@@ -2,15 +2,16 @@
 #define COM_H
 
 #include "board.h"
-#include "game.h"
+#include "rule.h"
 
 typedef struct com Com;
 struct com {
   int color;
-  int (*next)(Com *this, Game *game, Board *board, int *eval_val);
+  Rule *rule;
+  int (*next)(Com *this, Board *board, int *eval_val);
 };
 
-Com *Com_new(int color);
+Com *Com_new(Rule *rule, int color);
 void Com_delete(Com *com);
 
 #endif

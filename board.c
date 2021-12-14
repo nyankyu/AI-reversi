@@ -35,10 +35,6 @@ void  print(Board *this) {
   printf("\n %c > ", this->next_color == WHITE ? 'O' : 'X');
 }
 
-static int pos(int x, int y) {
-  return (BOARD_SIZE + 1) * y + x;
-}
-
 void  Board_init(Board *board) {
   // set method
   board->print = print;
@@ -55,10 +51,10 @@ void  Board_init(Board *board) {
     else
       board->box[i] = EMPTY;
   }
-  board->box[pos(4, 4)] = WHITE;
-  board->box[pos(5, 5)] = WHITE;
-  board->box[pos(4, 5)] = BLACK;
-  board->box[pos(5, 4)] = BLACK;
+  board->box[POS(4, 4)] = WHITE;
+  board->box[POS(5, 5)] = WHITE;
+  board->box[POS(4, 5)] = BLACK;
+  board->box[POS(5, 4)] = BLACK;
 }
 
 Board *Board_new(void) {

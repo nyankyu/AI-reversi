@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include "ai-reversi.h"
 #include "board.h"
-#include "game.h"
+#include "rule.h"
 
 static int other_color(int color) {
   if (color == WHITE)
@@ -30,21 +30,17 @@ static int reverse_line(int box[], int color, int init_pos, int dir) {
   return count;
 }
 
-static int pos(int x, int y) {
-  return (BOARD_SIZE + 1) * y + x;
-}
-
 /*
  * 1 <= x <= 8
  * 1 <= y <= 8
  */
-int set(Game *this, Board *board, int x, int y) {
+int set(Rule *this, Board *board, int x, int y) {
   if (this == NULL)
     return 0;
 
 
 
-  int p = pos(x, y);
+  int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return 0;
 
@@ -75,7 +71,7 @@ int set(Game *this, Board *board, int x, int y) {
   return count;
 }
 
-int set_by_str(Game *this, Board *board, char str[]) {
+int set_by_str(Rule *this, Board *board, char str[]) {
   if (strlen(str) != 2)
     return 0;
   str[0] = toupper(str[0]);
@@ -89,7 +85,7 @@ int set_by_str(Game *this, Board *board, char str[]) {
   return set(this, board, x, y);
 }
 
-int set_by_index(Game *this, Board *board, int index) {
+int set_by_index(Rule *this, Board *board, int index) {
   int x = index % 9;
   int y = index / 9;
   return set(this, board, x, y);
@@ -107,14 +103,14 @@ static int can_set_line(int box[], int color, int init_pos, int dir) {
   return OK;
 }
 
-int can_set(Game *this, Board *board, int x, int y) {
+int can_set(Rule *this, Board *board, int x, int y) {
   if (this == NULL)
     return 0;
 
 
 
 
-  int p = pos(x, y);
+  int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return NG;
 
@@ -137,7 +133,7 @@ int can_set(Game *this, Board *board, int x, int y) {
   return NG;
 }
 
-int can_pass(Game *this, Board *board) {
+int can_pass(Rule *this, Board *board) {
   for (int y = 1; y <= BOARD_SIZE; y++)
     for (int x = 1; x <= BOARD_SIZE; x++)
       if (can_set(this, board, x, y) == OK)
@@ -145,27 +141,28 @@ int can_pass(Game *this, Board *board) {
   return OK;
 }
 
-void Game_init(Game *game) {
-  game->history = 0;
+
+void Rule_init(Rule *rule) {
+  rule->history = 0;
 }
 
-Game *Game_new(void) {
-  Game *game = malloc(sizeof(Game));
-  if (game == NULL) {
-    printf("ERROR: malloc() Game-class\n");
+Rule *Rule_new(void) {
+  Rule *rule = malloc(sizeof(Rule));
+  if (rule == NULL) {
+    printf("ERROR: malloc() Rule-class\n");
     exit(EXIT_ERR);
   }
 
-  game->set = set;
-  game->set_by_str = set_by_str;
-  game->set_by_index = set_by_index;
-  game->can_set = can_set;
-  game->can_pass = can_pass;
+  rule->set = set;
+  rule->set_by_str = set_by_str;
+  rule->set_by_index = set_by_index;
+  rule->can_set = can_set;
+  rule->can_pass = can_pass;
 
-  Game_init(game);
-  return game;
+  Rule_init(rule);
+  return rule;
 }
 
-void Game_delete(Game *game) {
-  free(game);
+void Rule_delete(Rule *rule) {
+  free(rule);
 }

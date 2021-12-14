@@ -18,6 +18,8 @@
 #define DIR_DOWN        9
 #define DIR_DOWN_RIGHT  10
 
+#define POS(x,y) ((BOARD_SIZE + 1) * y + x)
+
 typedef struct board Board;
 
 struct board {

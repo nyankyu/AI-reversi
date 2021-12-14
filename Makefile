@@ -5,10 +5,10 @@ SRC = \
 	main.c \
 	board.c \
 	com.c \
-	game.c
+	rule.c
 OBJS = $(SRC:.c=.o)
 
-.PHONY: all clean fclean re run
+.PHONY: all clean fclean re run tags
 
 all: $(NAME)
 
@@ -25,3 +25,6 @@ re: fclean all
 
 run: $(NAME)
 	./$(NAME)
+
+tags:
+	ctags -R --languages=C .
