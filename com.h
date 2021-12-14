@@ -8,7 +8,7 @@ typedef struct com Com;
 struct com {
   int color;
   Rule *rule;
-  int (*next)(Com *this, Board *board, int *eval_val);
+  int (*next)(Com *this, Board *board, int color, int *eval_val);
 };
 
 Com *Com_new(Rule *rule, int color);

@@ -5,11 +5,11 @@
 #include "ai-reversi.h"
 #include "rule.h"
 
-static int next(Com *this, Board *board, int *eval_val) {
+static int next(Com *this, Board *board, int color, int *eval_val) {
   *eval_val = 0;
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
-      if (this->rule->can_set(board, x, y) == OK)
+      if (this->rule->can_set(board, x, y, color) == OK)
           return 9 * y + x;
     }
   }

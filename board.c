@@ -32,14 +32,12 @@ void  print(Board *this) {
       printf("\n");
   }
   printf("\n O: %d, X: %d, .: %d\n", this->white, this->black, this->empty);
-  printf("\n %c > ", this->next_color == WHITE ? 'O' : 'X');
 }
 
 void  Board_init(Board *board) {
   // set method
   board->print = print;
 
-  board->next_color = WHITE;
   board->empty = BOARD_SIZE * BOARD_SIZE - 4;
   board->white = 2;
   board->black = 2;

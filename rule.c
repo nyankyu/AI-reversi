@@ -34,26 +34,26 @@ static int reverse_line(int box[], int color, int init_pos, int dir) {
  * 1 <= x <= 8
  * 1 <= y <= 8
  */
-int set(Board *board, int x, int y) {
+int set(Board *board, int x, int y, int color) {
   int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return 0;
 
   int count = 0;
-  count += reverse_line(board->box, board->next_color, p, DIR_UP_LEFT);
-  count += reverse_line(board->box, board->next_color, p, DIR_UP);
-  count += reverse_line(board->box, board->next_color, p, DIR_UP_RIGHT);
-  count += reverse_line(board->box, board->next_color, p, DIR_LEFT);
-  count += reverse_line(board->box, board->next_color, p, DIR_RIGHT);
-  count += reverse_line(board->box, board->next_color, p, DIR_DOWN_LEFT);
-  count += reverse_line(board->box, board->next_color, p, DIR_DOWN);
-  count += reverse_line(board->box, board->next_color, p, DIR_DOWN_RIGHT);
+  count += reverse_line(board->box, color, p, DIR_UP_LEFT);
+  count += reverse_line(board->box, color, p, DIR_UP);
+  count += reverse_line(board->box, color, p, DIR_UP_RIGHT);
+  count += reverse_line(board->box, color, p, DIR_LEFT);
+  count += reverse_line(board->box, color, p, DIR_RIGHT);
+  count += reverse_line(board->box, color, p, DIR_DOWN_LEFT);
+  count += reverse_line(board->box, color, p, DIR_DOWN);
+  count += reverse_line(board->box, color, p, DIR_DOWN_RIGHT);
   if (count == 0)
     return 0;
 
-  board->box[p] = board->next_color;
+  board->box[p] = color;
   count++;
-  if (board->next_color == WHITE) {
+  if (color == WHITE) {
     board->white += count;
     board->black -= count - 1;
   } else {
@@ -62,11 +62,11 @@ int set(Board *board, int x, int y) {
   }
   board->empty--;
 
-  board->next_color = other_color(board->next_color);
+  color = other_color(color);
   return count;
 }
 
-int set_by_str(Board *board, char str[]) {
+int set_by_str(Board *board, char str[], int color) {
   if (strlen(str) != 2)
     return 0;
   str[0] = toupper(str[0]);
@@ -77,13 +77,13 @@ int set_by_str(Board *board, char str[]) {
   int x = str[0] - 'A' + 1;
   int y = str[1] - '1' + 1;
 
-  return set(board, x, y);
+  return set(board, x, y, color);
 }
 
-int set_by_index(Board *board, int index) {
+int set_by_index(Board *board, int index, int color) {
   int x = index % 9;
   int y = index / 9;
-  return set(board, x, y);
+  return set(board, x, y, color);
 }
 
 static int can_set_line(int box[], int color, int init_pos, int dir) {
@@ -98,34 +98,34 @@ static int can_set_line(int box[], int color, int init_pos, int dir) {
   return OK;
 }
 
-int can_set(Board *board, int x, int y) {
+int can_set(Board *board, int x, int y, int color) {
   int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return NG;
 
-  if (can_set_line(board->box, board->next_color, p, DIR_UP_LEFT) == OK)
+  if (can_set_line(board->box, color, p, DIR_UP_LEFT) == OK)
     return OK;
-  if (can_set_line(board->box, board->next_color, p, DIR_UP) == OK)
+  if (can_set_line(board->box, color, p, DIR_UP) == OK)
     return OK;
-  if (can_set_line(board->box, board->next_color, p, DIR_UP_RIGHT) == OK)
+  if (can_set_line(board->box, color, p, DIR_UP_RIGHT) == OK)
     return OK;
-  if (can_set_line(board->box, board->next_color, p, DIR_LEFT) == OK)
+  if (can_set_line(board->box, color, p, DIR_LEFT) == OK)
     return OK;
-  if (can_set_line(board->box, board->next_color, p, DIR_RIGHT) == OK)
+  if (can_set_line(board->box, color, p, DIR_RIGHT) == OK)
     return OK;
-  if (can_set_line(board->box, board->next_color, p, DIR_DOWN_LEFT) == OK)
+  if (can_set_line(board->box, color, p, DIR_DOWN_LEFT) == OK)
     return OK;
-  if (can_set_line(board->box, board->next_color, p, DIR_DOWN) == OK)
+  if (can_set_line(board->box, color, p, DIR_DOWN) == OK)
     return OK;
-  if (can_set_line(board->box, board->next_color, p, DIR_DOWN_RIGHT) == OK)
+  if (can_set_line(board->box, color, p, DIR_DOWN_RIGHT) == OK)
     return OK;
   return NG;
 }
 
-int can_pass(Board *board) {
+int can_pass(Board *board, int color) {
   for (int y = 1; y <= BOARD_SIZE; y++)
     for (int x = 1; x <= BOARD_SIZE; x++)
-      if (can_set(board, x, y) == OK)
+      if (can_set(board, x, y, color) == OK)
         return NG;
   return OK;
 }

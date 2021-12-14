@@ -23,7 +23,6 @@
 typedef struct board Board;
 
 struct board {
-  int next_color;
   int empty;
   int white;
   int black;
