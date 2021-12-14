@@ -34,12 +34,7 @@ static int reverse_line(int box[], int color, int init_pos, int dir) {
  * 1 <= x <= 8
  * 1 <= y <= 8
  */
-int set(Rule *this, Board *board, int x, int y) {
-  if (this == NULL)
-    return 0;
-
-
-
+int set(Board *board, int x, int y) {
   int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return 0;
@@ -71,7 +66,7 @@ int set(Rule *this, Board *board, int x, int y) {
   return count;
 }
 
-int set_by_str(Rule *this, Board *board, char str[]) {
+int set_by_str(Board *board, char str[]) {
   if (strlen(str) != 2)
     return 0;
   str[0] = toupper(str[0]);
@@ -82,13 +77,13 @@ int set_by_str(Rule *this, Board *board, char str[]) {
   int x = str[0] - 'A' + 1;
   int y = str[1] - '1' + 1;
 
-  return set(this, board, x, y);
+  return set(board, x, y);
 }
 
-int set_by_index(Rule *this, Board *board, int index) {
+int set_by_index(Board *board, int index) {
   int x = index % 9;
   int y = index / 9;
-  return set(this, board, x, y);
+  return set(board, x, y);
 }
 
 static int can_set_line(int box[], int color, int init_pos, int dir) {
@@ -103,13 +98,7 @@ static int can_set_line(int box[], int color, int init_pos, int dir) {
   return OK;
 }
 
-int can_set(Rule *this, Board *board, int x, int y) {
-  if (this == NULL)
-    return 0;
-
-
-
-
+int can_set(Board *board, int x, int y) {
   int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return NG;
@@ -133,10 +122,10 @@ int can_set(Rule *this, Board *board, int x, int y) {
   return NG;
 }
 
-int can_pass(Rule *this, Board *board) {
+int can_pass(Board *board) {
   for (int y = 1; y <= BOARD_SIZE; y++)
     for (int x = 1; x <= BOARD_SIZE; x++)
-      if (can_set(this, board, x, y) == OK)
+      if (can_set(board, x, y) == OK)
         return NG;
   return OK;
 }

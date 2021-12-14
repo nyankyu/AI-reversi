@@ -16,11 +16,11 @@ typedef struct rule Rule;
 struct rule {
   //History history;
   int history;
-  int (*set)(Rule *this, Board *board, int x, int y);
-  int (*set_by_str)(Rule *this, Board *board, char str[]);
-  int (*set_by_index)(Rule *this, Board *board, int index);
-  int (*can_set)(Rule *this, Board *board, int x, int y);
-  int (*can_pass)(Rule *this, Board *board);
+  int (*set)(Board *board, int x, int y);
+  int (*set_by_str)(Board *board, char str[]);
+  int (*set_by_index)(Board *board, int index);
+  int (*can_set)(Board *board, int x, int y);
+  int (*can_pass)(Board *board);
 };
 
 void Rule_init(Rule *rule);

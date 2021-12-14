@@ -29,11 +29,11 @@ int main(void) {
   while (1) {
     board->print(board);
 
-    if (rule->can_pass(rule, board) == NG) {
+    if (rule->can_pass(board) == NG) {
       get_input(buff);
       if (strcmp(buff, "q") == 0)
         exit(EXIT_OK);
-      if (rule->set_by_str(rule, board, buff) == 0)
+      if (rule->set_by_str(board, buff) == 0)
         continue;
       pass_other = 0;
     } else {
@@ -47,7 +47,7 @@ int main(void) {
       pass_other = 1;
       continue;
     }
-    rule->set_by_index(rule, board, next);
+    rule->set_by_index(board, next);
     pass_other = 0;
   }
 
