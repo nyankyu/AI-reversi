@@ -8,11 +8,11 @@
 
 #define BUFF_SIZE 256
 
-void turn_color(int *color) {
+static void turn_color(int *color) {
   *color = *color == WHITE ? BLACK : WHITE;
 }
 
-void get_input(char buff[]) {
+static void get_input(char buff[]) {
   if (fgets(buff, BUFF_SIZE, stdin) == NULL) {
     exit(EXIT_ERR);
   }
@@ -20,6 +20,11 @@ void get_input(char buff[]) {
   if (p != NULL)
     *p = '\0';
 }
+
+static void print_prompt(int next_color) {
+  printf("\n %c > ", next_color == WHITE ? 'O' : 'X');
+}
+
 
 int main(void) {
   Rule *rule = Rule_new();
@@ -33,30 +38,30 @@ int main(void) {
   char buff[BUFF_SIZE];
   while (1) {
     board->print(board);
-    printf("\n %c > ", next_color == WHITE ? 'O' : 'X');
+    print_prompt(next_color);
 
-    if (rule->can_pass(board, next_color) == NG) {
+    if (rule->can_pass(board, next_color) == OK) {
+      pass_other = 1;
+    } else {
       get_input(buff);
       if (strcmp(buff, "q") == 0)
         exit(EXIT_OK);
       if (rule->set_by_str(board, buff, next_color) == 0)
         continue;
-      turn_color(&next_color);
       pass_other = 0;
-    } else {
-      pass_other = 1;
     }
+    turn_color(&next_color);
 
     int next = com->next(com, board, next_color, &eval_val);
     if (next == 0) {
       if (pass_other == 1)
         exit(EXIT_OK);
       pass_other = 1;
-      continue;
+    } else {
+      rule->set_by_index(board, next, next_color);
+      pass_other = 0;
     }
-    rule->set_by_index(board, next, next_color);
     turn_color(&next_color);
-    pass_other = 0;
   }
 
   Board_delete(board);
