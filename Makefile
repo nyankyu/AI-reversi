@@ -5,7 +5,9 @@ SRC = \
 	main.c \
 	board.c \
 	com.c \
-	rule.c
+	rule.c \
+	tree.c \
+	node.c
 OBJS = $(SRC:.c=.o)
 
 .PHONY: all clean fclean re run tags

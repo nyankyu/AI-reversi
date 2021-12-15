@@ -4,8 +4,13 @@
 #include "com.h"
 #include "ai-reversi.h"
 #include "rule.h"
+#include "tree.h"
 
 static int next(Com *this, Board *board, int color, int *eval_val) {
+  Tree *tree = Tree_new(board, color, 3);
+  if (tree == NULL)
+    exit(0);
+
   *eval_val = 0;
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
