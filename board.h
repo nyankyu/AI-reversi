@@ -34,5 +34,6 @@ struct board {
 void  Board_init(Board *board);
 Board *Board_new(void);
 void  Board_delete(Board *board);
+Board *Board_copy(Board *board);
 
 #endif

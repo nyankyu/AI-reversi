@@ -8,8 +8,7 @@
 
 static int next(Com *this, Board *board, int color, int *eval_val) {
   Tree *tree = Tree_new(board, color, 3);
-  if (tree == NULL)
-    exit(0);
+  Tree_delete(tree);
 
   *eval_val = 0;
   for (int y = 1; y <= BOARD_SIZE; y++) {

@@ -9,7 +9,7 @@ Node *Node_new(Board *board, int color, int depth) {
     exit(EXIT_ERR);
   }
 
-  node->board = board;
+  node->board = Board_copy(board);
   node->color = color;
   node->depth = depth;
   memset(node->children, 0, CHIL_SIZE);
@@ -18,6 +18,8 @@ Node *Node_new(Board *board, int color, int depth) {
 }
 
 void Node_delete(Node *node) {
+  for (int i = 0; node->children[i]; i++)
+    Node_delete(node->children[i]);
   Board_delete(node->board);
   free(node);
 }

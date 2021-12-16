@@ -25,5 +25,6 @@ Tree *Tree_new(Board *board, int color, int depth) {
 }
 
 void Tree_delete(Tree *tree) {
+  Node_delete(tree->root);
   free(tree);
 }

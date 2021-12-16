@@ -70,3 +70,9 @@ Board *Board_new(void) {
 void Board_delete(Board *board) {
   free(board);
 }
+
+Board *Board_copy(Board *source) {
+  Board *copy = Board_new();
+  *copy = *source;
+  return copy;
+}
