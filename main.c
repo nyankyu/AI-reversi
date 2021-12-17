@@ -29,9 +29,9 @@ static void print_prompt(int next_color) {
 int main(void) {
   Rule *rule = Rule_new();
   Board *board = Board_new();
-  Com *com = Com_new(rule, BLACK);
+  Com *com = Com_new(rule, WHITE);
 
-  int next_color = WHITE;
+  int next_color = BLACK;
   int eval_val;
   int pass_other = 0;
 
