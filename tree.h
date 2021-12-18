@@ -8,10 +8,10 @@
 typedef struct tree Tree;
 struct tree {
   Node *root;
-  int color;
+  int my_color;
 };
 
-Tree *Tree_new(Board *board, int color, int depth);
+Tree *Tree_new(Board *board, int my_color, int max_depth);
 void Tree_delete(Tree *tree);
 
 #endif
