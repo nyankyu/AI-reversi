@@ -132,7 +132,9 @@ static int can_pass(Board *board, int color) {
 
 
 void Rule_init(Rule *rule) {
-  rule->history = 0;
+  // dummy use rule
+  if (rule == NULL)
+    exit(EXIT_ERR);
 }
 
 Rule *Rule_new(void) {

@@ -14,8 +14,6 @@
 
 typedef struct rule Rule;
 struct rule {
-  //History history;
-  int history;
   int (*set)(Board *board, int x, int y, int color);
   int (*set_by_str)(Board *board, char str[], int color);
   int (*set_by_index)(Board *board, int index, int color);

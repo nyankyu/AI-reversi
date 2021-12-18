@@ -4,7 +4,6 @@
 #include "ai-reversi.h"
 #include "board.h"
 #include "com.h"
-#include "rule.h"
 
 #define BUFF_SIZE 256
 
@@ -27,9 +26,9 @@ static void print_prompt(int next_color) {
 
 
 int main(void) {
-  Rule *rule = Rule_new();
+  g_rule = Rule_new();
   Board *board = Board_new();
-  Com *com = Com_new(rule, WHITE);
+  Com *com = Com_new(WHITE);
 
   int next_color = BLACK;
   int eval_val;
@@ -40,13 +39,13 @@ int main(void) {
     board->print(board);
     print_prompt(next_color);
 
-    if (rule->can_pass(board, next_color) == OK) {
+    if (g_rule->can_pass(board, next_color) == OK) {
       pass_other = 1;
     } else {
       get_input(buff);
       if (strcmp(buff, "q") == 0)
         exit(EXIT_OK);
-      if (rule->set_by_str(board, buff, next_color) == 0)
+      if (g_rule->set_by_str(board, buff, next_color) == 0)
         continue;
       pass_other = 0;
     }
@@ -58,7 +57,7 @@ int main(void) {
         exit(EXIT_OK);
       pass_other = 1;
     } else {
-      rule->set_by_index(board, next, next_color);
+      g_rule->set_by_index(board, next, next_color);
       pass_other = 0;
     }
     turn_color(&next_color);
