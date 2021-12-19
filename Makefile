@@ -10,7 +10,7 @@ SRC = \
 	node.c
 OBJS = $(SRC:.c=.o)
 
-.PHONY: all clean fclean re run tags
+.PHONY: all clean fclean re run tags debug
 
 all: $(NAME)
 
@@ -30,3 +30,6 @@ run: $(NAME)
 
 tags:
 	ctags -R --languages=C .
+
+debug: fclean
+	gcc -Wall -Werror -Wextra -g -fsanitize=address -DLEAKS=1 -o $(NAME) $(SRC)

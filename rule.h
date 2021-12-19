@@ -19,6 +19,7 @@ struct rule {
   int (*set_by_index)(Board *board, int index, int color);
   int (*can_set)(Board *board, int x, int y, int color);
   int (*can_pass)(Board *board, int color);
+  int (*other_color)(int color);
 };
 
 void Rule_init(Rule *rule);

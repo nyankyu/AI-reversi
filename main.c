@@ -43,8 +43,10 @@ int main(void) {
       pass_other = 1;
     } else {
       get_input(buff);
-      if (strcmp(buff, "q") == 0)
+      if (strcmp(buff, "q") == 0) {
+        system("leaks ai-reversi");
         exit(EXIT_OK);
+      }
       if (g_rule->set_by_str(board, buff, next_color) == 0)
         continue;
       pass_other = 0;

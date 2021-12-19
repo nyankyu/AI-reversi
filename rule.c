@@ -149,6 +149,7 @@ Rule *Rule_new(void) {
   rule->set_by_index = set_by_index;
   rule->can_set = can_set;
   rule->can_pass = can_pass;
+  rule->other_color = other_color;
 
   Rule_init(rule);
   return rule;
