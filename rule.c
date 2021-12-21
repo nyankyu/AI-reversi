@@ -64,15 +64,15 @@ static int set(Board *board, int x, int y, int color) {
   return count;
 }
 
-static int set_by_str(Board *board, char str[], int color) {
+static int set_by_str(Board *board, const char str[], int color) {
   if (strlen(str) != 2)
     return 0;
-  str[0] = toupper(str[0]);
-  if (str[0] < 'A' || 'H' < str[0])
+  int first_char = toupper(str[0]);
+  if (first_char < 'A' || 'H' < first_char)
     return 0;
   if (str[1] < '1' || '8' < str[1])
     return 0;
-  int x = str[0] - 'A' + 1;
+  int x = first_char - 'A' + 1;
   int y = str[1] - '1' + 1;
 
   return set(board, x, y, color);
@@ -84,7 +84,7 @@ static int set_by_index(Board *board, int index, int color) {
   return set(board, x, y, color);
 }
 
-static int can_set_line(int const box[], int color, int init_pos, int dir) {
+static int can_set_line(const int box[], int color, int init_pos, int dir) {
   int other = other_color(color);
   int pos;
 
@@ -96,7 +96,7 @@ static int can_set_line(int const box[], int color, int init_pos, int dir) {
   return OK;
 }
 
-static int can_set(Board *board, int x, int y, int color) {
+static int can_set(const Board *board, int x, int y, int color) {
   int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return NG;
@@ -120,7 +120,7 @@ static int can_set(Board *board, int x, int y, int color) {
   return NG;
 }
 
-static int can_pass(Board *board, int color) {
+static int can_pass(const Board *board, int color) {
   for (int y = 1; y <= BOARD_SIZE; y++)
     for (int x = 1; x <= BOARD_SIZE; x++)
       if (can_set(board, x, y, color) == OK)

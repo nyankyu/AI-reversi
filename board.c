@@ -16,7 +16,7 @@ static void  print_box(int box) {
     printf("#");
 }
 
-static void  print(Board *this) {
+static void  print(const Board *this) {
   printf("\033[H\033[2J");
   printf("===== AI-reversi =====\n");
   printf("   A B C D E F G H\n");
@@ -66,7 +66,7 @@ void Board_delete(Board *board) {
   free(board);
 }
 
-Board *Board_copy(Board *source) {
+Board *Board_copy(const Board *source) {
   Board *copy = Board_new();
   copy->empty = source->empty;
   copy->white = source->white;

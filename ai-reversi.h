@@ -8,6 +8,8 @@
 
 #define   OK  0
 #define   NG  1
+#define   TRUE   0
+#define   FALSE  1
 
 Rule *g_rule;
 

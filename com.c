@@ -5,7 +5,7 @@
 #include "ai-reversi.h"
 #include "tree.h"
 
-static int next(Com *this, Board *board, int *eval_val) {
+static int next(Com *this,const Board *board, int *eval_val) {
   // dummy use this
   if (this == NULL)
     exit(EXIT_ERR);

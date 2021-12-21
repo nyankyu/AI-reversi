@@ -7,10 +7,6 @@
 
 #define BUFF_SIZE 256
 
-static void turn_color(int *color) {
-  *color = *color == WHITE ? BLACK : WHITE;
-}
-
 static void get_input(char buff[]) {
   if (fgets(buff, BUFF_SIZE, stdin) == NULL) {
     exit(EXIT_ERR);
@@ -33,7 +29,7 @@ int main(void) {
 
   int next_color = BLACK;
   int eval_val;
-  int pass_other = 0;
+  int pass_other = FALSE;
 
   char buff[BUFF_SIZE];
   while (1) {
@@ -41,34 +37,34 @@ int main(void) {
     print_prompt(next_color);
 
     if (g_rule->can_pass(board, next_color) == OK) {
-      pass_other = 1;
+      pass_other = TRUE;
     } else {
       get_input(buff);
       if (strcmp(buff, "q") == 0)
         break;
       if (g_rule->set_by_str(board, buff, next_color) == 0)
         continue;
-      pass_other = 0;
+      pass_other = FALSE;
     }
-    turn_color(&next_color);
+    next_color = g_rule->other_color(next_color);
 
     int next = com->next(com, board, &eval_val);
     if (next == 0) {
-      if (pass_other == 1)
+      if (pass_other == TRUE)
         exit(EXIT_OK);
-      pass_other = 1;
+      pass_other = TRUE;
     } else {
       g_rule->set_by_index(board, next, next_color);
-      pass_other = 0;
+      pass_other = FALSE;
     }
-    turn_color(&next_color);
+    next_color = g_rule->other_color(next_color);
   }
 
   Rule_delete(g_rule);
   Board_delete(board);
   Com_delete(com);
 
-  system("leaks ai-reversi");
+  //system("leaks ai-reversi");
   return EXIT_OK;
 }
 
