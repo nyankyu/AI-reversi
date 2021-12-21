@@ -5,21 +5,21 @@
 #include "ai-reversi.h"
 #include "tree.h"
 
-static int next(Com *this, Board *board, int color, int *eval_val) {
+static int next(Com *this, Board *board, int *eval_val) {
   // dummy use this
   if (this == NULL)
     exit(EXIT_ERR);
 
 
   Board *copy = Board_copy(board);
-  Tree *tree = Tree_new(copy, color, 3);
+  Tree *tree = Tree_new(copy, this->color, 3);
   Tree_delete(tree);
 
-  // most weak ai
+  // most weak AI
   *eval_val = 0;
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
-      if (g_rule->can_set(board, x, y, color) == OK)
+      if (g_rule->can_set(board, x, y, this->color) == OK)
           return 9 * y + x;
     }
   }
@@ -29,7 +29,7 @@ static int next(Com *this, Board *board, int color, int *eval_val) {
 Com *Com_new(int color) {
   Com *com = malloc(sizeof(Com));
   if (com == NULL) {
-    printf("ERROR: filus malloc() Com\n");
+    printf("ERROR: files malloc() Com\n");
     exit(EXIT_ERR);
   }
   com->color = color;

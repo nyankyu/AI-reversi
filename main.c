@@ -52,7 +52,7 @@ int main(void) {
     }
     turn_color(&next_color);
 
-    int next = com->next(com, board, next_color, &eval_val);
+    int next = com->next(com, board, &eval_val);
     if (next == 0) {
       if (pass_other == 1)
         exit(EXIT_OK);

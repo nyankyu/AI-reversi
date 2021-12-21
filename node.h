@@ -3,14 +3,14 @@
 
 #include "board.h"
 
-#define CHIL_SIZE (BOARD_SIZE * BOARD_SIZE - 4)
+#define CHL_SIZE (BOARD_SIZE * BOARD_SIZE - 4)
 
 typedef struct node Node;
 struct node {
   Board *board;
   int color;
   int depth;
-  Node *children[CHIL_SIZE];
+  Node *children[CHL_SIZE];
 };
 
 Node *Node_new(Board *board, int color, int depth);

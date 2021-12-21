@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 #include <string.h>
 #include <ctype.h>
 #include "ai-reversi.h"
@@ -62,7 +61,6 @@ static int set(Board *board, int x, int y, int color) {
   }
   board->empty--;
 
-  color = other_color(color);
   return count;
 }
 
@@ -86,7 +84,7 @@ static int set_by_index(Board *board, int index, int color) {
   return set(board, x, y, color);
 }
 
-static int can_set_line(int box[], int color, int init_pos, int dir) {
+static int can_set_line(int const box[], int color, int init_pos, int dir) {
   int other = other_color(color);
   int pos;
 
