@@ -28,6 +28,7 @@ static void print_prompt(int next_color) {
 int main(void) {
   g_rule = Rule_new();
   Board *board = Board_new();
+  Board_init(board);
   Com *com = Com_new(WHITE);
 
   int next_color = BLACK;
@@ -43,10 +44,8 @@ int main(void) {
       pass_other = 1;
     } else {
       get_input(buff);
-      if (strcmp(buff, "q") == 0) {
-        system("leaks ai-reversi");
-        exit(EXIT_OK);
-      }
+      if (strcmp(buff, "q") == 0)
+        break;
       if (g_rule->set_by_str(board, buff, next_color) == 0)
         continue;
       pass_other = 0;
@@ -65,8 +64,11 @@ int main(void) {
     turn_color(&next_color);
   }
 
+  Rule_delete(g_rule);
   Board_delete(board);
+  Com_delete(com);
 
+  system("leaks ai-reversi");
   return EXIT_OK;
 }
 

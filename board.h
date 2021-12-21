@@ -28,7 +28,6 @@ struct board {
   int black;
   int box[BOX_SIZE];
   void (*print)(Board *this);
-  void (*print_counter)(Board *this);
 };
 
 void  Board_init(Board *board);

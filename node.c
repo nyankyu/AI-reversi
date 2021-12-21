@@ -9,7 +9,7 @@ Node *Node_new(Board *board, int color, int depth) {
     exit(EXIT_ERR);
   }
 
-  node->board = Board_copy(board);
+  node->board = board;
   node->color = color;
   node->depth = depth;
   memset(node->children, 0, sizeof(Node *) * CHIL_SIZE);

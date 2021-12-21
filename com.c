@@ -11,12 +11,11 @@ static int next(Com *this, Board *board, int color, int *eval_val) {
     exit(EXIT_ERR);
 
 
-
-
-
-  Tree *tree = Tree_new(board, color, 3);
+  Board *copy = Board_copy(board);
+  Tree *tree = Tree_new(copy, color, 3);
   Tree_delete(tree);
 
+  // most weak ai
   *eval_val = 0;
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {

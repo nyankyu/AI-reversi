@@ -24,7 +24,6 @@ static void build_children(Node *node, int color, int max_depth) {
   Board_delete(board);
 }
 
-#include "stdio.h"
 Tree *Tree_new(Board *board, int my_color, int max_depth) {
   Tree *tree = malloc(sizeof(Tree));
   if (tree == NULL) {

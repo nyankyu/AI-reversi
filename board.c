@@ -35,14 +35,10 @@ static void  print(Board *this) {
 }
 
 void  Board_init(Board *board) {
-  // set method
-  board->print = print;
-
   board->empty = BOARD_SIZE * BOARD_SIZE - 4;
   board->white = 2;
   board->black = 2;
 
-  // init box
   for (int i = 0; i < BOX_SIZE; i++) {
     if (i <= BOARD_SIZE || i > (BOARD_SIZE + 2) * BOARD_SIZE || i % (BOARD_SIZE + 1) == 0)
       board->box[i] = WALL;
@@ -62,7 +58,7 @@ Board *Board_new(void) {
     exit(EXIT_ERR);
   }
 
-  Board_init(board);
+  board->print = print;
 
   return board;
 }
@@ -73,6 +69,10 @@ void Board_delete(Board *board) {
 
 Board *Board_copy(Board *source) {
   Board *copy = Board_new();
-  *copy = *source;
+  copy->empty = source->empty;
+  copy->white = source->white;
+  copy->black = source->black;
+  for (int i = 0; i < BOX_SIZE; i++)
+    copy->box[i] = source->box[i];
   return copy;
 }
