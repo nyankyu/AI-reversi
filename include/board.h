@@ -27,7 +27,7 @@ struct board {
   int white;
   int black;
   int box[BOX_SIZE];
-  void (*print)(const Board *this);
+  void (*print)(const Board *self);
 };
 
 void  Board_init(Board *board);

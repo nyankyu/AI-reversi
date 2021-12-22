@@ -16,21 +16,21 @@ static void  print_box(int box) {
     printf("#");
 }
 
-static void  print(const Board *this) {
+static void  print(const Board *self) {
   printf("\033[H\033[2J");
   printf("===== AI-reversi =====\n");
   printf("   A B C D E F G H\n");
   for (int i = BOARD_SIZE; i <= (BOARD_SIZE + 2) * BOARD_SIZE; i++) {
     if (i % (BOARD_SIZE + 1) == 0)
       printf(" %d ", i / (BOARD_SIZE + 1));
-    if (this->box[i] == WALL)
+    if (self->box[i] == WALL)
       continue;
-    print_box(this->box[i]);
+    print_box(self->box[i]);
     printf(" ");
     if (i % 9 == 8)
       printf("\n");
   }
-  printf("\n O: %d, X: %d, .: %d\n", this->white, this->black, this->empty);
+  printf("\n O: %d, X: %d, .: %d\n", self->white, self->black, self->empty);
 }
 
 void  Board_init(Board *board) {

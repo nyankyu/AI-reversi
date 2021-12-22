@@ -5,21 +5,21 @@
 #include "ai-reversi.h"
 #include "tree.h"
 
-static int next(Com *this,const Board *board, int *eval_val) {
-  // dummy use this
-  if (this == NULL)
+static int next(Com *self,const Board *board, int *eval_val) {
+  // dummy use self
+  if (self == NULL)
     exit(EXIT_ERR);
 
 
   Board *copy = Board_copy(board);
-  Tree *tree = Tree_new(copy, this->color, 3);
+  Tree *tree = Tree_new(copy, self->color, 3);
   Tree_delete(tree);
 
   // most weak AI
   *eval_val = 0;
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
-      if (g_rule->can_set(board, x, y, this->color) == OK)
+      if (g_rule->can_set(board, x, y, self->color) == OK)
           return 9 * y + x;
     }
   }
