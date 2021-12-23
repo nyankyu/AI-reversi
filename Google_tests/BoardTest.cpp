@@ -7,11 +7,11 @@ extern "C" {
 class BoardTest : public ::testing::Test {
 
 protected:
-  virtual void SetUp() {
+  void SetUp() override {
     board = Board_new();
   }
 
-  virtual void TearDown() {
+  void TearDown() override {
     Board_delete(board);
   }
 
