@@ -3,7 +3,7 @@
 #include "tree.h"
 
 static void build_children(Node *node, int color, int max_depth) {
-  if (node->depth > max_depth)
+  if (node->depth + 1 > max_depth)
     return;
 
   Board *board = NULL;
