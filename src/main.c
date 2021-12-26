@@ -60,7 +60,7 @@ int main(void) {
     next_color = g_rule->other_color(next_color);
   }
 
-  Rule_delete(g_rule);
+  Rule_delete();
   Board_delete(board);
   Com_delete(com);
 

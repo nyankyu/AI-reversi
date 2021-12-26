@@ -3,14 +3,14 @@
 #include "ai-reversi.h"
 #include "node.h"
 
-Node *Node_new(Board *board, int color, int depth) {
+Node *Node_new(Board *board, int next_color, int depth) {
   Node *node = malloc(sizeof(Node));
   if (node == NULL) {
     exit(EXIT_ERR);
   }
 
   node->board = board;
-  node->color = color;
+  node->next_color = next_color;
   node->depth = depth;
   memset(node->children, 0, sizeof(Node *) * CHL_SIZE);
 

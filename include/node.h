@@ -8,12 +8,12 @@
 typedef struct node Node;
 struct node {
   Board *board;
-  int color;
+  int next_color;
   int depth;
   Node *children[CHL_SIZE];
 };
 
-Node *Node_new(Board *board, int color, int depth);
+Node *Node_new(Board *board, int next_color, int depth);
 void Node_delete(Node *node);
 
 #endif
