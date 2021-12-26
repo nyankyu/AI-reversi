@@ -22,7 +22,7 @@ static void print_prompt(int next_color) {
 
 
 int main(void) {
-  g_rule = Rule_new();
+  Rule_new();
   Board *board = Board_new();
   Board_init(board);
   Com *com = Com_new(WHITE);

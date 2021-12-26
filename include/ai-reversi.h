@@ -11,6 +11,4 @@
 #define   TRUE   0
 #define   FALSE  1
 
-Rule *g_rule;
-
 #endif

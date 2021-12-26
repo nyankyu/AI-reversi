@@ -23,7 +23,9 @@ struct rule {
 };
 
 void Rule_init(Rule *rule);
-Rule *Rule_new(void);
-void Rule_delete(Rule *rule);
+void Rule_new(void);
+void Rule_delete(void);
+
+extern Rule *g_rule;
 
 #endif

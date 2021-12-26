@@ -6,6 +6,8 @@
 #include "board.h"
 #include "rule.h"
 
+Rule *g_rule;
+
 static int other_color(int color) {
   if (color == WHITE)
     return BLACK;
@@ -135,24 +137,26 @@ void Rule_init(Rule *rule) {
     exit(EXIT_ERR);
 }
 
-Rule *Rule_new(void) {
-  Rule *rule = malloc(sizeof(Rule));
-  if (rule == NULL) {
+void Rule_new(void) {
+  if (g_rule != NULL)
+    return;
+  g_rule = malloc(sizeof(Rule));
+  if (g_rule == NULL) {
     printf("ERROR: malloc() Rule-class\n");
     exit(EXIT_ERR);
   }
 
-  rule->set = set;
-  rule->set_by_str = set_by_str;
-  rule->set_by_index = set_by_index;
-  rule->can_set = can_set;
-  rule->can_pass = can_pass;
-  rule->other_color = other_color;
+  g_rule->set = set;
+  g_rule->set_by_str = set_by_str;
+  g_rule->set_by_index = set_by_index;
+  g_rule->can_set = can_set;
+  g_rule->can_pass = can_pass;
+  g_rule->other_color = other_color;
 
-  Rule_init(rule);
-  return rule;
+  Rule_init(g_rule);
+  return;
 }
 
-void Rule_delete(Rule *rule) {
-  free(rule);
+void Rule_delete(void) {
+  free(g_rule);
 }
