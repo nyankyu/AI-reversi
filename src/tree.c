@@ -6,7 +6,6 @@ static void build_children(Node *node, int max_depth) {
   if (node->depth + 1 > max_depth)
     return;
 
-  int next_color = g_rule->other_color(node->next_color);
   Board *board = NULL;
   Node **children = &node->children[0];
 
@@ -14,9 +13,9 @@ static void build_children(Node *node, int max_depth) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
       if (board == NULL)
         board = Board_copy(node->board);
-      if (g_rule->set(board, x, y, next_color) == 0)
+      if (g_rule->set(board, x, y, node->next_color) == 0)
         continue;
-      *children = Node_new(board, next_color, node->depth + 1);
+      *children = Node_new(board, g_rule->other_color(node->next_color), node->depth + 1);
       board = NULL;
       build_children(*children, max_depth);
       children++;
