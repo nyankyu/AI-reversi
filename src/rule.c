@@ -158,5 +158,8 @@ void Rule_new(void) {
 }
 
 void Rule_delete(void) {
+  if (g_rule == NULL)
+    return;
   free(g_rule);
+  g_rule = NULL;
 }
