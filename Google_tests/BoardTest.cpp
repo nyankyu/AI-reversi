@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 
 extern "C" {
 #include "board.h"
@@ -45,8 +46,7 @@ TEST_F(BoardTest, Initialize) {
       W,E,E,E,E,E,E,E,E,
       W,W,W,W,W,W,W,W,W,W
   };
-  for (int i = 0; i < BOX_SIZE; i++)
-    ASSERT_EQ(box[i], board->box[i]);
+  ASSERT_THAT(board->box, ::testing::ContainerEq(box));
 }
 
 TEST_F(BoardTest, Copy) {
@@ -56,6 +56,5 @@ TEST_F(BoardTest, Copy) {
   board->box[20] = 13;
   board->box[BOX_SIZE - 1] = 14;
   Board *copy = Board_copy(board);
-  for (int i = 0; i < BOX_SIZE; i++)
-    ASSERT_EQ(board->box[i], copy->box[i]);
+  ASSERT_THAT(board->box, ::testing::ContainerEq(copy->box));
 }

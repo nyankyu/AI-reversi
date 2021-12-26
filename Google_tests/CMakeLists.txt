@@ -8,6 +8,7 @@ add_executable(Google_Tests_run
         BoardTest.cpp
         NodeTest.cpp
         TreeTest.cpp
+        RuleTest.cpp
         ../src/board.c
         ../src/node.c
         ../src/rule.c
