@@ -24,6 +24,15 @@ TEST_F(RuleTest, OtherColor) {
   ASSERT_EQ(BLACK, g_rule->other_color(WHITE));
 }
 
+::testing::AssertionResult BoxEQ(int expected[], int actual[]) {
+  for (int i = 0; i < BOX_SIZE; i++) {
+    if (expected[i] != actual[i]) {
+      return ::testing::AssertionFailure() << "failure index : " << i;
+    }
+  }
+  return ::testing::AssertionSuccess();
+}
+
 TEST_F(RuleTest, SetXYSimple) {
   int W = WALL;
   int E = EMPTY;
@@ -100,23 +109,23 @@ TEST_F(RuleTest, SetXYSimple) {
       Board_init(board);
       if (x == 4 && y == 3) {
         ASSERT_EQ(2, g_rule->set(board, x, y, BLACK));
-        ASSERT_THAT(box43, testing::ContainerEq(board->box));
+        ASSERT_TRUE(BoxEQ(box43, board->box));
       }
       else if (x == 3 && y == 4) {
         ASSERT_EQ(2, g_rule->set(board, x, y, BLACK));
-        ASSERT_THAT(box34, testing::ContainerEq(board->box));
+        ASSERT_TRUE(BoxEQ(box34, board->box));
       }
       else if (x == 6 && y == 5) {
         ASSERT_EQ(2, g_rule->set(board, x, y, BLACK));
-        ASSERT_THAT(box65, testing::ContainerEq(board->box));
+        ASSERT_TRUE(BoxEQ(box65, board->box));
       }
       else if (x == 5 && y == 6) {
         ASSERT_EQ(2, g_rule->set(board, x, y, BLACK));
-        ASSERT_THAT(box56, testing::ContainerEq(board->box));
+        ASSERT_TRUE(BoxEQ(box56, board->box));
       }
       else {
         ASSERT_EQ(0, g_rule->set(board, x, y, BLACK));
-        ASSERT_THAT(box0, testing::ContainerEq(board->box));
+        ASSERT_TRUE(BoxEQ(box0, board->box));
       }
     }
   }
