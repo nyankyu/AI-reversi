@@ -33,6 +33,38 @@ static void  print(const Board *self) {
   printf("\n O: %d, X: %d, .: %d\n", self->white, self->black, self->empty);
 }
 
+static void make_box(Board *self, const char str[]) {
+  if (strlen(str) != BOX_SIZE)
+    exit(EXIT_ERR);
+
+  self->empty = 0;
+  self->white = 0;
+  self->black = 0;
+  int val;
+  for (int i = 0; i < BOX_SIZE; i++) {
+    switch (str[i]) {
+      case '#':
+        val = WALL;
+        break;
+      case '.':
+        val = EMPTY;
+        self->empty++;
+        break;
+      case 'O':
+        val = WHITE;
+        self->white++;
+        break;
+      case 'X':
+        val = BLACK;
+        self->black++;
+        break;
+      default:
+        exit(EXIT_ERR);
+    }
+    self->box[i] = val;
+  }
+}
+
 void  Board_init(Board *board) {
   board->empty = BOARD_SIZE * BOARD_SIZE - 4;
   board->white = 2;
@@ -58,6 +90,7 @@ Board *Board_new(void) {
   }
 
   board->print = print;
+  board->make_box = make_box;
 
   return board;
 }

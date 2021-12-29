@@ -28,6 +28,7 @@ struct board {
   int black;
   int box[BOX_SIZE];
   void (*print)(const Board *self);
+  void (*make_box)(Board *self, const char str[]);
 };
 
 void  Board_init(Board *board);
