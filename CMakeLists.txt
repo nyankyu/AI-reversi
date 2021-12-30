@@ -12,4 +12,7 @@ target_sources(ai-reversi PUBLIC
         src/node.c
         src/com.c)
 
-add_subdirectory(Google_tests)
+if (EXISTS "${CMAKE_SOURCE_DIR}/Google_tests/lib/CMakeLists.txt")
+    enable_testing()
+    add_subdirectory(Google_tests)
+endif()
