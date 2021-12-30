@@ -34,34 +34,30 @@ static void  print(const Board *self) {
 }
 
 static void make_box(Board *self, const char str[]) {
-  if (strlen(str) != BOX_SIZE)
+  if (str == NULL || strlen(str) != BOARD_SIZE * BOARD_SIZE)
     exit(EXIT_ERR);
 
   self->empty = 0;
   self->white = 0;
   self->black = 0;
-  int val;
+
   for (int i = 0; i < BOX_SIZE; i++) {
-    switch (str[i]) {
-      case '#':
-        val = WALL;
-        break;
-      case '.':
-        val = EMPTY;
-        self->empty++;
-        break;
-      case 'O':
-        val = WHITE;
-        self->white++;
-        break;
-      case 'X':
-        val = BLACK;
-        self->black++;
-        break;
-      default:
-        exit(EXIT_ERR);
-    }
-    self->box[i] = val;
+    if (i < 9 || i % 9 == 0 || i > 80) {
+      self->box[i] = WALL;
+    } else if (*str == '.') {
+      self->box[i] = EMPTY;
+      self->empty++;
+      str++;
+    } else if (*str == 'O') {
+      self->box[i] = WHITE;
+      self->white++;
+      str++;
+    } else if (*str == 'X') {
+      self->box[i] = BLACK;
+      self->black++;
+      str++;
+    } else
+      exit(EXIT_ERR);
   }
 }
 
