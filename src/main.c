@@ -22,6 +22,9 @@ static void print_prompt(int next_color) {
 
 
 int main(void) {
+  int array[10];
+  array[10] = 0;
+
   Rule_new();
   Board *board = Board_new();
   Board_init(board);
