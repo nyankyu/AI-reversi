@@ -5,8 +5,8 @@ add_executable(ai-reversi)
 
 set(CMAKE_C_FLAGS "-Wall")
 
-target_include_directories(ai-reversi PUBLIC include)
-target_sources(ai-reversi PUBLIC
+target_include_directories(ai-reversi PRIVATE include)
+target_sources(ai-reversi PRIVATE
         src/main.c
         src/rule.c
         src/board.c
@@ -14,7 +14,7 @@ target_sources(ai-reversi PUBLIC
         src/node.c
         src/com.c)
 
-if (EXISTS "${CMAKE_SOURCE_DIR}/test/lib/CMakeLists.txt")
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/lib/CMakeLists.txt")
     enable_testing()
     add_subdirectory(test)
 endif()

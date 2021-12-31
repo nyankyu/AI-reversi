@@ -9,11 +9,11 @@ add_executable(Google_Tests_run
         NodeTest.cpp
         TreeTest.cpp
         RuleTest.cpp
-        ../src/board.c
-        ../src/node.c
-        ../src/rule.c
-        ../src/tree.c
+        ${ai-reversi_SOURCE_DIR}/src/board.c
+        ${ai-reversi_SOURCE_DIR}/src/node.c
+        ${ai-reversi_SOURCE_DIR}/src/rule.c
+        ${ai-reversi_SOURCE_DIR}/src/tree.c
         )
 
 target_link_libraries(Google_Tests_run gtest gmock gtest_main)
-target_include_directories(Google_Tests_run PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(Google_Tests_run PUBLIC ${ai-reversi_SOURCE_DIR}/include)
