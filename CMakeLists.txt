@@ -3,7 +3,7 @@ project(ai-reversi C)
 
 add_executable(ai-reversi)
 
-set(CMAKE_C_FLAGS "-Wall -O3")
+set(CMAKE_C_FLAGS "-Wall")
 
 target_include_directories(ai-reversi PUBLIC include)
 target_sources(ai-reversi PUBLIC
