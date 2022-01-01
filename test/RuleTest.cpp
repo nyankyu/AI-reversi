@@ -103,7 +103,7 @@ TEST_F(RuleTest, OtherColor) {
   return ::testing::AssertionSuccess();
 }
 
-TEST_F(RuleTest, SetXYSimple) {
+TEST_F(RuleTest, SetXY_1stMove) {
   Board *board = Board_new();
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
@@ -132,7 +132,7 @@ TEST_F(RuleTest, SetXYSimple) {
   }
 }
 
-TEST_F(RuleTest, SetByStrSimple) {
+TEST_F(RuleTest, SetByStr_1stMove) {
   Board *board = Board_new();
   char str[] = "..";
   for (str[0] = 'A'; str[0] <= 'H'; str[0]++) {
@@ -162,7 +162,7 @@ TEST_F(RuleTest, SetByStrSimple) {
   }
 }
 
-TEST_F(RuleTest, SetByIndexSimple) {
+TEST_F(RuleTest, SetByIndex1stMove) {
   Board *board = Board_new();
   for (int i = 0; i < BOX_SIZE; i++) {
       Board_init(board);
@@ -189,7 +189,7 @@ TEST_F(RuleTest, SetByIndexSimple) {
   }
 }
 
-TEST_F(RuleTest, CanSetSimple) {
+TEST_F(RuleTest, CanSet_1stMove) {
   Board *board = Board_new();
   Board_init(board);
   for (int y = 1; y <= BOARD_SIZE; y++) {
@@ -221,48 +221,39 @@ TEST_F(RuleTest, CanPass) {
   board->box[50] = X;
   ASSERT_EQ(OK, g_rule->can_pass(board, BLACK));
 
-  int box_full[BOX_SIZE] = {
-      W,W,W,W,W,W,W,W,W,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,W,W,W,W,W,W,W,W,W
-  };
-  memcpy(board->box, box_full, sizeof(int) * BOX_SIZE);
+  board->make_box(board,
+                  "OOOOOOOO"
+                  "OOOOOOOO"
+                  "OOOOOOOO"
+                  "OOOOOOOO"
+                  "OOOOOOOO"
+                  "OOOOOOOO"
+                  "OOOOOOOO"
+                  "OOOOOOOO"
+                  );
   ASSERT_EQ(OK, g_rule->can_pass(board, BLACK));
 
-  int box_empty[BOX_SIZE] = {
-      W,W,W,W,W,W,W,W,W,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,O,O,O,O,O,O,O,O,
-      W,W,W,W,W,W,W,W,W,W
-  };
-  memcpy(board->box, box_empty, sizeof(int) * BOX_SIZE);
+  board->make_box(board,
+                  "........"
+                  "........"
+                  "........"
+                  "........"
+                  "........"
+                  "........"
+                  "........"
+                  "........"
+                  );
   ASSERT_EQ(OK, g_rule->can_pass(board, BLACK));
 
-  int box_all_dir[BOX_SIZE] = {
-      W,W,W,W,W,W,W,W,W,
-      W,O,X,X,O,X,X,O,X,
-      W,X,O,O,O,O,O,O,X,
-      W,X,O,O,O,O,O,O,X,
-      W,O,O,O,E,O,O,O,O,
-      W,X,O,O,O,O,O,O,X,
-      W,X,O,O,O,O,O,O,X,
-      W,O,O,O,O,O,O,O,X,
-      W,X,X,X,O,X,X,X,O,
-      W,W,W,W,W,W,W,W,W,W
-  };
-  memcpy(board->box, box_all_dir, sizeof(int) * BOX_SIZE);
+  board->make_box(board,
+                  "O X X O X X O X"
+                  "X O O O O O O X"
+                  "X O O O O O O X"
+                  "O O O . O O O O"
+                  "X O O O O O O X"
+                  "X O O O O O O X"
+                  "O O O O O O O X"
+                  "X X X O X X X O"
+                  );
   ASSERT_EQ(OK, g_rule->can_pass(board, BLACK));
 }

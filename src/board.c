@@ -34,7 +34,7 @@ static void  print(const Board *self) {
 }
 
 static void make_box(Board *self, const char str[]) {
-  if (str == NULL || strlen(str) != BOARD_SIZE * BOARD_SIZE)
+  if (str == NULL || strlen(str) < BOARD_SIZE * BOARD_SIZE)
     exit(EXIT_ERR);
 
   self->empty = 0;
@@ -44,7 +44,12 @@ static void make_box(Board *self, const char str[]) {
   for (int i = 0; i < BOX_SIZE; i++) {
     if (i < 9 || i % 9 == 0 || i > 80) {
       self->box[i] = WALL;
-    } else if (*str == '.') {
+      continue;
+    }
+
+    while (*str == ' ')
+      str++;
+    if (*str == '.') {
       self->box[i] = EMPTY;
       self->empty++;
       str++;
