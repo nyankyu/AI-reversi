@@ -154,7 +154,6 @@ void Rule_new(void) {
   g_rule->other_color = other_color;
 
   Rule_init(g_rule);
-  return;
 }
 
 void Rule_delete(void) {

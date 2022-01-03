@@ -1,5 +1,4 @@
 #include "gtest/gtest.h"
-#include "gmock//gmock.h"
 
 extern "C" {
 #include "rule.h"
@@ -94,7 +93,7 @@ TEST_F(RuleTest, OtherColor) {
   ASSERT_EQ(BLACK, g_rule->other_color(WHITE));
 }
 
-::testing::AssertionResult BoxEQ(int expected[], int actual[]) {
+::testing::AssertionResult BoxEQ(const int expected[], const int actual[]) {
   for (int i = 0; i < BOX_SIZE; i++) {
     if (expected[i] != actual[i]) {
       return ::testing::AssertionFailure() << "failure index : " << i;

@@ -73,8 +73,6 @@ TEST_F(BoardTest, MakeBoxError) {
 TEST_F(BoardTest, MakeBoxSuccess) {
   int W = WALL;
   int E = EMPTY;
-  int O = WHITE;
-  int X = BLACK;
   int box_all_empty[] = {
       W,W,W,W,W,W,W,W,W,
       W,E,E,E,E,E,E,E,E,
