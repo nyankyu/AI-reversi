@@ -12,6 +12,7 @@ add_executable(Google_Tests_run
         NodeTest.cpp
         TreeTest.cpp
         RuleTest.cpp
+        Util.cpp
         ${ai-reversi_SOURCE_DIR}/src/board.c
         ${ai-reversi_SOURCE_DIR}/src/node.c
         ${ai-reversi_SOURCE_DIR}/src/rule.c

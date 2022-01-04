@@ -5,6 +5,8 @@ extern "C" {
 #include "ai-reversi.h"
 }
 
+extern ::testing::AssertionResult BoxEQ(const int expected[], const int actual[]);
+
 class RuleTest : public ::testing::Test {
 protected:
   void SetUp() override {
@@ -91,15 +93,6 @@ TEST_F(RuleTest, Constructor) {
 TEST_F(RuleTest, OtherColor) {
   ASSERT_EQ(WHITE, g_rule->other_color(BLACK));
   ASSERT_EQ(BLACK, g_rule->other_color(WHITE));
-}
-
-::testing::AssertionResult BoxEQ(const int expected[], const int actual[]) {
-  for (int i = 0; i < BOX_SIZE; i++) {
-    if (expected[i] != actual[i]) {
-      return ::testing::AssertionFailure() << "failure index : " << i;
-    }
-  }
-  return ::testing::AssertionSuccess();
 }
 
 TEST_F(RuleTest, SetXY_1stMove) {
