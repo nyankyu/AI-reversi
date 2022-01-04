@@ -10,6 +10,7 @@ struct node {
   Board *board;
   int next_color;
   int depth;
+  int eval_point;
   Node *children[CHL_SIZE];
 };
 

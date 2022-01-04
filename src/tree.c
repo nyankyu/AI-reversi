@@ -3,8 +3,10 @@
 #include "tree.h"
 
 static void build_children(Node *node, int max_depth) {
-  if (node->depth + 1 > max_depth)
+  if (node->depth + 1 > max_depth) {
+    node->eval_point = 10;
     return;
+  }
 
   Board *board = NULL;
   Node **children = &node->children[0];
