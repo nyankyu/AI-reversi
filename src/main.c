@@ -21,11 +21,20 @@ static void print_prompt(int next_color) {
 }
 
 
-int main(void) {
+int main(int argc, char **argv) {
+  int ai_vs_ai = FALSE;
+  if (argc == 2 && strcmp("auto", argv[1]) == 0) {
+    ai_vs_ai = TRUE;
+  }
+
   Rule_new();
   Board *board = Board_new();
   Board_init(board);
-  Com *com = Com_new(WHITE);
+  Com *com1;
+  Com *com2;
+  if (ai_vs_ai == TRUE)
+    com1 = Com_new(BLACK);
+  com2 = Com_new(WHITE);
 
   int next_color = BLACK;
   int eval_val;
@@ -36,22 +45,38 @@ int main(void) {
     board->print(board);
     print_prompt(next_color);
 
-    if (g_rule->can_pass(board, next_color) == OK) {
-      pass_other = TRUE;
+    int next;
+
+    if (ai_vs_ai == TRUE) {
+      next = com1->next(com1, board, &eval_val);
+      if (next == 0) {
+        if (pass_other == TRUE)
+          break;
+        pass_other = TRUE;
+      } else {
+        g_rule->set_by_index(board, next, next_color);
+        pass_other = FALSE;
+      }
     } else {
-      get_input(buff);
-      if (strcmp(buff, "q") == 0)
-        break;
-      if (g_rule->set_by_str(board, buff, next_color) == 0)
-        continue;
-      pass_other = FALSE;
+      if (g_rule->can_pass(board, next_color) == OK) {
+        pass_other = TRUE;
+      } else {
+        get_input(buff);
+        if (strcmp(buff, "q") == 0)
+          break;
+        if (g_rule->set_by_str(board, buff, next_color) == 0)
+          continue;
+        pass_other = FALSE;
+      }
     }
     next_color = g_rule->other_color(next_color);
 
-    int next = com->next(com, board, &eval_val);
+    board->print(board);
+    print_prompt(next_color);
+    next = com2->next(com2, board, &eval_val);
     if (next == 0) {
       if (pass_other == TRUE)
-        exit(EXIT_OK);
+        break;
       pass_other = TRUE;
     } else {
       g_rule->set_by_index(board, next, next_color);
@@ -62,7 +87,9 @@ int main(void) {
 
   Rule_delete();
   Board_delete(board);
-  Com_delete(com);
+  if (ai_vs_ai == TRUE)
+    Com_delete(com1);
+  Com_delete(com2);
 
   //system("leaks ai-reversi");
   return EXIT_OK;
