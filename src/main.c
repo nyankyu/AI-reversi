@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
   Com_delete(com2);
 
   //system("leaks ai-reversi");
-  return EXIT_OK;
+  return EXIT_ERR;
 }
 
 
