@@ -6,6 +6,8 @@
 
 This is Reversi against the AI.
 
+It's **not finished** yet, the AI is just searching for a place to put stone, starting from the top left.
+
 ## Build and Run
 ```bash
 $ git clone https://github.com/nyankyu/AI-reversi.git
