@@ -21,7 +21,7 @@ static void build_children(Node *node, int max_depth) {
       children++;
     }
   }
-  //Board_delete(board);
+  Board_delete(board);
 }
 
 Tree *Tree_new(Board *board, int my_color, int max_depth) {
