@@ -13,8 +13,8 @@ protected:
     Rule_new();
     board = Board_new();
     Board_init(board);
-    com = Com_new(BLACK);
-    tree = Tree_new(com, board, BLACK, 1);
+    com = Com_new(WHITE);
+    tree = Tree_new(com, board, WHITE, 1);
   }
   void TearDown() override {
     Tree_delete(tree);
@@ -27,11 +27,12 @@ protected:
 
 TEST_F(TreeTest, ConstructorMemberValue) {
   EXPECT_NE(nullptr, tree);
-  ASSERT_EQ(BLACK, tree->my_color);
+  ASSERT_EQ(WHITE, tree->my_color);
   EXPECT_NE(nullptr, tree->root);
   ASSERT_EQ(0, tree->root->depth);
-  ASSERT_EQ(BLACK, tree->root->next_color);
+  ASSERT_EQ(WHITE, tree->root->next_color);
   ASSERT_EQ(board, tree->root->board);
+  ASSERT_EQ(10, tree->root->eval_point);
 }
 
 int W = WALL;
@@ -96,28 +97,28 @@ TEST_F(TreeTest, ConstractorBuildTree) {
   child = tree->root->children[0];
   ASSERT_EQ(BLACK, child->next_color);
   ASSERT_EQ(1, child->depth);
-  ASSERT_EQ(10, child->eval_point);
+  ASSERT_EQ(-10, child->eval_point);
   ASSERT_THAT(box0, testing::ContainerEq(child->board->box));
   ASSERT_EQ(nullptr, child->children[0]);
 
   child = tree->root->children[1];
   ASSERT_EQ(BLACK, child->next_color);
   ASSERT_EQ(1, child->depth);
-  ASSERT_EQ(10, child->eval_point);
+  ASSERT_EQ(-10, child->eval_point);
   ASSERT_THAT(box1, testing::ContainerEq(child->board->box));
   ASSERT_EQ(nullptr, child->children[0]);
 
   child = tree->root->children[2];
   ASSERT_EQ(BLACK, child->next_color);
   ASSERT_EQ(1, child->depth);
-  ASSERT_EQ(10, child->eval_point);
+  ASSERT_EQ(-10, child->eval_point);
   ASSERT_THAT(box2, testing::ContainerEq(child->board->box));
   ASSERT_EQ(nullptr, child->children[0]);
 
   child = tree->root->children[3];
   ASSERT_EQ(BLACK, child->next_color);
   ASSERT_EQ(1, child->depth);
-  ASSERT_EQ(10, child->eval_point);
+  ASSERT_EQ(-10, child->eval_point);
   ASSERT_THAT(box3, testing::ContainerEq(child->board->box));
   ASSERT_EQ(nullptr, child->children[0]);
 

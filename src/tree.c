@@ -5,10 +5,10 @@
 #include "com.h"
 
 static void set_eval_point(Node *node) {
-  node->eval_point = INT_MIN;
+  node->eval_point = INT_MAX;
 
   for (Node **child = &node->children[0]; *child != NULL; child++) {
-    if (node->eval_point < (*child)->eval_point)
+    if (node->eval_point > (*child)->eval_point)
       node->eval_point = (*child)->eval_point;
   }
 
