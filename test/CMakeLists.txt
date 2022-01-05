@@ -17,6 +17,7 @@ add_executable(Google_Tests_run
         ${ai-reversi_SOURCE_DIR}/src/node.c
         ${ai-reversi_SOURCE_DIR}/src/rule.c
         ${ai-reversi_SOURCE_DIR}/src/tree.c
+        ${ai-reversi_SOURCE_DIR}/src/com.c
         )
 
 target_link_libraries(Google_Tests_run gtest gmock gtest_main)

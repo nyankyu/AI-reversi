@@ -1,10 +1,23 @@
 #include <stdlib.h>
+#include <limits.h>
 #include "ai-reversi.h"
 #include "tree.h"
+#include "com.h"
 
-static void build_children(Node *node, int max_depth) {
-  if (node->depth + 1 > max_depth) {
-    node->eval_point = 10;
+static void set_eval_point(Node *node) {
+  node->eval_point = INT_MIN;
+
+  for (Node **child = &node->children[0]; *child != NULL; child++) {
+    if (node->eval_point < (*child)->eval_point)
+      node->eval_point = (*child)->eval_point;
+  }
+
+  node->eval_point *= -1;
+}
+
+static void build_children(Com *com, Node *node, int max_depth) {
+  if (node->depth >= max_depth) {
+    node->eval_point = (com->color == node->next_color) ? 10 : -10;
     return;
   }
 
@@ -19,22 +32,29 @@ static void build_children(Node *node, int max_depth) {
         continue;
       *children = Node_new(board, g_rule->other_color(node->next_color), node->depth + 1);
       board = NULL;
-      build_children(*children, max_depth);
+      build_children(com, *children, max_depth);
       children++;
     }
   }
+
+  if (*children == &node->children[0]) {
+    *children = Node_new(board, node->next_color, node->depth + 1);
+  }
+
+  set_eval_point(node);
+
   Board_delete(board);
 }
 
-Tree *Tree_new(Board *board, int my_color, int max_depth) {
+Tree *Tree_new(Com *com, Board *board, int my_color, int max_depth) {
   Tree *tree = malloc(sizeof(Tree));
   if (tree == NULL) {
     exit(EXIT_ERR);
   }
 
-  tree->root = Node_new(board, g_rule->other_color(my_color), 0);
+  tree->root = Node_new(board, my_color, 0);
   tree->my_color = my_color;
-  build_children(tree->root, max_depth);
+  build_children(com, tree->root, max_depth);
   return tree;
 }
 

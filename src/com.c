@@ -12,7 +12,7 @@ static int next(Com *self,const Board *board, int *eval_val) {
 
 
   Board *copy = Board_copy(board);
-  Tree *tree = Tree_new(copy, self->color, 3);
+  Tree *tree = Tree_new(self, copy, self->color, 3);
   Tree_delete(tree);
 
   // most weak AI
