@@ -1,24 +1,22 @@
 #include <stdlib.h>
-#include <limits.h>
 #include "ai-reversi.h"
 #include "tree.h"
 #include "com.h"
 
-void get_next_point(Tree *tree, int *x, int *y) {
-  for (Node **child = &tree->root->children[0]; *child != NULL; child++)
+static void get_next_point(Tree *tree, int *x, int *y) {
+  for (Node **child = &tree->root->children[0]; *child != NULL; child++) {
     if (tree->root->eval_point == -(*child)->eval_point) {
       *x = (*child)->last_x;
       *y = (*child)->last_y;
       return;
     }
+  }
 
   *x = 0;
   *y = 0;
 }
 
 static void set_eval_point(Node *node) {
-  node->eval_point = INT_MAX;
-
   for (Node **child = &node->children[0]; *child != NULL; child++) {
     if (node->eval_point > (*child)->eval_point)
       node->eval_point = (*child)->eval_point;

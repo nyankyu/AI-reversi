@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include "ai-reversi.h"
 #include "node.h"
 
@@ -14,6 +15,7 @@ Node *Node_new(Board *board, int next_color, int depth, int x, int y) {
   node->depth = depth;
   node->last_x = x;
   node->last_y = y;
+  node->eval_point = INT_MAX;
   memset(node->children, 0, sizeof(Node *) * CHL_SIZE);
 
   return node;
