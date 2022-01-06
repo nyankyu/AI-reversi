@@ -31,17 +31,15 @@ static void build_children(Com *com, Node *node, int max_depth) {
     return;
   }
 
-  Board *board = NULL;
+  Board *board = Board_copy(node->board);
   Node **children = &node->children[0];
 
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
-      if (board == NULL)
-        board = Board_copy(node->board);
       if (g_rule->set(board, x, y, node->next_color) == 0)
         continue;
       *children = Node_new(board, g_rule->other_color(node->next_color), node->depth + 1, x, y);
-      board = NULL;
+      board = Board_copy(node->board);
       build_children(com, *children, max_depth);
       children++;
     }
@@ -49,11 +47,11 @@ static void build_children(Com *com, Node *node, int max_depth) {
 
   if (children == &node->children[0]) {
     *children = Node_new(board, node->next_color, node->depth + 1, node->last_x, node->last_y);
+  } else {
+    Board_delete(board);
   }
 
   set_eval_point(node);
-
-  Board_delete(board);
 }
 
 Tree *Tree_new(Com *com, Board *board, int my_color, int max_depth) {
