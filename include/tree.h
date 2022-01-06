@@ -8,6 +8,7 @@
 
 typedef struct tree Tree;
 struct tree {
+  void (*get_next_point)(Tree *tree, int *x, int *y);
   Node *root;
   int my_color;
 };

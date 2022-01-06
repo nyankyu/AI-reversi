@@ -80,12 +80,6 @@ static int set_by_str(Board *board, const char str[], int color) {
   return set(board, x, y, color);
 }
 
-static int set_by_index(Board *board, int index, int color) {
-  int x = index % 9;
-  int y = index / 9;
-  return set(board, x, y, color);
-}
-
 static int can_set_line(const int box[], int color, int init_pos, int dir) {
   int other = other_color(color);
   int pos;
@@ -148,7 +142,7 @@ void Rule_new(void) {
 
   g_rule->set = set;
   g_rule->set_by_str = set_by_str;
-  g_rule->set_by_index = set_by_index;
+  //g_rule->set_by_index = set_by_index;
   g_rule->can_set = can_set;
   g_rule->can_pass = can_pass;
   g_rule->other_color = other_color;

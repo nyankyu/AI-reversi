@@ -154,33 +154,6 @@ TEST_F(RuleTest, SetByStr_1stMove) {
   }
 }
 
-TEST_F(RuleTest, SetByIndex1stMove) {
-  Board *board = Board_new();
-  for (int i = 0; i < BOX_SIZE; i++) {
-      Board_init(board);
-      if (i == 31) {
-        ASSERT_EQ(2, g_rule->set_by_index(board, i, BLACK));
-        ASSERT_TRUE(BoxEQ(box43, board->box));
-      }
-      else if (i == 39) {
-        ASSERT_EQ(2, g_rule->set_by_index(board, i, BLACK));
-        ASSERT_TRUE(BoxEQ(box34, board->box));
-      }
-      else if (i == 51) {
-        ASSERT_EQ(2, g_rule->set_by_index(board, i, BLACK));
-        ASSERT_TRUE(BoxEQ(box65, board->box));
-      }
-      else if (i == 59) {
-        ASSERT_EQ(2, g_rule->set_by_index(board, i, BLACK));
-        ASSERT_TRUE(BoxEQ(box56, board->box));
-      }
-      else {
-        ASSERT_EQ(0, g_rule->set_by_index(board, i, BLACK));
-        ASSERT_TRUE(BoxEQ(box0, board->box));
-      }
-  }
-}
-
 TEST_F(RuleTest, CanSet_1stMove) {
   Board *board = Board_new();
   Board_init(board);

@@ -16,7 +16,6 @@ typedef struct rule Rule;
 struct rule {
   int (*set)(Board *board, int x, int y, int color);
   int (*set_by_str)(Board *board, const char str[], int color);
-  int (*set_by_index)(Board *board, int index, int color);
   int (*can_set)(const Board *board, int x, int y, int color);
   int (*can_pass)(const Board *board, int color);
   int (*other_color)(int color);

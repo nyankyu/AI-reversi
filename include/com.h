@@ -6,7 +6,7 @@
 typedef struct com Com;
 struct com {
   int color;
-  int (*next)(Com *self, const Board *board, int *eval_val);
+  void (*next)(Com *self, const Board *board, int *x, int *y, int *eval_val);
 };
 
 Com *Com_new(int color);

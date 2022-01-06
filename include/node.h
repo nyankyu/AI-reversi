@@ -11,10 +11,12 @@ struct node {
   int next_color;
   int depth;
   int eval_point;
+  int last_x;
+  int last_y;
   Node *children[CHL_SIZE];
 };
 
-Node *Node_new(Board *board, int next_color, int depth);
+Node *Node_new(Board *board, int next_color, int depth, int x, int y);
 void Node_delete(Node *node);
 
 #endif

@@ -3,7 +3,7 @@
 #include "ai-reversi.h"
 #include "node.h"
 
-Node *Node_new(Board *board, int next_color, int depth) {
+Node *Node_new(Board *board, int next_color, int depth, int x, int y) {
   Node *node = malloc(sizeof(Node));
   if (node == NULL) {
     exit(EXIT_ERR);
@@ -12,6 +12,8 @@ Node *Node_new(Board *board, int next_color, int depth) {
   node->board = board;
   node->next_color = next_color;
   node->depth = depth;
+  node->last_x = x;
+  node->last_y = y;
   memset(node->children, 0, sizeof(Node *) * CHL_SIZE);
 
   return node;

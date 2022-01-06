@@ -44,17 +44,19 @@ int main(int argc, char **argv) {
   while (1) {
     board->print(board);
     print_prompt(next_color);
-
-    int next;
+    int x;
+    int y;
 
     if (ai_vs_ai == TRUE) {
-      next = com1->next(com1, board, &eval_val);
-      if (next == 0) {
+      com1->next(com1, board, &x, &y, &eval_val);
+      if (x == 0) {
+        printf("PASS\n");
         if (pass_other == TRUE)
           break;
         pass_other = TRUE;
       } else {
-        g_rule->set_by_index(board, next, next_color);
+        printf("%c%c\n", 'a' + x - 1, '1' + y - 1);
+        g_rule->set(board, x, y, next_color);
         pass_other = FALSE;
       }
     } else {
@@ -73,13 +75,15 @@ int main(int argc, char **argv) {
 
     board->print(board);
     print_prompt(next_color);
-    next = com2->next(com2, board, &eval_val);
-    if (next == 0) {
+    com2->next(com2, board, &x, &y, &eval_val);
+    if (x == 0) {
+      printf("PASS\n");
       if (pass_other == TRUE)
         break;
       pass_other = TRUE;
     } else {
-      g_rule->set_by_index(board, next, next_color);
+      printf("%c%c\n", 'a' + x - 1, '1' + y - 1);
+      g_rule->set(board, x, y, next_color);
       pass_other = FALSE;
     }
     next_color = g_rule->other_color(next_color);

@@ -5,25 +5,14 @@
 #include "ai-reversi.h"
 #include "tree.h"
 
-static int next(Com *self,const Board *board, int *eval_val) {
-  // dummy use self
-  if (self == NULL)
-    exit(EXIT_ERR);
-
-
+static void next(Com *self,const Board *board, int *x, int *y, int *eval_val) {
   Board *copy = Board_copy(board);
   Tree *tree = Tree_new(self, copy, self->color, 3);
-  Tree_delete(tree);
 
-  // most weak AI
-  *eval_val = 0;
-  for (int y = 1; y <= BOARD_SIZE; y++) {
-    for (int x = 1; x <= BOARD_SIZE; x++) {
-      if (g_rule->can_set(board, x, y, self->color) == OK)
-          return 9 * y + x;
-    }
-  }
-  return 0;
+  tree->get_next_point(tree, x, y);
+  if (*x != 0)
+    *eval_val = tree->root->eval_point;
+  Tree_delete(tree);
 }
 
 Com *Com_new(int color) {
