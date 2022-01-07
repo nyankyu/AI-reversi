@@ -67,20 +67,15 @@ static void make_box(Board *self, const char str[]) {
 }
 
 void  Board_init(Board *board) {
-  board->empty = BOARD_SIZE * BOARD_SIZE - 4;
-  board->white = 2;
-  board->black = 2;
-
-  for (int i = 0; i < BOX_SIZE; i++) {
-    if (i <= BOARD_SIZE || i > (BOARD_SIZE + 2) * BOARD_SIZE || i % (BOARD_SIZE + 1) == 0)
-      board->box[i] = WALL;
-    else
-      board->box[i] = EMPTY;
-  }
-  board->box[POS(4, 4)] = WHITE;
-  board->box[POS(5, 5)] = WHITE;
-  board->box[POS(4, 5)] = BLACK;
-  board->box[POS(5, 4)] = BLACK;
+  make_box(board, ""
+      "........"
+      "........"
+      "........"
+      "...OX..."
+      "...XO..."
+      "........"
+      "........"
+      "........");
 }
 
 Board *Board_new(void) {
