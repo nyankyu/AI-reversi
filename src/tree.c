@@ -39,6 +39,7 @@ static void build_children(Com *com, Node *node, int max_depth) {
 
   if (children == &node->children[0]) {
     *children = Node_new(board, node->next_color, node->depth + 1, node->last_x, node->last_y);
+    build_children(com, *children, max_depth);
   } else {
     Board_delete(board);
   }
