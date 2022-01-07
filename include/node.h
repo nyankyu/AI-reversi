@@ -13,6 +13,8 @@ struct node {
   int eval_point;
   int last_x;
   int last_y;
+  int next_x;
+  int next_y;
   Node *children[CHL_SIZE];
 };
 

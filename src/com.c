@@ -9,7 +9,8 @@ static void next(Com *self,const Board *board, int *x, int *y, int *eval_val) {
   Board *copy = Board_copy(board);
   Tree *tree = Tree_new(self, copy, self->color, 3);
 
-  tree->get_next_point(tree, x, y);
+  *x = tree->root->next_x;
+  *y = tree->root->next_y;
   if (*x != 0)
     *eval_val = tree->root->eval_point;
   Tree_delete(tree);

@@ -3,23 +3,13 @@
 #include "tree.h"
 #include "com.h"
 
-static void get_next_point(Tree *tree, int *x, int *y) {
-  for (Node **child = &tree->root->children[0]; *child != NULL; child++) {
-    if (tree->root->eval_point == -(*child)->eval_point) {
-      *x = (*child)->last_x;
-      *y = (*child)->last_y;
-      return;
-    }
-  }
-
-  *x = 0;
-  *y = 0;
-}
-
 static void set_eval_point(Node *node) {
   for (Node **child = &node->children[0]; *child != NULL; child++) {
-    if (node->eval_point > (*child)->eval_point)
+    if (node->eval_point > (*child)->eval_point) {
       node->eval_point = (*child)->eval_point;
+      node->next_x = (*child)->last_x;
+      node->next_y = (*child)->last_y;
+    }
   }
 
   node->eval_point *= -1;
@@ -64,7 +54,6 @@ Tree *Tree_new(Com *com, Board *board, int my_color, int max_depth) {
 
   tree->root = Node_new(board, my_color, 0, 0, 0);
   tree->my_color = my_color;
-  tree->get_next_point = get_next_point;
   build_children(com, tree->root, max_depth);
   return tree;
 }
