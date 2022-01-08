@@ -27,10 +27,10 @@ struct board {
   int white;
   int black;
   int box[BOX_SIZE];
-  void (*print)(const Board *self);
-  void (*make_box)(Board *self, const char str[]);
 };
 
+void Board_print(const Board *self);
+void Board_make_box(Board *self, const char str[]);
 void  Board_init(Board *board);
 Board *Board_new(void);
 void  Board_delete(Board *board);

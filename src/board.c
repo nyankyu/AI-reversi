@@ -5,7 +5,7 @@
 #include "ai-reversi.h"
 #include "board.h"
 
-static void  print_box(int box) {
+static void print_box(int box) {
   if (box == EMPTY)
     printf(".");
   else if (box == WHITE)
@@ -16,7 +16,7 @@ static void  print_box(int box) {
     printf("#");
 }
 
-static void  print(const Board *self) {
+void Board_print(const Board *self) {
   printf("\033[H\033[2J");
   printf("===== AI-reversi =====\n");
   printf("   A B C D E F G H\n");
@@ -33,7 +33,7 @@ static void  print(const Board *self) {
   printf("\n O: %d, X: %d, .: %d\n", self->white, self->black, self->empty);
 }
 
-static void make_box(Board *self, const char str[]) {
+void Board_make_box(Board *self, const char str[]) {
   if (str == NULL || strlen(str) < BOARD_SIZE * BOARD_SIZE)
     exit(EXIT_ERR);
 
@@ -66,8 +66,8 @@ static void make_box(Board *self, const char str[]) {
   }
 }
 
-void  Board_init(Board *board) {
-  make_box(board, ""
+void Board_init(Board *board) {
+  Board_make_box(board, ""
       "........"
       "........"
       "........"
@@ -84,10 +84,6 @@ Board *Board_new(void) {
     puts("ERROR: failure malloc() Board");
     exit(EXIT_ERR);
   }
-
-  board->print = print;
-  board->make_box = make_box;
-
   return board;
 }
 

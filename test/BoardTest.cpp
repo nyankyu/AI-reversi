@@ -22,7 +22,6 @@ protected:
 
 TEST_F(BoardTest, Constructor) {
   ASSERT_TRUE(board != nullptr);
-  ASSERT_TRUE(board->print != nullptr);
 }
 
 TEST_F(BoardTest, Initialize) {
@@ -52,12 +51,12 @@ TEST_F(BoardTest, Initialize) {
 
 TEST_F(BoardTest, MakeBoxError) {
   ASSERT_EXIT(
-      board->make_box(board, "sort string"),
+      Board_make_box(board, "sort string"),
       ::testing::ExitedWithCode(EXIT_ERR),
       ".*");
 
   ASSERT_EXIT(
-      board->make_box(board,
+      Board_make_box(board,
                       "ABCDEFGH"
                       "illegal "
                       "char    "
@@ -85,7 +84,7 @@ TEST_F(BoardTest, MakeBoxSuccess) {
       W,E,E,E,E,E,E,E,E,
       W,W,W,W,W,W,W,W,W,W
   };
-  board->make_box(board,
+  Board_make_box(board,
                   "........"
                   "........"
                   "........"
@@ -96,7 +95,7 @@ TEST_F(BoardTest, MakeBoxSuccess) {
                   "........");
   ASSERT_THAT(box_all_empty, ::testing::ContainerEq(board->box));
 
-  board->make_box(board,
+  Board_make_box(board,
                   "........"
                   "........"
                   "........"

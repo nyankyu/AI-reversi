@@ -186,7 +186,7 @@ TEST_F(RuleTest, CanPass_OK) {
   board->box[50] = X;
   ASSERT_EQ(OK, g_rule->can_pass(board, BLACK));
 
-  board->make_box(board,
+  Board_make_box(board,
                   "OOOOOOOO"
                   "OOOOOOOO"
                   "OOOOOOOO"
@@ -198,7 +198,7 @@ TEST_F(RuleTest, CanPass_OK) {
                   );
   ASSERT_EQ(OK, g_rule->can_pass(board, BLACK));
 
-  board->make_box(board,
+  Board_make_box(board,
                   "........"
                   "........"
                   "........"
@@ -210,7 +210,7 @@ TEST_F(RuleTest, CanPass_OK) {
                   );
   ASSERT_EQ(OK, g_rule->can_pass(board, BLACK));
 
-  board->make_box(board,
+  Board_make_box(board,
                   "O X X O X X O X"
                   "X O O O O O O X"
                   "X O O O O O O X"
@@ -230,7 +230,7 @@ TEST_F(RuleTest, CanPass_NG) {
   ASSERT_EQ(NG, g_rule->can_pass(board, WHITE));
   ASSERT_EQ(NG, g_rule->can_pass(board, BLACK));
 
-  board->make_box(board,
+  Board_make_box(board,
                   "X O O X O O X O"
                   "O O O O O O O O"
                   "O O O O O O O O"
@@ -242,7 +242,7 @@ TEST_F(RuleTest, CanPass_NG) {
   );
   ASSERT_EQ(NG, g_rule->can_pass(board, BLACK));
 
-  board->make_box(board,
+  Board_make_box(board,
                   "O X X O X X O X"
                   "X X X X X X X X"
                   "X X X X X X X X"
@@ -254,7 +254,7 @@ TEST_F(RuleTest, CanPass_NG) {
   );
   ASSERT_EQ(NG, g_rule->can_pass(board, WHITE));
 
-  board->make_box(board,
+  Board_make_box(board,
                   ". . . . . . . ."
                   ". . . . . . . ."
                   ". . . . . . . ."
@@ -267,7 +267,7 @@ TEST_F(RuleTest, CanPass_NG) {
   ASSERT_EQ(NG, g_rule->can_pass(board, BLACK));
   ASSERT_EQ(NG, g_rule->can_pass(board, WHITE));
 
-  board->make_box(board,
+  Board_make_box(board,
                   ". . . . . . . ."
                   ". . . . X . . ."
                   ". . . . X . . ."
@@ -280,7 +280,7 @@ TEST_F(RuleTest, CanPass_NG) {
   ASSERT_EQ(NG, g_rule->can_pass(board, BLACK));
   ASSERT_EQ(NG, g_rule->can_pass(board, WHITE));
 
-  board->make_box(board,
+  Board_make_box(board,
                   ". . . . . . . ."
                   ". . X . . . . ."
                   ". . . X . . . ."

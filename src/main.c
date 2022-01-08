@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
 
   char buff[BUFF_SIZE];
   while (1) {
-    board->print(board);
+    Board_print(board);
     print_prompt(next_color);
     int x;
     int y;
@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
     }
     next_color = g_rule->other_color(next_color);
 
-    board->print(board);
+    Board_print(board);
     print_prompt(next_color);
     com2->next(com2, board, &x, &y, &eval_val);
     if (x == 0) {
