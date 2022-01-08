@@ -18,7 +18,7 @@ static void set_eval_point(Node *node) {
 
 static void build_children(Com *com, Node *node, int max_depth) {
   if (node->depth >= max_depth) {
-    evaluate(node, com->color);
+    Evaluator_evaluate(node, com->color);
     return;
   }
 
@@ -27,9 +27,9 @@ static void build_children(Com *com, Node *node, int max_depth) {
 
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
-      if (g_rule->set(board, x, y, node->next_color) == 0)
+      if (Rule_set(board, x, y, node->next_color) == 0)
         continue;
-      *children = Node_new(board, g_rule->other_color(node->next_color), node->depth + 1, x, y);
+      *children = Node_new(board, Rule_other_color(node->next_color), node->depth + 1, x, y);
       board = Board_copy(node->board);
       build_children(com, *children, max_depth);
       children++;

@@ -6,9 +6,7 @@
 #include "board.h"
 #include "rule.h"
 
-Rule *g_rule;
-
-static int other_color(int color) {
+int Rule_other_color(int color) {
   if (color == WHITE)
     return BLACK;
   if (color == BLACK)
@@ -17,7 +15,7 @@ static int other_color(int color) {
 }
 
 static int reverse_line(int box[], int color, int init_pos, int dir) {
-  int other = other_color(color);
+  int other = Rule_other_color(color);
   int pos;
   int count = 0;
 
@@ -35,7 +33,7 @@ static int reverse_line(int box[], int color, int init_pos, int dir) {
  * 1 <= x <= 8
  * 1 <= y <= 8
  */
-static int set(Board *board, int x, int y, int color) {
+int Rule_set(Board *board, int x, int y, int color) {
   int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return 0;
@@ -66,7 +64,7 @@ static int set(Board *board, int x, int y, int color) {
   return count;
 }
 
-static int set_by_str(Board *board, const char str[], int color) {
+int Rule_set_by_str(Board *board, const char str[], int color) {
   if (strlen(str) != 2)
     return 0;
   int first_char = toupper(str[0]);
@@ -77,11 +75,11 @@ static int set_by_str(Board *board, const char str[], int color) {
   int x = first_char - 'A' + 1;
   int y = str[1] - '1' + 1;
 
-  return set(board, x, y, color);
+  return Rule_set(board, x, y, color);
 }
 
 static int can_set_line(const int box[], int color, int init_pos, int dir) {
-  int other = other_color(color);
+  int other = Rule_other_color(color);
   int pos;
 
   for (pos = init_pos + dir; box[pos] == other; pos += dir);
@@ -92,7 +90,7 @@ static int can_set_line(const int box[], int color, int init_pos, int dir) {
   return OK;
 }
 
-static int can_set(const Board *board, int x, int y, int color) {
+int Rule_can_set(const Board *board, int x, int y, int color) {
   int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return NG;
@@ -116,43 +114,10 @@ static int can_set(const Board *board, int x, int y, int color) {
   return NG;
 }
 
-static int can_pass(const Board *board, int color) {
+int Rule_can_pass(const Board *board, int color) {
   for (int y = 1; y <= BOARD_SIZE; y++)
     for (int x = 1; x <= BOARD_SIZE; x++)
-      if (can_set(board, x, y, color) == OK)
+      if (Rule_can_set(board, x, y, color) == OK)
         return NG;
   return OK;
-}
-
-
-void Rule_init(Rule *rule) {
-  // dummy use rule
-  if (rule == NULL)
-    exit(EXIT_ERR);
-}
-
-void Rule_new(void) {
-  if (g_rule != NULL)
-    return;
-  g_rule = malloc(sizeof(Rule));
-  if (g_rule == NULL) {
-    printf("ERROR: malloc() Rule-class\n");
-    exit(EXIT_ERR);
-  }
-
-  g_rule->set = set;
-  g_rule->set_by_str = set_by_str;
-  //g_rule->set_by_index = set_by_index;
-  g_rule->can_set = can_set;
-  g_rule->can_pass = can_pass;
-  g_rule->other_color = other_color;
-
-  Rule_init(g_rule);
-}
-
-void Rule_delete(void) {
-  if (g_rule == NULL)
-    return;
-  free(g_rule);
-  g_rule = NULL;
 }

@@ -27,7 +27,6 @@ int main(int argc, char **argv) {
     ai_vs_ai = TRUE;
   }
 
-  Rule_new();
   Board *board = Board_new();
   Board_init(board);
   Com *com1;
@@ -48,7 +47,7 @@ int main(int argc, char **argv) {
     int y;
 
     if (ai_vs_ai == TRUE) {
-      com1->next(com1, board, &x, &y, &eval_val);
+      Com_next(com1, board, &x, &y, &eval_val);
       if (x == 0) {
         printf("PASS\n");
         if (pass_other == TRUE)
@@ -56,26 +55,26 @@ int main(int argc, char **argv) {
         pass_other = TRUE;
       } else {
         printf("%c%c\n", 'a' + x - 1, '1' + y - 1);
-        g_rule->set(board, x, y, next_color);
+        Rule_set(board, x, y, next_color);
         pass_other = FALSE;
       }
     } else {
-      if (g_rule->can_pass(board, next_color) == OK) {
+      if (Rule_can_pass(board, next_color) == OK) {
         pass_other = TRUE;
       } else {
         get_input(buff);
         if (strcmp(buff, "q") == 0)
           break;
-        if (g_rule->set_by_str(board, buff, next_color) == 0)
+        if (Rule_set_by_str(board, buff, next_color) == 0)
           continue;
         pass_other = FALSE;
       }
     }
-    next_color = g_rule->other_color(next_color);
+    next_color = Rule_other_color(next_color);
 
     Board_print(board);
     print_prompt(next_color);
-    com2->next(com2, board, &x, &y, &eval_val);
+    Com_next(com2, board, &x, &y, &eval_val);
     if (x == 0) {
       printf("PASS\n");
       if (pass_other == TRUE)
@@ -83,13 +82,12 @@ int main(int argc, char **argv) {
       pass_other = TRUE;
     } else {
       printf("%c%c\n", 'a' + x - 1, '1' + y - 1);
-      g_rule->set(board, x, y, next_color);
+      Rule_set(board, x, y, next_color);
       pass_other = FALSE;
     }
-    next_color = g_rule->other_color(next_color);
+    next_color = Rule_other_color(next_color);
   }
 
-  Rule_delete();
   Board_delete(board);
   if (ai_vs_ai == TRUE)
     Com_delete(com1);

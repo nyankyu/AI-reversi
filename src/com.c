@@ -5,7 +5,7 @@
 #include "ai-reversi.h"
 #include "tree.h"
 
-static void next(Com *self,const Board *board, int *x, int *y, int *eval_val) {
+void Com_next(Com *self,const Board *board, int *x, int *y, int *eval_val) {
   Board *copy = Board_copy(board);
   Tree *tree = Tree_new(self, copy, self->color, 3);
 
@@ -23,7 +23,6 @@ Com *Com_new(int color) {
     exit(EXIT_ERR);
   }
   com->color = color;
-  com->next = next;
 
   return com;
 }

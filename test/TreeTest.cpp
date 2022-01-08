@@ -10,7 +10,6 @@ extern "C" {
 class TreeTest : public ::testing::Test {
 protected:
   void SetUp() override {
-    Rule_new();
     board = Board_new();
     Board_init(board);
     com = Com_new(WHITE);
@@ -18,7 +17,6 @@ protected:
   }
   void TearDown() override {
     Tree_delete(tree);
-    Rule_delete();
   }
   Board *board;
   Tree *tree;
