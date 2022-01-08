@@ -2,6 +2,7 @@
 #include "ai-reversi.h"
 #include "tree.h"
 #include "com.h"
+#include "evaluator.h"
 
 static void set_eval_point(Node *node) {
   for (Node **child = &node->children[0]; *child != NULL; child++) {
@@ -17,9 +18,7 @@ static void set_eval_point(Node *node) {
 
 static void build_children(Com *com, Node *node, int max_depth) {
   if (node->depth >= max_depth) {
-    node->eval_point = (com->color == WHITE) ? node->board->black : node->board->white;
-    if (com->color != node->next_color)
-      node->eval_point *= -1;
+    evaluate(node, com->color);
     return;
   }
 

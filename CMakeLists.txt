@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 project(ai-reversi C)
 
-add_executable(ai-reversi)
+add_executable(ai-reversi include/evaluator.h src/evaluator.c)
 
 set(CMAKE_C_FLAGS "-Wall")
 
