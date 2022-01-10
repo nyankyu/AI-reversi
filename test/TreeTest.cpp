@@ -13,7 +13,7 @@ protected:
     board = Board_new();
     Board_init(board);
     com = Com_new(WHITE);
-    tree = Tree_new(com, board, WHITE, 1);
+    tree = Tree_new(com, board, 1);
   }
   void TearDown() override {
     Tree_delete(tree);
@@ -25,7 +25,6 @@ protected:
 
 TEST_F(TreeTest, ConstructorMemberValue) {
   EXPECT_NE(nullptr, tree);
-  ASSERT_EQ(WHITE, tree->my_color);
   EXPECT_NE(nullptr, tree->root);
   ASSERT_EQ(0, tree->root->depth);
   ASSERT_EQ(WHITE, tree->root->next_color);

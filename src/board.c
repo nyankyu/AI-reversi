@@ -18,7 +18,7 @@ static void print_box(int box) {
 
 void Board_print(const Board *self) {
   printf("\033[H\033[2J");
-  printf("===== AI-reversi =====\n");
+  printf("==== AI-reversi ====\n");
   printf("   A B C D E F G H\n");
   for (int i = BOARD_SIZE; i <= (BOARD_SIZE + 2) * BOARD_SIZE; i++) {
     if (i % (BOARD_SIZE + 1) == 0)
