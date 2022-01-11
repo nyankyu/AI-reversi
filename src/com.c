@@ -7,7 +7,7 @@
 
 void Com_next(Com *self,const Board *board, int *x, int *y, int *eval_val) {
   Board *copy = Board_copy(board);
-  Tree *tree = Tree_new(self, copy, 5);
+  Tree *tree = Tree_new(self, copy, 4);
 
   *x = tree->root->next_x;
   *y = tree->root->next_y;

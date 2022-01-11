@@ -49,12 +49,33 @@ TEST_F(EvaluatorTest, ImportantPoint) {
                         "..OX...."
                         "........"
                         "........"
-                        );
+  );
   Node *node = Node_new(board, WHITE, 0, 1, 1);
   Evaluator_evaluate(node, WHITE);
-  ASSERT_EQ(80 - 50 - 30 - 30 + 1, node->eval_point);
+  ASSERT_EQ(80 + 1, node->eval_point);
 
   node = Node_new(board, BLACK, 0, 1, 1);
   Evaluator_evaluate(node, BLACK);
-  ASSERT_EQ(-80 + 50 + 30 + 30 + 1, node->eval_point);
+  ASSERT_EQ(-80 + 1, node->eval_point);
+}
+
+TEST_F(EvaluatorTest, ImportantPointNonCorner) {
+  Board *board = Board_new();
+  Board_make_box(board, ""
+                        "......O."
+                        "......OO"
+                        "........"
+                        "........"
+                        "........"
+                        "..OX...."
+                        "........"
+                        "........"
+                        );
+  Node *node = Node_new(board, WHITE, 0, 1, 1);
+  Evaluator_evaluate(node, WHITE);
+  ASSERT_EQ(- 50 - 30 - 30 + 1, node->eval_point);
+
+  node = Node_new(board, BLACK, 0, 1, 1);
+  Evaluator_evaluate(node, BLACK);
+  ASSERT_EQ(50 + 30 + 30 + 1, node->eval_point);
 }

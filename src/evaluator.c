@@ -31,70 +31,91 @@ int important_point(Node *node) {
 
   if (node->board->box[A1] == WHITE)
     point += CORNER_POINT;
-  if (node->board->box[A1] == BLACK)
-    point -= CORNER_POINT;
+  else if (node->board->box[A1] == EMPTY) {
+    if (node->board->box[B1] == WHITE)
+      point -= C_POINT;
+    if (node->board->box[A2] == WHITE)
+      point -= C_POINT;
+    if (node->board->box[B2] == WHITE)
+      point -= X_POINT;
+  }
+
   if (node->board->box[H1] == WHITE)
     point += CORNER_POINT;
-  if (node->board->box[H1] == BLACK)
-    point -= CORNER_POINT;
+  else if (node->board->box[H1] == EMPTY) {
+    if (node->board->box[G1] == WHITE)
+      point -= C_POINT;
+    if (node->board->box[H2] == WHITE)
+      point -= C_POINT;
+    if (node->board->box[G2] == WHITE)
+      point -= X_POINT;
+  }
+
   if (node->board->box[A8] == WHITE)
     point += CORNER_POINT;
-  if (node->board->box[A8] == BLACK)
-    point -= CORNER_POINT;
+  else if (node->board->box[A8] == EMPTY) {
+    if (node->board->box[B8] == WHITE)
+      point -= C_POINT;
+    if (node->board->box[A7] == WHITE)
+      point -= C_POINT;
+    if (node->board->box[B7] == WHITE)
+      point -= X_POINT;
+  }
+
   if (node->board->box[H8] == WHITE)
     point += CORNER_POINT;
+  else if (node->board->box[H8] == EMPTY) {
+    if (node->board->box[G8] == WHITE)
+      point -= C_POINT;
+    if (node->board->box[H7] == WHITE)
+      point -= C_POINT;
+    if (node->board->box[G7] == WHITE)
+      point -= X_POINT;
+  }
+
+  if (node->board->box[A1] == BLACK)
+    point -= CORNER_POINT;
+  else if (node->board->box[A1] == EMPTY) {
+    if (node->board->box[B1] == BLACK)
+      point += C_POINT;
+    if (node->board->box[A2] == BLACK)
+      point += C_POINT;
+    if (node->board->box[B2] == BLACK)
+      point += X_POINT;
+  }
+
+  if (node->board->box[H1] == BLACK)
+    point -= CORNER_POINT;
+  else if (node->board->box[H1] == EMPTY) {
+    if (node->board->box[G1] == BLACK)
+      point += C_POINT;
+    if (node->board->box[H2] == BLACK)
+      point += C_POINT;
+    if (node->board->box[G2] == BLACK)
+      point += X_POINT;
+  }
+
+  if (node->board->box[A8] == BLACK)
+    point -= CORNER_POINT;
+  else if (node->board->box[A8] == EMPTY) {
+    if (node->board->box[B8] == BLACK)
+      point += C_POINT;
+    if (node->board->box[A7] == BLACK)
+      point += C_POINT;
+    if (node->board->box[B7] == BLACK)
+      point += X_POINT;
+  }
+
   if (node->board->box[H8] == BLACK)
     point -= CORNER_POINT;
-
-  if (node->board->box[B1] == WHITE)
-    point -= C_POINT;
-  if (node->board->box[B1] == BLACK)
-    point += C_POINT;
-  if (node->board->box[G1] == WHITE)
-    point -= C_POINT;
-  if (node->board->box[G1] == BLACK)
-    point += C_POINT;
-  if (node->board->box[A2] == WHITE)
-    point -= C_POINT;
-  if (node->board->box[A2] == BLACK)
-    point += C_POINT;
-  if (node->board->box[H2] == WHITE)
-    point -= C_POINT;
-  if (node->board->box[H2] == BLACK)
-    point += C_POINT;
-  if (node->board->box[A7] == WHITE)
-    point -= C_POINT;
-  if (node->board->box[A7] == BLACK)
-    point += C_POINT;
-  if (node->board->box[H7] == WHITE)
-    point -= C_POINT;
-  if (node->board->box[H7] == BLACK)
-    point += C_POINT;
-  if (node->board->box[B8] == WHITE)
-    point -= C_POINT;
-  if (node->board->box[B8] == BLACK)
-    point += C_POINT;
-  if (node->board->box[G8] == WHITE)
-    point -= C_POINT;
-  if (node->board->box[G8] == BLACK)
-    point += C_POINT;
-
-  if (node->board->box[B2] == WHITE)
-    point -= X_POINT;
-  if (node->board->box[B2] == BLACK)
-    point += X_POINT;
-  if (node->board->box[G2] == WHITE)
-    point -= X_POINT;
-  if (node->board->box[G2] == BLACK)
-    point += X_POINT;
-  if (node->board->box[B7] == WHITE)
-    point -= X_POINT;
-  if (node->board->box[B7] == BLACK)
-    point += X_POINT;
-  if (node->board->box[G7] == WHITE)
-    point -= X_POINT;
-  if (node->board->box[G7] == BLACK)
-    point += X_POINT;
+  else if (node->board->box[H8] == EMPTY) {
+    if (node->board->box[G8] == BLACK)
+      point += C_POINT;
+    if (node->board->box[H7] == BLACK)
+      point += C_POINT;
+    if (node->board->box[G7] == BLACK)
+      point += X_POINT;
+  }
 
   return point;
 }
