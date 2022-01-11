@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <memory.h>
 #include "history.h"
 #include "ai-reversi.h"
 
@@ -21,6 +22,7 @@ void History_undo(History *history) {
 
 History *History_new(void) {
   History *history = malloc(sizeof(History));
+  memset(history->board_array, 0, sizeof(Board *) * BOARD_SIZE * BOARD_SIZE);
   if (history == NULL)
     return EXIT_ERR;
   history->current = -1;
