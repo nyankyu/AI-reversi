@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 project(ai-reversi C)
 
-add_executable(ai-reversi include/evaluator.h src/evaluator.c)
+add_executable(ai-reversi)
 
 set(CMAKE_C_FLAGS "-Wall")
 
@@ -12,7 +12,9 @@ target_sources(ai-reversi PRIVATE
         src/board.c
         src/tree.c
         src/node.c
-        src/com.c)
+        src/com.c
+        src/evaluator.c
+        src/history.c)
 
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/lib/CMakeLists.txt")
     enable_testing()

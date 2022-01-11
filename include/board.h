@@ -107,5 +107,6 @@ void  Board_init(Board *board);
 Board *Board_new(void);
 void  Board_delete(Board *board);
 Board *Board_copy(const Board *board);
+void Board_rewrite(Board *dest, const Board *src);
 
 #endif

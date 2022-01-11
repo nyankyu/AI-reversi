@@ -100,3 +100,11 @@ Board *Board_copy(const Board *source) {
     copy->box[i] = source->box[i];
   return copy;
 }
+
+void Board_rewrite(Board *dest, const Board *src) {
+  dest->white = src->white;
+  dest->black = src->black;
+  dest->empty = src->empty;
+  for (int i = 0; i < BOX_SIZE; i++)
+    dest->box[i] = src->box[i];
+}

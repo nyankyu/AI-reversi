@@ -4,6 +4,7 @@
 #include "ai-reversi.h"
 #include "board.h"
 #include "com.h"
+#include "history.h"
 
 #define BUFF_SIZE 256
 
@@ -29,6 +30,8 @@ int main(int argc, char **argv) {
 
   Board *board = Board_new();
   Board_init(board);
+  History *history = History_new();
+  History_add(history, board, BLACK);
   Com *com1;
   Com *com2;
   if (ai_vs_ai == TRUE)
@@ -65,8 +68,14 @@ int main(int argc, char **argv) {
         get_input(buff);
         if (strcmp(buff, "q") == 0)
           break;
+        if (strcmp(buff, "r") == 0) {
+          History_undo(history);
+          Board_rewrite(board, history->board_array[history->current]);
+          continue;
+        }
         if (Rule_set_by_str(board, buff, next_color) == 0)
           continue;
+        History_add(history, board, next_color);
         pass_other = FALSE;
       }
     }
@@ -89,6 +98,7 @@ int main(int argc, char **argv) {
   }
 
   Board_delete(board);
+  History_delete(history);
   if (ai_vs_ai == TRUE)
     Com_delete(com1);
   Com_delete(com2);
