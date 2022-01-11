@@ -22,9 +22,9 @@ void History_undo(History *history) {
 
 History *History_new(void) {
   History *history = malloc(sizeof(History));
-  memset(history->board_array, 0, sizeof(Board *) * BOARD_SIZE * BOARD_SIZE);
   if (history == NULL)
     return EXIT_ERR;
+  memset(history->board_array, 0, sizeof(Board *) * BOARD_SIZE * BOARD_SIZE);
   history->current = -1;
   return history;
 }
