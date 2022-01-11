@@ -7,7 +7,7 @@
 
 This is Reversi against the AI.
 
-It's **not finished** yet, the AI is just searching for a place to put stone, starting from the top left.
+It's **not finished** yet, this AI is very weak. No learning. Using a very simple evaluator.
 
 ## Build and Run
 ```bash
@@ -58,4 +58,3 @@ For example, to place a stone in the `C` column, `4` row, enter `C4`. The result
 ```
 
 If you want to quit the game midway, enter `q`.
-
