@@ -5,6 +5,7 @@ extern "C" {
 #include "tree.h"
 #include "rule.h"
 #include "com.h"
+Com *Com_new(int color);
 }
 
 class TreeTest : public ::testing::Test {
