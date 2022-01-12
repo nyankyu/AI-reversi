@@ -14,7 +14,8 @@ target_sources(ai-reversi PRIVATE
         src/node.c
         src/com.c
         src/evaluator.c
-        src/history.c)
+        src/history.c
+        src/human.c)
 
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/lib/CMakeLists.txt")
     enable_testing()

@@ -4,16 +4,23 @@
 #include "com.h"
 #include "ai-reversi.h"
 #include "tree.h"
+#include "player.h"
 
-void Com_next(Com *self,const Board *board, int *x, int *y, int *eval_val) {
+int Com_next(Player *player, Board *board) {
   Board *copy = Board_copy(board);
-  Tree *tree = Tree_new(self, copy, 4);
+  Tree *tree = Tree_new((Com *)player->obj, copy, 4);
 
-  *x = tree->root->next_x;
-  *y = tree->root->next_y;
-  if (*x != 0)
-    *eval_val = tree->root->eval_point;
+  int x = tree->root->next_x;
+  int y = tree->root->next_y;
   Tree_delete(tree);
+
+  if (x == 0)
+    return PLAYER_PASS;
+
+  Rule_set(board, x, y, player->color);
+  printf("%c%c\n", 'a' + x - 1, '1' + y - 1);
+
+  return PLAYER_PUT;
 }
 
 Com *Com_new(int color) {
@@ -27,6 +34,20 @@ Com *Com_new(int color) {
   return com;
 }
 
-void Com_delete(Com *com) {
-  free(com);
+void Com_delete(Player *player) {
+  free(player->obj);
+  free(player);
+}
+
+Player *Com_make_player(int color) {
+  Com *com = Com_new(color);
+  Player *player = malloc(sizeof(Player));
+  if (player == NULL)
+    exit(EXIT_ERR);
+
+  player->color = color;
+  player->next = Com_next;
+  player->Player_delete = Com_delete;
+  player->obj = com;
+  return player;
 }

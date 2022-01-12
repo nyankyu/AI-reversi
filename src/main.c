@@ -5,17 +5,8 @@
 #include "board.h"
 #include "com.h"
 #include "history.h"
-
-#define BUFF_SIZE 256
-
-static void get_input(char buff[]) {
-  if (fgets(buff, BUFF_SIZE, stdin) == NULL) {
-    exit(EXIT_ERR);
-  }
-  char *p = strchr(buff, '\n');
-  if (p != NULL)
-    *p = '\0';
-}
+#include "player.h"
+#include "human.h"
 
 static void print_prompt(int next_color) {
   printf("\n %c > ", next_color == WHITE ? 'O' : 'X');
@@ -28,80 +19,53 @@ int main(int argc, char **argv) {
     ai_vs_ai = TRUE;
   }
 
+  Player *black;
+  Player *white;
+  Player *player;
   Board *board = Board_new();
-  Board_init(board);
   History *history = History_new();
-  History_add(history, board, BLACK);
-  Com *com1;
-  Com *com2;
-  if (ai_vs_ai == TRUE)
-    com1 = Com_new(BLACK);
-  com2 = Com_new(WHITE);
-
   int next_color = BLACK;
-  int eval_val;
-  int pass_other = FALSE;
+  int pass = 0;
 
-  char buff[BUFF_SIZE];
+  if (ai_vs_ai == TRUE)
+    black = Com_make_player(BLACK);
+  else
+    black = Human_make_player(BLACK);
+  white = Com_make_player(WHITE);
+  player = black;
+  Board_init(board);
+  History_add(history, board, BLACK);
+
   while (1) {
     Board_print(board);
     print_prompt(next_color);
-    int x;
-    int y;
 
-    if (ai_vs_ai == TRUE) {
-      Com_next(com1, board, &x, &y, &eval_val);
-      if (x == 0) {
-        printf("PASS\n");
-        if (pass_other == TRUE)
-          break;
-        pass_other = TRUE;
-      } else {
-        printf("%c%c\n", 'a' + x - 1, '1' + y - 1);
-        Rule_set(board, x, y, next_color);
-        pass_other = FALSE;
-      }
-    } else {
-      if (Rule_can_pass(board, next_color) == OK) {
-        pass_other = TRUE;
-      } else {
-        get_input(buff);
-        if (strcmp(buff, "q") == 0)
-          break;
-        if (strcmp(buff, "r") == 0) {
-          History_undo(history);
-          Board_rewrite(board, history->board_array[history->current]);
-          continue;
-        }
-        if (Rule_set_by_str(board, buff, next_color) == 0)
-          continue;
-        History_add(history, board, next_color);
-        pass_other = FALSE;
-      }
-    }
-    next_color = Rule_other_color(next_color);
-
-    Board_print(board);
-    print_prompt(next_color);
-    Com_next(com2, board, &x, &y, &eval_val);
-    if (x == 0) {
-      printf("PASS\n");
-      if (pass_other == TRUE)
+    int result = player->next(player, board);
+    if (result == PLAYER_PUT) {
+      pass = 0;
+    } else if (result == PLAYER_PASS) {
+      if (pass == 1)
         break;
-      pass_other = TRUE;
-    } else {
-      printf("%c%c\n", 'a' + x - 1, '1' + y - 1);
-      Rule_set(board, x, y, next_color);
-      pass_other = FALSE;
+      pass++;
+    } else if (result == PLAYER_QUIT) {
+      break;
+    } else if (result == PLAYER_UNDO) {
+      History_undo(history);
+      Board_rewrite(board, history->board_array[history->current]);
+    } else if (result == PLAYER_ERR){
+      exit(EXIT_ERR);
+    } else if (result == PLAYER_NG) {
+      continue;
     }
+    History_add(history, board, next_color);
+    player = (player == white) ? black : white;
     next_color = Rule_other_color(next_color);
   }
 
-  Board_delete(board);
   History_delete(history);
-  if (ai_vs_ai == TRUE)
-    Com_delete(com1);
-  Com_delete(com2);
+  Board_delete(board);
+  black->Player_delete(black);
+  white->Player_delete(white);
 
   //system("leaks ai-reversi");
   return EXIT_OK;
