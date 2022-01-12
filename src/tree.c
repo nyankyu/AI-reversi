@@ -6,7 +6,7 @@
 
 static void set_eval_point(Node *node) {
   for (Node **child = &node->children[0]; *child != NULL; child++) {
-    if (node->eval_point > (*child)->eval_point) {
+    if (node->eval_point >= (*child)->eval_point) {
       node->eval_point = (*child)->eval_point;
       node->next_x = (*child)->last_x;
       node->next_y = (*child)->last_y;
