@@ -10,9 +10,13 @@ extern ::testing::AssertionResult BoxEQ(const int expected[], const int actual[]
 class RuleTest : public ::testing::Test {
 protected:
   void SetUp() override {
+    board = Board_new();
   }
   void TearDown() override {
+    Board_delete(board);
   }
+  Board *board;
+
   int W = WALL;
   int E = EMPTY;
   int O = WHITE;
@@ -85,7 +89,6 @@ protected:
 };
 
 TEST_F(RuleTest, SetXY_1stMove) {
-  Board *board = Board_new();
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
       Board_init(board);
@@ -114,7 +117,6 @@ TEST_F(RuleTest, SetXY_1stMove) {
 }
 
 TEST_F(RuleTest, SetByStr_1stMove) {
-  Board *board = Board_new();
   char str[] = "..";
   for (str[0] = 'A'; str[0] <= 'H'; str[0]++) {
     for (str[1] = '1'; str[1] <= '8'; str[1]++) {
@@ -144,7 +146,6 @@ TEST_F(RuleTest, SetByStr_1stMove) {
 }
 
 TEST_F(RuleTest, CanSet_1stMove) {
-  Board *board = Board_new();
   Board_init(board);
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
@@ -168,14 +169,12 @@ TEST_F(RuleTest, CanSet_1stMove) {
 }
 
 TEST_F(RuleTest, CanPass_OK) {
-  Board *board = Board_new();
-
   Board_init(board);
   board->box[40] = X;
   board->box[50] = X;
   ASSERT_EQ(OK, Rule_can_pass(board, BLACK));
 
-  Board_make_box(board,
+  Board_make_box(board, ""
                   "OOOOOOOO"
                   "OOOOOOOO"
                   "OOOOOOOO"
@@ -187,7 +186,7 @@ TEST_F(RuleTest, CanPass_OK) {
                   );
   ASSERT_EQ(OK, Rule_can_pass(board, BLACK));
 
-  Board_make_box(board,
+  Board_make_box(board, ""
                   "........"
                   "........"
                   "........"
@@ -213,7 +212,6 @@ TEST_F(RuleTest, CanPass_OK) {
 }
 
 TEST_F(RuleTest, CanPass_NG) {
-  Board *board = Board_new();
   Board_init(board);
 
   ASSERT_EQ(NG, Rule_can_pass(board, WHITE));
