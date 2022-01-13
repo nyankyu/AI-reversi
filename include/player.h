@@ -11,9 +11,12 @@
 #define PLAYER_ERR  14
 #define PLAYER_NG   15
 
+extern int g_print;
+
 typedef struct player Player;
 struct player {
   int color;
+  char *name;
   void *obj;
   int (*next)(Player *player, Board *board);
   void (*Player_delete)(Player *player);

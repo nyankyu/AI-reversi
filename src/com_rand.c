@@ -22,13 +22,13 @@ int Com_rand_next(Player *player, Board *board) {
   }
 
   if (index == 0) {
-    printf("PASS\n");
+    if (g_print) printf("PASS\n");
     return PLAYER_PASS;
   }
 
   int r = rand() % index;
   Rule_set(board, x_array[r], y_array[r], player->color);
-  printf("%c%c\n", 'a' + x_array[r] - 1, '1' + y_array[r] - 1);
+  if (g_print) printf("%c%c\n", 'a' + x_array[r] - 1, '1' + y_array[r] - 1);
 
   return PLAYER_PUT;
 }
@@ -58,6 +58,7 @@ Player *Com_rand_make_player(int color) {
     exit(EXIT_ERR);
 
   player->color = color;
+  player->name = "Com-Random";
   player->next = Com_rand_next;
   player->Player_delete = Com_rand_delete;
   player->obj = com_rand;

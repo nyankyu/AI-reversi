@@ -14,11 +14,13 @@ int Com_next(Player *player, Board *board) {
   int y = tree->root->next_y;
   Tree_delete(tree);
 
-  if (x == 0)
+  if (x == 0) {
+    if (g_print) printf("PASS\n");
     return PLAYER_PASS;
+  }
 
   Rule_set(board, x, y, player->color);
-  printf("%c%c\n", 'a' + x - 1, '1' + y - 1);
+  if (g_print) printf("%c%c\n", 'a' + x - 1, '1' + y - 1);
 
   return PLAYER_PUT;
 }
@@ -46,6 +48,7 @@ Player *Com_make_player(int color) {
     exit(EXIT_ERR);
 
   player->color = color;
+  player->name = "Com";
   player->next = Com_next;
   player->Player_delete = Com_delete;
   player->obj = com;

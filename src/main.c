@@ -8,6 +8,7 @@
 #include "history.h"
 #include "player.h"
 #include "human.h"
+#include "measure.h"
 
 static void print_prompt(int next_color) {
   printf("\n %c > ", next_color == WHITE ? 'O' : 'X');
@@ -32,6 +33,8 @@ static void judge(Board *board) {
   else
     printf("\tDRAW\n");
 }
+
+int g_print = 1;
 
 int main(int argc, char **argv) {
   Player *black;
@@ -59,6 +62,11 @@ int main(int argc, char **argv) {
   } else if (strcmp("vs_human", argv[1]) == 0) {
     white = Human_make_player(WHITE);
     black = Human_make_player(BLACK);
+  } else if (strcmp("measure", argv[1]) == 0) {
+    History_delete(history);
+    Board_delete(board);
+    Measure_start();
+    exit(EXIT_OK);
   } else {
     usage();
     exit(EXIT_ERR);
