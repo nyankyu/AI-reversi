@@ -22,6 +22,16 @@ static void usage(void) {
   printf("\tvs_human    Human vs Human\n");
 }
 
+static void judge(Board *board) {
+  printf("\n\n");
+  if (board->white > board->black)
+    printf("\tO WIN\n");
+  else if (board->white < board->black)
+    printf("\tX WIN\n");
+  else
+    printf("\tDRAW\n");
+}
+
 int main(int argc, char **argv) {
   Player *black;
   Player *white;
@@ -85,6 +95,8 @@ int main(int argc, char **argv) {
     History_add(history, board, player->color);
     player = (player == white) ? black : white;
   }
+
+  judge(board);
 
   History_delete(history);
   Board_delete(board);
