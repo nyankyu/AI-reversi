@@ -4,12 +4,11 @@
 #include "board.h"
 #include "com_rand.h"
 #include "ai-reversi.h"
-#include "tree.h"
 #include "player.h"
 
 int Com_rand_next(Player *player, Board *board) {
-  int x_array[BOARD_SIZE * BOARD_SIZE] = {};
-  int y_array[BOARD_SIZE * BOARD_SIZE] = {};
+  int x_array[BOARD_SIZE * BOARD_SIZE];
+  int y_array[BOARD_SIZE * BOARD_SIZE];
   size_t index = 0;
 
   for (int y = 1; y <= BOARD_SIZE; y++) {
