@@ -15,7 +15,7 @@ void History_add(History *history, const Board *board, int next_color) {
 }
 
 void History_undo(History *history) {
-  if (history->current == -1)
+  if (history->current == 0)
     return;
   history->current--;
 }

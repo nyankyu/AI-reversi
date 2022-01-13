@@ -51,7 +51,9 @@ int main(int argc, char **argv) {
       break;
     } else if (result == PLAYER_UNDO) {
       History_undo(history);
+      History_undo(history);
       Board_rewrite(board, history->board_array[history->current]);
+      continue;
     } else if (result == PLAYER_ERR){
       exit(EXIT_ERR);
     } else if (result == PLAYER_NG) {
