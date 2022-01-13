@@ -13,6 +13,7 @@ target_sources(ai-reversi PRIVATE
         src/tree.c
         src/node.c
         src/com.c
+        src/com_rand.c
         src/evaluator.c
         src/history.c
         src/human.c)

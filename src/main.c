@@ -4,6 +4,7 @@
 #include "ai-reversi.h"
 #include "board.h"
 #include "com.h"
+#include "com_rand.h"
 #include "history.h"
 #include "player.h"
 #include "human.h"
@@ -47,7 +48,7 @@ int main(int argc, char **argv) {
     usage();
     exit(EXIT_ERR);
   } else if (strcmp("auto", argv[1]) == 0) {
-    white = Com_make_player(WHITE);
+    white = Com_rand_make_player(WHITE);
     black = Com_make_player(BLACK);
   } else if (strcmp("white", argv[1]) == 0) {
     white = Human_make_player(WHITE);
