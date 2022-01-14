@@ -18,7 +18,7 @@ static void set_eval_point(Node *node) {
 
 static void build_children(Com *com, Node *node, int max_depth) {
   if (node->depth >= max_depth) {
-    Evaluator_evaluate(node, com->color);
+    Evaluator_evaluate(node);
     return;
   }
 

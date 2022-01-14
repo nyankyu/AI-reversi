@@ -120,7 +120,7 @@ int important_point(Node *node) {
   return point;
 }
 
-void Evaluator_evaluate(Node *node, int my_color) {
+void Evaluator_evaluate(Node *node) {
   int available = available_point(node);
 
   if (available == INT_MAX) {
@@ -131,8 +131,6 @@ void Evaluator_evaluate(Node *node, int my_color) {
     node->eval_point = available + important;
   }
   if (node->next_color == BLACK)
-    node->eval_point *= -1;
-  if (my_color != node->next_color)
     node->eval_point *= -1;
 }
 

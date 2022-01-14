@@ -30,11 +30,11 @@ TEST_F(EvaluatorTest, AvailablePoint) {
                         "........"
   );
   Node *node = Node_new(board, WHITE, 0, 1, 1);
-  Evaluator_evaluate(node, WHITE);
+  Evaluator_evaluate(node);
   ASSERT_EQ(8, node->eval_point);
 
   node = Node_new(board, BLACK, 0, 1, 1);
-  Evaluator_evaluate(node, BLACK);
+  Evaluator_evaluate(node);
   ASSERT_EQ(8, node->eval_point);
 }
 
@@ -51,11 +51,11 @@ TEST_F(EvaluatorTest, ImportantPoint) {
                         "........"
   );
   Node *node = Node_new(board, WHITE, 0, 1, 1);
-  Evaluator_evaluate(node, WHITE);
+  Evaluator_evaluate(node);
   ASSERT_EQ(80 + 1, node->eval_point);
 
   node = Node_new(board, BLACK, 0, 1, 1);
-  Evaluator_evaluate(node, BLACK);
+  Evaluator_evaluate(node);
   ASSERT_EQ(-80 + 1, node->eval_point);
 }
 
@@ -72,10 +72,10 @@ TEST_F(EvaluatorTest, ImportantPointNonCorner) {
                         "........"
                         );
   Node *node = Node_new(board, WHITE, 0, 1, 1);
-  Evaluator_evaluate(node, WHITE);
+  Evaluator_evaluate(node);
   ASSERT_EQ(- 50 - 30 - 30 + 1, node->eval_point);
 
   node = Node_new(board, BLACK, 0, 1, 1);
-  Evaluator_evaluate(node, BLACK);
+  Evaluator_evaluate(node);
   ASSERT_EQ(50 + 30 + 30 + 1, node->eval_point);
 }
