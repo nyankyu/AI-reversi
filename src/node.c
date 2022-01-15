@@ -4,11 +4,13 @@
 #include "ai-reversi.h"
 #include "node.h"
 
+Node g_nodePool[NODE_POOL_SIZE];
+int g_nodePoolIndex = 0;
+
 Node *Node_new(Board *board, int next_color, int depth, int x, int y) {
-  Node *node = malloc(sizeof(Node));
-  if (node == NULL) {
+  if (g_nodePoolIndex == NODE_POOL_SIZE)
     exit(EXIT_ERR);
-  }
+  Node *node = &g_nodePool[g_nodePoolIndex++];
 
   node->board = board;
   node->next_color = next_color;
@@ -23,9 +25,21 @@ Node *Node_new(Board *board, int next_color, int depth, int x, int y) {
   return node;
 }
 
+/**
+ * Release node. Do note perform free().
+ * We only consider the number of new and delete operations,
+ * but this implementation is fine because Node_delete() is
+ * called at the same time when the program finishes using
+ * all the nodes.
+ * @param node
+ */
 void Node_delete(Node *node) {
+  if (node == NULL)
+    return;
+  if (g_nodePoolIndex == 0)
+    exit(EXIT_ERR);
   for (int i = 0; node->children[i]; i++)
     Node_delete(node->children[i]);
   Board_delete(node->board);
-  free(node);
+  g_nodePoolIndex--;
 }

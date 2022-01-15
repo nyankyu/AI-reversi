@@ -5,6 +5,9 @@
 #include "ai-reversi.h"
 #include "board.h"
 
+Board g_boardPool[BOARD_POOL_SIZE];
+int g_boardPoolIndex = 0;
+
 static void print_box(int box) {
   if (box == EMPTY)
     printf(".");
@@ -79,16 +82,25 @@ void Board_init(Board *board) {
 }
 
 Board *Board_new(void) {
-  Board *board = malloc(sizeof(Board));
-  if (board == NULL) {
-    puts("ERROR: failure malloc() Board");
+  if (g_boardPoolIndex == BOARD_POOL_SIZE)
     exit(EXIT_ERR);
-  }
-  return board;
+  return &g_boardPool[g_boardPoolIndex++];
 }
 
+/**
+ * Release board. Do note perform free().
+ * We only consider the number of new and delete operations,
+ * but this implementation is fine because Board_delete() is
+ * called at the same time when the program finishes using
+ * all the boards.
+ * @param board
+ */
 void Board_delete(Board *board) {
-  free(board);
+  if (board == NULL)
+    return;
+  if (g_boardPoolIndex == 0)
+    exit(EXIT_ERR);
+  g_boardPoolIndex--;
 }
 
 Board *Board_copy(const Board *source) {

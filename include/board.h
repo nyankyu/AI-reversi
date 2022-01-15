@@ -90,10 +90,11 @@
 #define H7  79
 #define H8  80
 
+#define BOARD_POOL_SIZE 1000000
+
 #define POS(x,y) ((BOARD_SIZE + 1) * y + x)
 
 typedef struct board Board;
-
 struct board {
   int empty;
   int white;
