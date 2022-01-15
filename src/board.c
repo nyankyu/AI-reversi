@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "ai-reversi.h"
 #include "board.h"
 
 Board g_boardPool[BOARD_POOL_SIZE];
@@ -82,8 +81,10 @@ void Board_init(Board *board) {
 }
 
 Board *Board_new(void) {
-  if (g_boardPoolIndex == BOARD_POOL_SIZE)
+  if (g_boardPoolIndex == BOARD_POOL_SIZE) {
+    fputs("Failure: Used up all the Board prepared in advance.\n", stderr);
     exit(EXIT_FAILURE);
+  }
   return &g_boardPool[g_boardPoolIndex++];
 }
 

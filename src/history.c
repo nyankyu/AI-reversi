@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <memory.h>
 #include "history.h"
-#include "ai-reversi.h"
 
 void History_add(History *history, const Board *board, int next_color) {
   if (history->current == BOARD_SIZE * BOARD_SIZE - 1)

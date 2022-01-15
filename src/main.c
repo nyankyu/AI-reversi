@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "ai-reversi.h"
 #include "board.h"
 #include "com.h"
 #include "com_rand.h"

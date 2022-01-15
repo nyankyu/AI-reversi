@@ -1,15 +1,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include "ai-reversi.h"
+#include <stdio.h>
 #include "node.h"
 
 Node g_nodePool[NODE_POOL_SIZE];
 int g_nodePoolIndex = 0;
 
 Node *Node_new(Board *board, int next_color, int depth, int x, int y) {
-  if (g_nodePoolIndex == NODE_POOL_SIZE)
+  if (g_nodePoolIndex == NODE_POOL_SIZE) {
+    fputs("Failure: Used up all the Node prepared in advance.\n", stderr);
     exit(EXIT_FAILURE);
+  }
   Node *node = &g_nodePool[g_nodePoolIndex++];
 
   node->board = board;

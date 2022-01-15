@@ -4,7 +4,6 @@
 #include "player.h"
 #include "com.h"
 #include "com_rand.h"
-#include "ai-reversi.h"
 
 #define GAME_SIZE 100
 
