@@ -4,10 +4,18 @@
 #include <stdio.h>
 #include "node.h"
 
-Node g_nodePool[NODE_POOL_SIZE];
+Node *g_nodePool = NULL;
 int g_nodePoolIndex = 0;
 
 Node *Node_new(Board *board, int next_color, int depth, int x, int y) {
+  if (g_nodePool == NULL) {
+    g_nodePool = malloc(sizeof(Board) * BOARD_POOL_SIZE);
+    if (g_nodePool == NULL) {
+      fputs("Failure: Make Node pool.\n", stderr);
+      exit(EXIT_FAILURE);
+    }
+  }
+
   if (g_nodePoolIndex == NODE_POOL_SIZE) {
     fputs("Failure: Used up all the Node prepared in advance.\n", stderr);
     exit(EXIT_FAILURE);

@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include "board.h"
 
-Board g_boardPool[BOARD_POOL_SIZE];
+Board *g_boardPool = NULL;
 int g_boardPoolIndex = 0;
 
 static void print_box(int box) {
@@ -81,6 +81,14 @@ void Board_init(Board *board) {
 }
 
 Board *Board_new(void) {
+  if (g_boardPool == NULL) {
+    g_boardPool = malloc(sizeof(Board) * BOARD_POOL_SIZE);
+    if (g_boardPool == NULL) {
+      fputs("Failure: Make Board pool.\n", stderr);
+      exit(EXIT_FAILURE);
+    }
+  }
+
   if (g_boardPoolIndex == BOARD_POOL_SIZE) {
     fputs("Failure: Used up all the Board prepared in advance.\n", stderr);
     exit(EXIT_FAILURE);
