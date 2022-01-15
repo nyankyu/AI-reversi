@@ -52,7 +52,7 @@ TEST_F(BoardTest, Initialize) {
 TEST_F(BoardTest, MakeBoxError) {
   ASSERT_EXIT(
       Board_make_box(board, "sort string"),
-      ::testing::ExitedWithCode(EXIT_ERR),
+      ::testing::ExitedWithCode(EXIT_FAILURE),
       ".*");
 
   ASSERT_EXIT(
@@ -65,7 +65,7 @@ TEST_F(BoardTest, MakeBoxError) {
                       "6       "
                       "7       "
                       "8       "),
-      ::testing::ExitedWithCode(EXIT_ERR),
+      ::testing::ExitedWithCode(EXIT_FAILURE),
       ".*");
 }
 

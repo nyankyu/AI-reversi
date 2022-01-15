@@ -36,7 +36,7 @@ void Measure_start(void) {
             break;
           pass++;
         } else if (result == PLAYER_ERR) {
-          exit(EXIT_ERR);
+          exit(EXIT_FAILURE);
         } else if (result == PLAYER_NG) {
           continue;
         }

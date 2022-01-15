@@ -38,7 +38,7 @@ void Board_print(const Board *self) {
 
 void Board_make_box(Board *self, const char str[]) {
   if (str == NULL || strlen(str) < BOARD_SIZE * BOARD_SIZE)
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
 
   self->empty = 0;
   self->white = 0;
@@ -65,7 +65,7 @@ void Board_make_box(Board *self, const char str[]) {
       self->black++;
       str++;
     } else
-      exit(EXIT_ERR);
+      exit(EXIT_FAILURE);
   }
 }
 
@@ -83,7 +83,7 @@ void Board_init(Board *board) {
 
 Board *Board_new(void) {
   if (g_boardPoolIndex == BOARD_POOL_SIZE)
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   return &g_boardPool[g_boardPoolIndex++];
 }
 
@@ -99,7 +99,7 @@ void Board_delete(Board *board) {
   if (board == NULL)
     return;
   if (g_boardPoolIndex == 0)
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   g_boardPoolIndex--;
 }
 

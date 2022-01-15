@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
     black = Human_make_player(BLACK);
   } else if (argc != 2) {
     usage();
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   } else if (strcmp("auto", argv[1]) == 0) {
     white = Com_rand_make_player(WHITE);
     black = Com_make_player(BLACK);
@@ -66,10 +66,10 @@ int main(int argc, char **argv) {
     History_delete(history);
     Board_delete(board);
     Measure_start();
-    exit(EXIT_OK);
+    exit(EXIT_SUCCESS);
   } else {
     usage();
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   }
 
   player = black;
@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
         player = black;
       continue;
     } else if (result == PLAYER_ERR){
-      exit(EXIT_ERR);
+      exit(EXIT_FAILURE);
     } else if (result == PLAYER_NG) {
       continue;
     }
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
   white->Player_delete(white);
 
   //system("leaks ai-reversi");
-  return EXIT_OK;
+  return EXIT_SUCCESS;
 }
 
 

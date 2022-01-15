@@ -8,7 +8,7 @@
 
 static void get_input(char buff[]) {
   if (fgets(buff, BUFF_SIZE, stdin) == NULL) {
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   }
   char *p = strchr(buff, '\n');
   if (p != NULL)
@@ -34,7 +34,7 @@ int Human_next(Player *player, Board *board) {
 Human *Human_new(int color) {
   Human *human = malloc(sizeof(Human));
   if (human == NULL)
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   human->color = color;
   return human;
 }
@@ -48,7 +48,7 @@ Player *Human_make_player(int color) {
   Human *human = Human_new(color);
   Player *player = malloc(sizeof(Player));
   if (player == NULL)
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
 
   player->color = color;
   player->next = Human_next;

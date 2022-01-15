@@ -9,7 +9,7 @@ int g_nodePoolIndex = 0;
 
 Node *Node_new(Board *board, int next_color, int depth, int x, int y) {
   if (g_nodePoolIndex == NODE_POOL_SIZE)
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   Node *node = &g_nodePool[g_nodePoolIndex++];
 
   node->board = board;
@@ -37,7 +37,7 @@ void Node_delete(Node *node) {
   if (node == NULL)
     return;
   if (g_nodePoolIndex == 0)
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   for (int i = 0; node->children[i]; i++)
     Node_delete(node->children[i]);
   Board_delete(node->board);

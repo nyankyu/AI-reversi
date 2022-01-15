@@ -29,7 +29,7 @@ Com *Com_new(int color) {
   Com *com = malloc(sizeof(Com));
   if (com == NULL) {
     printf("ERROR: files malloc() Com\n");
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   }
   com->color = color;
 
@@ -45,7 +45,7 @@ Player *Com_make_player(int color) {
   Com *com = Com_new(color);
   Player *player = malloc(sizeof(Player));
   if (player == NULL)
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
 
   player->color = color;
   player->name = "Com";

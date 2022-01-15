@@ -49,7 +49,7 @@ static void build_children(Com *com, Node *node, int max_depth) {
 Tree *Tree_new(Com *com, Board *board, int max_depth) {
   Tree *tree = malloc(sizeof(Tree));
   if (tree == NULL) {
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   }
 
   tree->root = Node_new(board, com->color, 0, 0, 0);

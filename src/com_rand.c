@@ -37,7 +37,7 @@ Com_rand *Com_rand_new(int color) {
   Com_rand *com_rand = malloc(sizeof(Com_rand));
   if (com_rand == NULL) {
     printf("ERROR: files malloc() Com_rand\n");
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
   }
   com_rand->color = color;
 
@@ -55,7 +55,7 @@ Player *Com_rand_make_player(int color) {
   Com_rand *com_rand = Com_rand_new(color);
   Player *player = malloc(sizeof(Player));
   if (player == NULL)
-    exit(EXIT_ERR);
+    exit(EXIT_FAILURE);
 
   player->color = color;
   player->name = "Com-Random";

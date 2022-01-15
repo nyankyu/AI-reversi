@@ -11,7 +11,7 @@ int Rule_other_color(int color) {
     return BLACK;
   if (color == BLACK)
     return WHITE;
-  exit(EXIT_ERR);
+  exit(EXIT_FAILURE);
 }
 
 static int reverse_line(int box[], int color, int init_pos, int dir) {
