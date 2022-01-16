@@ -14,7 +14,6 @@ void Measure_start(void) {
   Player *player = black;
   Board board;
 
-  printf("\033[H\033[2J");
   printf("==== AI-reversi ====\n");
 
   for (int i = 0; i < 2; i++) {
