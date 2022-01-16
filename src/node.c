@@ -7,9 +7,9 @@
 Node *g_nodePool = NULL;
 int g_nodePoolIndex = 0;
 
-Node *Node_new(Board *board, int next_color, int depth, int x, int y) {
+Node *Node_new(const Board *board, int next_color, int depth, int x, int y) {
   if (g_nodePool == NULL) {
-    g_nodePool = malloc(sizeof(Board) * BOARD_POOL_SIZE);
+    g_nodePool = malloc(sizeof(Node) * NODE_POOL_SIZE);
     if (g_nodePool == NULL) {
       fputs("Failure: Make Node pool.\n", stderr);
       exit(EXIT_FAILURE);
@@ -22,7 +22,7 @@ Node *Node_new(Board *board, int next_color, int depth, int x, int y) {
   }
   Node *node = &g_nodePool[g_nodePoolIndex++];
 
-  node->board = board;
+  Board_rewrite(&node->board ,board);
   node->next_color = next_color;
   node->depth = depth;
   node->last_x = x;
@@ -50,6 +50,5 @@ void Node_delete(Node *node) {
     exit(EXIT_FAILURE);
   for (int i = 0; node->children[i]; i++)
     Node_delete(node->children[i]);
-  Board_delete(node->board);
   g_nodePoolIndex--;
 }

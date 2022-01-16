@@ -11,7 +11,7 @@ struct tree {
   Node *root;
 };
 
-Tree *Tree_new(Com *com, Board *board, int max_depth);
+Tree *Tree_new(Com *com, const Board *board, int max_depth);
 void Tree_delete(Tree *tree);
 
 #endif

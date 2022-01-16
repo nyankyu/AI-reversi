@@ -12,15 +12,14 @@ int g_print = 1;
 class TreeTest : public ::testing::Test {
 protected:
   void SetUp() override {
-    board = Board_new();
-    Board_init(board);
+    Board board;
+    Board_init(&board);
     com = Com_new(WHITE);
-    tree = Tree_new(com, board, 1);
+    tree = Tree_new(com, &board, 1);
   }
   void TearDown() override {
     Tree_delete(tree);
   }
-  Board *board;
   Tree *tree;
   Com *com;
 };
@@ -30,7 +29,9 @@ TEST_F(TreeTest, ConstructorMemberValue) {
   EXPECT_NE(nullptr, tree->root);
   ASSERT_EQ(0, tree->root->depth);
   ASSERT_EQ(WHITE, tree->root->next_color);
-  ASSERT_EQ(board, tree->root->board);
+  Board board;
+  Board_init(&board);
+  ASSERT_THAT(board.box, testing::ContainerEq(tree->root->board.box));
   //ASSERT_EQ(10, tree->root->eval_point);
 }
 
@@ -97,28 +98,28 @@ TEST_F(TreeTest, ConstractorBuildTree) {
   ASSERT_EQ(BLACK, child->next_color);
   ASSERT_EQ(1, child->depth);
   //ASSERT_EQ(-10, child->eval_point);
-  ASSERT_THAT(box0, testing::ContainerEq(child->board->box));
+  ASSERT_THAT(box0, testing::ContainerEq(child->board.box));
   ASSERT_EQ(nullptr, child->children[0]);
 
   child = tree->root->children[1];
   ASSERT_EQ(BLACK, child->next_color);
   ASSERT_EQ(1, child->depth);
   //ASSERT_EQ(-10, child->eval_point);
-  ASSERT_THAT(box1, testing::ContainerEq(child->board->box));
+  ASSERT_THAT(box1, testing::ContainerEq(child->board.box));
   ASSERT_EQ(nullptr, child->children[0]);
 
   child = tree->root->children[2];
   ASSERT_EQ(BLACK, child->next_color);
   ASSERT_EQ(1, child->depth);
   //ASSERT_EQ(-10, child->eval_point);
-  ASSERT_THAT(box2, testing::ContainerEq(child->board->box));
+  ASSERT_THAT(box2, testing::ContainerEq(child->board.box));
   ASSERT_EQ(nullptr, child->children[0]);
 
   child = tree->root->children[3];
   ASSERT_EQ(BLACK, child->next_color);
   ASSERT_EQ(1, child->depth);
   //ASSERT_EQ(-10, child->eval_point);
-  ASSERT_THAT(box3, testing::ContainerEq(child->board->box));
+  ASSERT_THAT(box3, testing::ContainerEq(child->board.box));
   ASSERT_EQ(nullptr, child->children[0]);
 
   ASSERT_EQ(nullptr, tree->root->children[4]);

@@ -90,8 +90,6 @@
 #define H7  79
 #define H8  80
 
-#define BOARD_POOL_SIZE 10000000
-
 #define POS(x,y) ((BOARD_SIZE + 1) * y + x)
 
 typedef struct board Board;
@@ -105,9 +103,6 @@ struct board {
 void Board_print(const Board *self);
 void Board_make_box(Board *self, const char str[]);
 void  Board_init(Board *board);
-Board *Board_new(void);
-void  Board_delete(Board *board);
-Board *Board_copy(const Board *board);
 void Board_rewrite(Board *dest, const Board *src);
 
 #endif

@@ -7,8 +7,7 @@
 #include "player.h"
 
 int Com_next(Player *player, Board *board) {
-  Board *copy = Board_copy(board);
-  Tree *tree = Tree_new((Com *)player->obj, copy, 5);
+  Tree *tree = Tree_new((Com *)player->obj, board, 5);
 
   int x = tree->root->next_x;
   int y = tree->root->next_y;

@@ -12,7 +12,7 @@ void Measure_start(void) {
   Player *white = Com_make_player(WHITE);
   Player *black = Com_rand_make_player(BLACK);
   Player *player = black;
-  Board *board = Board_new();
+  Board board;
 
   printf("\033[H\033[2J");
   printf("==== AI-reversi ====\n");
@@ -24,10 +24,10 @@ void Measure_start(void) {
     int win_black = 0;
 
     while (game_count--) {
-      Board_init(board);
+      Board_init(&board);
 
       while (1) {
-        int result = player->next(player, board);
+        int result = player->next(player, &board);
         if (result == PLAYER_PUT) {
           pass = 0;
         } else if (result == PLAYER_PASS) {
@@ -42,9 +42,9 @@ void Measure_start(void) {
         player = (player == white) ? black : white;
       }
 
-      if (board->white > board->black)
+      if (board.white > board.black)
         win_white++;
-      else if (board->black > board->white)
+      else if (board.black > board.white)
         win_black++;
     }
 
@@ -56,7 +56,6 @@ void Measure_start(void) {
     black = Com_make_player(BLACK);
     player = black;
   }
-  Board_delete(board);
   white->Player_delete(white);
   black->Player_delete(black);
 }
