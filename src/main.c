@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
   Player *black;
   Player *white;
   Player *player;
-  Board *board = Board_new();
+  Board board;
   History *history = History_new();
   int pass = 0;
 
@@ -63,7 +63,6 @@ int main(int argc, char **argv) {
     black = Human_make_player(BLACK);
   } else if (strcmp("measure", argv[1]) == 0) {
     History_delete(history);
-    Board_delete(board);
     Measure_start();
     exit(EXIT_SUCCESS);
   } else {
@@ -72,14 +71,14 @@ int main(int argc, char **argv) {
   }
 
   player = black;
-  Board_init(board);
-  History_add(history, board, BLACK);
+  Board_init(&board);
+  History_add(history, &board, BLACK);
 
   while (1) {
-    Board_print(board);
+    Board_print(&board);
     print_prompt(player->color);
 
-    int result = player->next(player, board);
+    int result = player->next(player, &board);
     if (result == PLAYER_PUT) {
       pass = 0;
     } else if (result == PLAYER_PASS) {
@@ -91,7 +90,7 @@ int main(int argc, char **argv) {
     } else if (result == PLAYER_UNDO) {
       History_undo(history);
       History_undo(history);
-      Board_rewrite(board, history->board_array[history->current]);
+      Board_rewrite(&board, history->board_array[history->current]);
       if (history->current == 0)
         player = black;
       continue;
@@ -100,14 +99,13 @@ int main(int argc, char **argv) {
     } else if (result == PLAYER_NG) {
       continue;
     }
-    History_add(history, board, player->color);
+    History_add(history, &board, player->color);
     player = (player == white) ? black : white;
   }
 
-  judge(board);
+  judge(&board);
 
   History_delete(history);
-  Board_delete(board);
   black->Player_delete(black);
   white->Player_delete(white);
 
