@@ -4,7 +4,7 @@
 #include "board.h"
 
 #define CHL_SIZE (BOARD_SIZE * BOARD_SIZE - 4)
-#define NODE_POOL_SIZE 10000000
+#define NODE_POOL_SIZE 1000000
 
 typedef struct node Node;
 struct node {
