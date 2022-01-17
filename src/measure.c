@@ -57,4 +57,5 @@ void Measure_start(void) {
   }
   white->Player_delete(white);
   black->Player_delete(black);
+  //system("leaks ai-reversi");
 }

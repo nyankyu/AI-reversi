@@ -38,6 +38,7 @@ Com *Com_new(int color) {
 void Com_delete(Player *player) {
   free(player->obj);
   free(player);
+  Node_deletePool();
 }
 
 Player *Com_make_player(int color) {

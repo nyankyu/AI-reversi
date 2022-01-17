@@ -4,7 +4,16 @@
 #include "board.h"
 
 #define CHL_SIZE (BOARD_SIZE * BOARD_SIZE - 4)
-#define NODE_POOL_SIZE 1000000
+
+/*
+ * (pool size) = (col size) * (row size)
+ * depth | node size
+ * 4     |    100_000
+ * 5     |  4_000_000
+ * 6     | 20_000_000
+ */
+#define NODE_POOL_COL_SIZE 2000
+#define NODE_POOL_ROW_SIZE 2000
 
 typedef struct node Node;
 struct node {
@@ -20,6 +29,7 @@ struct node {
 };
 
 Node *Node_new(const Board *board, int next_color, int depth, int x, int y);
-void Node_delete(Node *node);
+void Node_deletePool(void);
+void Node_initPool(void);
 
 #endif

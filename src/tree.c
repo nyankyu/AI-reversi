@@ -58,6 +58,6 @@ Tree *Tree_new(Com *com, const Board *board, int max_depth) {
 }
 
 void Tree_delete(Tree *tree) {
-  Node_delete(tree->root);
+  Node_initPool();
   free(tree);
 }
