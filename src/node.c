@@ -32,7 +32,7 @@ static inline void incrementIndex(void) {
   }
 }
 
-inline Node *Node_new(const Board *board, int next_color, int depth, int x, int y) {
+Node *Node_new(const Board *board, int next_color, int depth, int x, int y) {
   if (g_nodePoolRow == NODE_POOL_ROW_SIZE) {
     fprintf(stderr, "FAILURE: ran out of Node pool\n");
     exit(EXIT_FAILURE);
@@ -56,7 +56,7 @@ inline Node *Node_new(const Board *board, int next_color, int depth, int x, int 
   return node;
 }
 
-inline void Node_deletePool(void) {
+void Node_deletePool(void) {
   if (g_nodePool == NULL)
     return;
   for (int row = 0; row < NODE_POOL_ROW_SIZE; row++) {
@@ -69,7 +69,7 @@ inline void Node_deletePool(void) {
   //printf("use pool; %d\n", g_nodePoolMax);
 }
 
-inline void Node_initPool(void) {
+void Node_initPool(void) {
   int count = g_nodePoolRow * NODE_POOL_COL_SIZE + g_nodePoolCol;
   if (g_nodePoolMax < count)
     g_nodePoolMax = count;

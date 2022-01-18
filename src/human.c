@@ -15,7 +15,7 @@ static inline void get_input(char buff[]) {
     *p = '\0';
 }
 
-inline int Human_next(Player *player, Board *board) {
+int Human_next(Player *player, Board *board) {
   if (Rule_can_pass(board, player->color) == OK)
     return PLAYER_PASS;
 
@@ -39,12 +39,12 @@ static inline Human *Human_new(int color) {
   return human;
 }
 
-inline void Human_delete(Player *player) {
+void Human_delete(Player *player) {
   free(player->obj);
   free(player);
 }
 
-inline Player *Human_make_player(int color) {
+Player *Human_make_player(int color) {
   Human *human = Human_new(color);
   Player *player = malloc(sizeof(Player));
   if (player == NULL)

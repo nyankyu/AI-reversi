@@ -45,7 +45,7 @@ static inline void build_children(Com *com, Node *node, int max_depth) {
   set_eval_point(node);
 }
 
-inline Tree *Tree_new(Com *com, const Board *board, int max_depth) {
+Tree *Tree_new(Com *com, const Board *board, int max_depth) {
   Tree *tree = malloc(sizeof(Tree));
   if (tree == NULL) {
     exit(EXIT_FAILURE);
@@ -57,7 +57,7 @@ inline Tree *Tree_new(Com *com, const Board *board, int max_depth) {
   return tree;
 }
 
-inline void Tree_delete(Tree *tree) {
+void Tree_delete(Tree *tree) {
   Node_initPool();
   free(tree);
 }

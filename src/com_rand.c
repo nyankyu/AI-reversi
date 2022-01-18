@@ -6,7 +6,7 @@
 #include "ai-reversi.h"
 #include "player.h"
 
-inline int Com_rand_next(Player *player, Board *board) {
+int Com_rand_next(Player *player, Board *board) {
   int x_array[BOARD_SIZE * BOARD_SIZE];
   int y_array[BOARD_SIZE * BOARD_SIZE];
   size_t index = 0;
@@ -44,12 +44,12 @@ static inline Com_rand *Com_rand_new(int color) {
   return com_rand;
 }
 
-inline void Com_rand_delete(Player *player) {
+void Com_rand_delete(Player *player) {
   free(player->obj);
   free(player);
 }
 
-inline Player *Com_rand_make_player(int color) {
+Player *Com_rand_make_player(int color) {
   srand((unsigned int)time(NULL));
 
   Com_rand *com_rand = Com_rand_new(color);

@@ -120,7 +120,7 @@ static inline int important_point(Node *node) {
   return point;
 }
 
-inline void Evaluator_evaluate(Node *node) {
+void Evaluator_evaluate(Node *node) {
   int available = available_point(node);
 
   if (available == INT_MAX) {

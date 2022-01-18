@@ -5,7 +5,7 @@
 #include "board.h"
 #include "rule.h"
 
-inline int Rule_other_color(int color) {
+int Rule_other_color(int color) {
   if (color == WHITE)
     return BLACK;
   if (color == BLACK)
@@ -28,7 +28,7 @@ static inline int reverse_line(int box[], int color, int init_pos, int dir) {
   return count;
 }
 
-inline int Rule_set(Board *board, int x, int y, int color) {
+int Rule_set(Board *board, int x, int y, int color) {
   int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return 0;
@@ -59,7 +59,7 @@ inline int Rule_set(Board *board, int x, int y, int color) {
   return count;
 }
 
-inline int Rule_set_by_str(Board *board, const char str[], int color) {
+int Rule_set_by_str(Board *board, const char str[], int color) {
   if (strlen(str) != 2)
     return 0;
   int first_char = toupper(str[0]);
@@ -85,7 +85,7 @@ static inline int can_set_line(const int box[], int color, int init_pos, int dir
   return OK;
 }
 
-inline int Rule_can_set(const Board *board, int x, int y, int color) {
+int Rule_can_set(const Board *board, int x, int y, int color) {
   int p = POS(x, y);
   if (board->box[p] != EMPTY)
     return NG;
@@ -109,7 +109,7 @@ inline int Rule_can_set(const Board *board, int x, int y, int color) {
   return NG;
 }
 
-inline int Rule_can_pass(const Board *board, int color) {
+int Rule_can_pass(const Board *board, int color) {
   for (int y = 1; y <= BOARD_SIZE; y++)
     for (int x = 1; x <= BOARD_SIZE; x++)
       if (Rule_can_set(board, x, y, color) == OK)

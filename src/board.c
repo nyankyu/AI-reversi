@@ -15,7 +15,7 @@ static inline void print_box(int box) {
     printf("#");
 }
 
-inline void Board_print(const Board *self) {
+void Board_print(const Board *self) {
   printf("\033[H\033[2J");
   printf("==== AI-reversi ====\n");
   printf("   A B C D E F G H\n");
@@ -32,7 +32,7 @@ inline void Board_print(const Board *self) {
   printf("\n O: %d, X: %d, .: %d\n", self->white, self->black, self->empty);
 }
 
-inline void Board_make_box(Board *self, const char str[]) {
+void Board_make_box(Board *self, const char str[]) {
   if (str == NULL || strlen(str) < BOARD_SIZE * BOARD_SIZE)
     exit(EXIT_FAILURE);
 
@@ -65,7 +65,7 @@ inline void Board_make_box(Board *self, const char str[]) {
   }
 }
 
-inline void Board_init(Board *board) {
+void Board_init(Board *board) {
   Board_make_box(board, ""
       "........"
       "........"
@@ -77,7 +77,7 @@ inline void Board_init(Board *board) {
       "........");
 }
 
-inline void Board_rewrite(Board *dest, const Board *src) {
+void Board_rewrite(Board *dest, const Board *src) {
   dest->white = src->white;
   dest->black = src->black;
   dest->empty = src->empty;
