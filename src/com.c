@@ -6,7 +6,7 @@
 #include "tree.h"
 #include "player.h"
 
-int Com_next(Player *player, Board *board) {
+inline int Com_next(Player *player, Board *board) {
   Tree *tree = Tree_new((Com *)player->obj, board, 5);
 
   int x = tree->root->next_x;
@@ -24,7 +24,7 @@ int Com_next(Player *player, Board *board) {
   return PLAYER_PUT;
 }
 
-Com *Com_new(int color) {
+Com *Com_new(int color) { // TODO no static inline because called from TreeTest
   Com *com = malloc(sizeof(Com));
   if (com == NULL) {
     printf("ERROR: files malloc() Com\n");
@@ -35,13 +35,13 @@ Com *Com_new(int color) {
   return com;
 }
 
-void Com_delete(Player *player) {
+inline void Com_delete(Player *player) {
   free(player->obj);
   free(player);
   Node_deletePool();
 }
 
-Player *Com_make_player(int color) {
+inline Player *Com_make_player(int color) {
   Com *com = Com_new(color);
   Player *player = malloc(sizeof(Player));
   if (player == NULL)

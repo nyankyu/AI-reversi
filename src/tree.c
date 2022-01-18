@@ -4,7 +4,7 @@
 #include "com.h"
 #include "evaluator.h"
 
-static void set_eval_point(Node *node) {
+static inline void set_eval_point(Node *node) {
   for (Node **child = &node->children[0]; *child != NULL; child++) {
     if (node->eval_point >= (*child)->eval_point) {
       node->eval_point = (*child)->eval_point;
@@ -16,7 +16,7 @@ static void set_eval_point(Node *node) {
   node->eval_point *= -1;
 }
 
-static void build_children(Com *com, Node *node, int max_depth) {
+static inline void build_children(Com *com, Node *node, int max_depth) {
   if (node->depth >= max_depth) {
     Evaluator_evaluate(node);
     return;
@@ -45,7 +45,7 @@ static void build_children(Com *com, Node *node, int max_depth) {
   set_eval_point(node);
 }
 
-Tree *Tree_new(Com *com, const Board *board, int max_depth) {
+inline Tree *Tree_new(Com *com, const Board *board, int max_depth) {
   Tree *tree = malloc(sizeof(Tree));
   if (tree == NULL) {
     exit(EXIT_FAILURE);
@@ -57,7 +57,7 @@ Tree *Tree_new(Com *com, const Board *board, int max_depth) {
   return tree;
 }
 
-void Tree_delete(Tree *tree) {
+inline void Tree_delete(Tree *tree) {
   Node_initPool();
   free(tree);
 }

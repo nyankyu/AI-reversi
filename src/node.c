@@ -4,12 +4,12 @@
 #include <stdio.h>
 #include "node.h"
 
-Node **g_nodePool = NULL;
-int g_nodePoolCol;
-int g_nodePoolRow;
-int g_nodePoolMax;
+static Node **g_nodePool = NULL;
+static int g_nodePoolCol;
+static int g_nodePoolRow;
+static int g_nodePoolMax;
 
-static void makePool(void) {
+static inline void makePool(void) {
   g_nodePool = malloc(sizeof(Node *) * NODE_POOL_ROW_SIZE);
   if (g_nodePool == NULL) {
     fprintf(stderr, "FAILURE: make new pool. malloc()\n");
@@ -24,7 +24,7 @@ static void makePool(void) {
   }
 }
 
-void incrementIndex(void) {
+static inline void incrementIndex(void) {
   g_nodePoolCol++;
   if (g_nodePoolCol == NODE_POOL_COL_SIZE) {
     g_nodePoolRow++;
@@ -32,7 +32,7 @@ void incrementIndex(void) {
   }
 }
 
-Node *Node_new(const Board *board, int next_color, int depth, int x, int y) {
+inline Node *Node_new(const Board *board, int next_color, int depth, int x, int y) {
   if (g_nodePoolRow == NODE_POOL_ROW_SIZE) {
     fprintf(stderr, "FAILURE: ran out of Node pool\n");
     exit(EXIT_FAILURE);
@@ -56,7 +56,7 @@ Node *Node_new(const Board *board, int next_color, int depth, int x, int y) {
   return node;
 }
 
-void Node_deletePool(void) {
+inline void Node_deletePool(void) {
   if (g_nodePool == NULL)
     return;
   for (int row = 0; row < NODE_POOL_ROW_SIZE; row++) {
@@ -69,7 +69,7 @@ void Node_deletePool(void) {
   //printf("use pool; %d\n", g_nodePoolMax);
 }
 
-void Node_initPool(void) {
+inline void Node_initPool(void) {
   int count = g_nodePoolRow * NODE_POOL_COL_SIZE + g_nodePoolCol;
   if (g_nodePoolMax < count)
     g_nodePoolMax = count;

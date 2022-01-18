@@ -7,7 +7,7 @@
 
 #define GAME_SIZE 100
 
-void Measure_start(void) {
+inline void Measure_start(void) {
   g_print = 0;
   Player *white = Com_make_player(WHITE);
   Player *black = Com_rand_make_player(BLACK);

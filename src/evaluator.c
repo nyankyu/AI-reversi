@@ -7,7 +7,7 @@
 #define X_POINT       50
 #define C_POINT       30
 
-int available_point(Node *node) {
+static inline int available_point(Node *node) {
   int count_white = 0;
   int count_black = 0;
 
@@ -26,7 +26,7 @@ int available_point(Node *node) {
   return count_white - count_black;
 }
 
-int important_point(Node *node) {
+static inline int important_point(Node *node) {
   int point = 0;
 
   if (node->board.box[A1] == WHITE)
@@ -120,7 +120,7 @@ int important_point(Node *node) {
   return point;
 }
 
-void Evaluator_evaluate(Node *node) {
+inline void Evaluator_evaluate(Node *node) {
   int available = available_point(node);
 
   if (available == INT_MAX) {

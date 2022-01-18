@@ -6,7 +6,7 @@
 #include "ai-reversi.h"
 #include "player.h"
 
-int Com_rand_next(Player *player, Board *board) {
+inline int Com_rand_next(Player *player, Board *board) {
   int x_array[BOARD_SIZE * BOARD_SIZE];
   int y_array[BOARD_SIZE * BOARD_SIZE];
   size_t index = 0;
@@ -33,7 +33,7 @@ int Com_rand_next(Player *player, Board *board) {
   return PLAYER_PUT;
 }
 
-Com_rand *Com_rand_new(int color) {
+static inline Com_rand *Com_rand_new(int color) {
   Com_rand *com_rand = malloc(sizeof(Com_rand));
   if (com_rand == NULL) {
     printf("ERROR: files malloc() Com_rand\n");
@@ -44,12 +44,12 @@ Com_rand *Com_rand_new(int color) {
   return com_rand;
 }
 
-void Com_rand_delete(Player *player) {
+inline void Com_rand_delete(Player *player) {
   free(player->obj);
   free(player);
 }
 
-Player *Com_rand_make_player(int color) {
+inline Player *Com_rand_make_player(int color) {
   srand((unsigned int)time(NULL));
 
   Com_rand *com_rand = Com_rand_new(color);

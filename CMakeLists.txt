@@ -3,6 +3,7 @@ project(ai-reversi C)
 
 add_executable(ai-reversi)
 
+set_property(TARGET ai-reversi PROPERTY C_STANDARD 11)
 set(CMAKE_C_FLAGS "-Wall")
 
 target_include_directories(ai-reversi PRIVATE include)

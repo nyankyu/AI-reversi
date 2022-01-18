@@ -102,7 +102,7 @@ struct board {
 
 void Board_print(const Board *self);
 void Board_make_box(Board *self, const char str[]);
-void  Board_init(Board *board);
+void Board_init(Board *board);
 void Board_rewrite(Board *dest, const Board *src);
 
 #endif

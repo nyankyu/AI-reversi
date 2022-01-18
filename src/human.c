@@ -6,7 +6,7 @@
 
 #define BUFF_SIZE 256
 
-static void get_input(char buff[]) {
+static inline void get_input(char buff[]) {
   if (fgets(buff, BUFF_SIZE, stdin) == NULL) {
     exit(EXIT_FAILURE);
   }
@@ -15,7 +15,7 @@ static void get_input(char buff[]) {
     *p = '\0';
 }
 
-int Human_next(Player *player, Board *board) {
+inline int Human_next(Player *player, Board *board) {
   if (Rule_can_pass(board, player->color) == OK)
     return PLAYER_PASS;
 
@@ -31,7 +31,7 @@ int Human_next(Player *player, Board *board) {
   return PLAYER_PUT;
 }
 
-Human *Human_new(int color) {
+static inline Human *Human_new(int color) {
   Human *human = malloc(sizeof(Human));
   if (human == NULL)
     exit(EXIT_FAILURE);
@@ -39,12 +39,12 @@ Human *Human_new(int color) {
   return human;
 }
 
-void Human_delete(Player *player) {
+inline void Human_delete(Player *player) {
   free(player->obj);
   free(player);
 }
 
-Player *Human_make_player(int color) {
+inline Player *Human_make_player(int color) {
   Human *human = Human_new(color);
   Player *player = malloc(sizeof(Player));
   if (player == NULL)
