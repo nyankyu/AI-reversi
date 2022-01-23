@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <limits.h>
 #include "ai-reversi.h"
 #include "tree.h"
 #include "com.h"
@@ -18,7 +19,7 @@ static inline void set_eval_point(Node *node) {
 
 static inline void build_children(Com *com, Node *node, int max_depth) {
   if (node->depth >= max_depth) {
-    Evaluator_evaluate(node);
+    Evaluator_evaluate(node, com->color);
     return;
   }
 
@@ -38,7 +39,20 @@ static inline void build_children(Com *com, Node *node, int max_depth) {
   }
 
   if (children == &node->children[0]) {
+    // pass
+    if (node->pass == TRUE) {
+      // game over
+      if (node->board.white > node->board.black && com->color == WHITE)
+        node->eval_point = INT_MAX;
+      else if (node->board.white < node->board.black && com->color == BLACK)
+        node->eval_point = INT_MAX;
+      else
+        node->eval_point = -INT_MAX;
+
+      return;
+    }
     *children = Node_new(&board, node->next_color, node->depth + 1, node->last_x, node->last_y);
+    (*children)->pass = TRUE;
     build_children(com, *children, max_depth);
   }
 
@@ -52,7 +66,6 @@ Tree *Tree_new(Com *com, const Board *board, int max_depth) {
   }
 
   tree->root = Node_new(board, com->color, 0, 0, 0);
-  //tree->my_color = my_color;
   build_children(com, tree->root, max_depth);
   return tree;
 }

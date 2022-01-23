@@ -3,6 +3,7 @@
 #include <limits.h>
 #include <stdio.h>
 #include "node.h"
+#include "ai-reversi.h"
 
 static Node **g_nodePool = NULL;
 static int g_nodePoolCol;
@@ -51,6 +52,7 @@ Node *Node_new(const Board *board, int next_color, int depth, int x, int y) {
   node->next_x = 0;
   node->next_y = 0;
   node->eval_point = INT_MAX;
+  node->pass = FALSE;
   memset(node->children, 0, sizeof(Node *) * CHL_SIZE);
 
   return node;

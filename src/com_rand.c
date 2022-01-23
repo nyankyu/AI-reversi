@@ -9,7 +9,7 @@
 int Com_rand_next(Player *player, Board *board) {
   int x_array[BOARD_SIZE * BOARD_SIZE];
   int y_array[BOARD_SIZE * BOARD_SIZE];
-  size_t index = 0;
+  int index = 0;
 
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
