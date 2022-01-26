@@ -78,6 +78,7 @@ void Node_initPool(void) {
       fprintf(stderr, "FAILURE: make new pool. malloc()\n");
       exit(EXIT_FAILURE);
     }
+    g_nodePoolTop->next = NULL;
   }
 
   g_currentArray = g_nodePoolTop;
