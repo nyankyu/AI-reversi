@@ -65,12 +65,12 @@ Tree *Tree_new(Com *com, const Board *board, int max_depth) {
     exit(EXIT_FAILURE);
   }
 
+  Node_initPool();
   tree->root = Node_new(board, com->color, 0, 0, 0);
   build_children(com, tree->root, max_depth);
   return tree;
 }
 
 void Tree_delete(Tree *tree) {
-  Node_initPool();
   free(tree);
 }

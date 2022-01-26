@@ -4,6 +4,7 @@
 #include "player.h"
 #include "com.h"
 #include "com_rand.h"
+#include "node.h"
 
 #define GAME_SIZE 50
 
@@ -58,5 +59,7 @@ void Measure_start(void) {
   }
   white->Player_delete(white);
   black->Player_delete(black);
+  Node_deletePool();
+
   //system("leaks ai-reversi");
 }

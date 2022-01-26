@@ -5,44 +5,45 @@
 #include "node.h"
 #include "ai-reversi.h"
 
-static Node **g_nodePool = NULL;
-static int g_nodePoolCol;
-static int g_nodePoolRow;
-static int g_nodePoolMax;
+#define NODE_POOL_ARRAY_SIZE 2000
 
-static inline void makePool(void) {
-  g_nodePool = malloc(sizeof(Node *) * NODE_POOL_ROW_SIZE);
-  if (g_nodePool == NULL) {
+typedef struct list_elem ListElem;
+struct list_elem {
+  Node array[NODE_POOL_ARRAY_SIZE];
+  ListElem *next;
+};
+
+static ListElem *g_nodePoolTop = NULL;
+static ListElem *g_currentArray;
+static int g_index;
+
+static inline void extendPool(void) {
+  ListElem *elem = malloc(sizeof(ListElem));
+  if (elem == NULL) {
     fprintf(stderr, "FAILURE: make new pool. malloc()\n");
     exit(EXIT_FAILURE);
   }
-  for (int row = 0; row < NODE_POOL_ROW_SIZE; row++) {
-    g_nodePool[row] = malloc(sizeof(Node) * NODE_POOL_COL_SIZE);
-    if (g_nodePool[row] == NULL) {
-      fprintf(stderr, "FAILURE: make new pool. malloc()\n");
-      exit(EXIT_FAILURE);
-    }
-  }
+
+  elem->next = NULL;
+  g_currentArray->next = elem;
 }
 
 static inline void incrementIndex(void) {
-  g_nodePoolCol++;
-  if (g_nodePoolCol == NODE_POOL_COL_SIZE) {
-    g_nodePoolRow++;
-    g_nodePoolCol = 0;
+  g_index++;
+  if (g_index != NODE_POOL_ARRAY_SIZE)
+    return;
+
+  g_index = 0;
+
+  if (g_currentArray->next == NULL) {
+    extendPool();
   }
+  g_currentArray = g_currentArray->next;
 }
 
 Node *Node_new(const Board *board, int next_color, int depth, int x, int y) {
-  if (g_nodePoolRow == NODE_POOL_ROW_SIZE) {
-    fprintf(stderr, "FAILURE: ran out of Node pool\n");
-    exit(EXIT_FAILURE);
-  }
-  if (g_nodePool == NULL)
-    makePool();
-
-  Node *node = &g_nodePool[g_nodePoolRow][g_nodePoolCol];
   incrementIndex();
+  Node *node = &g_currentArray->array[g_index];
 
   Board_rewrite(&node->board ,board);
   node->next_color = next_color;
@@ -59,22 +60,26 @@ Node *Node_new(const Board *board, int next_color, int depth, int x, int y) {
 }
 
 void Node_deletePool(void) {
-  if (g_nodePool == NULL)
-    return;
-  for (int row = 0; row < NODE_POOL_ROW_SIZE; row++) {
-    free(g_nodePool[row]);
+  ListElem *elem = g_nodePoolTop;
+  while (elem != NULL) {
+    ListElem *next = elem->next;
+    free(elem);
+    elem = next;
   }
-  free(g_nodePool);
-  g_nodePool = NULL;
-  Node_initPool();
-
-  //printf("use pool; %d\n", g_nodePoolMax);
+  g_currentArray = NULL;
+  g_nodePoolTop = NULL;
+  g_index = -1;
 }
 
 void Node_initPool(void) {
-  int count = g_nodePoolRow * NODE_POOL_COL_SIZE + g_nodePoolCol;
-  if (g_nodePoolMax < count)
-    g_nodePoolMax = count;
-  g_nodePoolRow = 0;
-  g_nodePoolCol = 0;
+  if (g_nodePoolTop == NULL) {
+    g_nodePoolTop = malloc(sizeof(ListElem));
+    if (g_nodePoolTop == NULL) {
+      fprintf(stderr, "FAILURE: make new pool. malloc()\n");
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  g_currentArray = g_nodePoolTop;
+  g_index = -1;
 }

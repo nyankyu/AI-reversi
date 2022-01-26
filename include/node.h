@@ -5,16 +5,6 @@
 
 #define CHL_SIZE (BOARD_SIZE * BOARD_SIZE - 4)
 
-/*
- * (pool size) = (col size) * (row size)
- * depth | node size
- * 4     |    100_000
- * 5     | 12_000_000
- * 6     | 40_000_000
- */
-#define NODE_POOL_COL_SIZE 2000
-#define NODE_POOL_ROW_SIZE 6000
-
 typedef struct node Node;
 struct node {
   Board board;

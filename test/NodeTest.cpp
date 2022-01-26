@@ -9,9 +9,11 @@ protected:
   void SetUp() override {
     Board board;
     Board_init(&board);
+    Node_initPool();
     node = Node_new(&board, WHITE, 10, 1, 1);
   }
   void TearDown() override {
+    Node_deletePool();
   }
   Node *node;
 };

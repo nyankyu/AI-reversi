@@ -8,6 +8,7 @@
 #include "player.h"
 #include "human.h"
 #include "measure.h"
+#include "node.h"
 
 static void print_prompt(int next_color) {
   printf("\n %c > ", next_color == WHITE ? 'O' : 'X');
@@ -107,6 +108,7 @@ int main(int argc, char **argv) {
 
   black->Player_delete(black);
   white->Player_delete(white);
+  Node_deletePool();
 
   //system("leaks ai-reversi");
   return EXIT_SUCCESS;

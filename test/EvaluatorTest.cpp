@@ -10,10 +10,10 @@ extern "C" {
 class EvaluatorTest : public ::testing::Test {
 protected:
   void SetUp() {
-
+    Node_initPool();
   }
   void TearDown() {
-
+    Node_deletePool();
   }
 };
 

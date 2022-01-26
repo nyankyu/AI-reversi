@@ -7,7 +7,7 @@
 #include "player.h"
 
 int Com_next(Player *player, Board *board) {
-  Tree *tree = Tree_new((Com *)player->obj, board, 5);
+  Tree *tree = Tree_new((Com *)player->obj, board, 4);
 
   int x = tree->root->next_x;
   int y = tree->root->next_y;
@@ -38,7 +38,6 @@ Com *Com_new(int color) {
 void Com_delete(Player *player) {
   free(player->obj);
   free(player);
-  Node_deletePool();
 }
 
 Player *Com_make_player(int color) {

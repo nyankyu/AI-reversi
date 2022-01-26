@@ -19,6 +19,7 @@ protected:
   }
   void TearDown() override {
     Tree_delete(tree);
+    Node_deletePool();
   }
   Tree *tree;
   Com *com;
