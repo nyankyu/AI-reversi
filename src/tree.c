@@ -6,7 +6,7 @@
 #include "evaluator.h"
 
 static inline void set_eval_point(Node *node) {
-  for (Node **child = &node->children[0]; *child != NULL; child++) {
+  for (Node **child = node->children; *child != NULL; child++) {
     if (node->eval_point >= (*child)->eval_point) {
       node->eval_point = (*child)->eval_point;
       node->next_x = (*child)->last_x;
@@ -25,7 +25,7 @@ static inline void build_children(Com *com, Node *node, int max_depth) {
 
   Board board;
   Board_rewrite(&board,&node->board);
-  Node **children = &node->children[0];
+  Node **children = node->children;
 
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
@@ -38,7 +38,7 @@ static inline void build_children(Com *com, Node *node, int max_depth) {
     }
   }
 
-  if (children == &node->children[0]) {
+  if (children == node->children) {
     // pass
     if (node->pass == TRUE) {
       // game over
