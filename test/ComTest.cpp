@@ -4,6 +4,8 @@ extern "C" {
 #include "com.h"
 }
 
+extern int g_print;
+
 class ComTest : public ::testing::Test {
 protected:
   Player *black;
