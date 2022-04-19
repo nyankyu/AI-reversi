@@ -11,8 +11,6 @@ target_sources(ai-reversi PRIVATE
         src/main.c
         src/rule.c
         src/board.c
-        src/tree.c
-        src/node.c
         src/com.c
         src/com_rand.c
         src/evaluator.c

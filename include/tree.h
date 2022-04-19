@@ -2,7 +2,6 @@
 #define TREE_H
 
 #include "board.h"
-#include "node.h"
 #include "com.h"
 
 

@@ -1,12 +1,12 @@
 #ifndef EVALUATOR_H
 #define EVALUATOR_H
 
-#include "node.h"
+#include "com.h"
 
-#define CORNER_POINT  80
-#define X_POINT       50
-#define C_POINT       30
+#define CORNER_POINT  120
+#define X_POINT       90
+#define C_POINT       80
 
-void Evaluator_evaluate(Node *node, int my_color);
+void Evaluator_evaluate(const Board *board, int next_color, int *eval_point);
 
 #endif

@@ -5,6 +5,8 @@ extern "C" {
 #include "ai-reversi.h"
 }
 
+int g_print = 1;
+
 extern ::testing::AssertionResult BoxEQ(const int expected[], const int actual[]);
 
 class RuleTest : public ::testing::Test {
@@ -196,7 +198,7 @@ TEST_F(RuleTest, CanPass_OK) {
                   );
   ASSERT_EQ(OK, Rule_can_pass(&board, BLACK));
 
-  Board_make_box(&board,
+  Board_make_box(&board, ""
                   "O X X O X X O X"
                   "X O O O O O O X"
                   "X O O O O O O X"

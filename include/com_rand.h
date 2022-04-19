@@ -10,7 +10,6 @@ struct com_rand {
 };
 
 int Com_rand_next(Player *player, Board *board);
-void Com_rand_delete(Player *player);
 Player *Com_rand_make_player(int color);
 
 #endif
