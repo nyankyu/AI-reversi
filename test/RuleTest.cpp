@@ -5,8 +5,6 @@ extern "C" {
 #include "ai-reversi.h"
 }
 
-int g_print = 1;
-
 extern ::testing::AssertionResult BoxEQ(const int expected[], const int actual[]);
 
 class RuleTest : public ::testing::Test {
