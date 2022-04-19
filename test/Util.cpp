@@ -1,7 +1,9 @@
 #include "gtest/gtest.h"
 #include "board.h"
 
+extern "C" {
 int g_print = 1;
+}
 
 ::testing::AssertionResult BoxEQ(const int expected[], const int actual[]) {
   for (int i = 0; i < BOX_SIZE; i++) {
