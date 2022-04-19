@@ -17,9 +17,7 @@ typedef struct player Player;
 struct player {
   int color;
   char *name;
-  void *obj;
-  int (*next)(Player *player, Board *board);
-  void (*Player_delete)(Player *player);
+  int (*put_next)(Player *player, Board *board);
 };
 
 #endif

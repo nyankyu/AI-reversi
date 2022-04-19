@@ -1,16 +1,18 @@
 #ifndef COM_H
 #define COM_H
 
-#include "board.h"
 #include "player.h"
 
-typedef struct com Com;
-struct com {
-  int color;
-};
+#define DEPTH_MAX 3
+#define COM_PASS 100
 
-int Com_next(Player *player, Board *board);
-void Com_delete(Player *player);
+extern int g_print;
+
+typedef struct {
+  int x;
+  int y;
+} Point;
+
 Player *Com_make_player(int color);
 
 #endif

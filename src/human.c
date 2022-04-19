@@ -31,29 +31,13 @@ int Human_next(Player *player, Board *board) {
   return PLAYER_PUT;
 }
 
-static inline Human *Human_new(int color) {
-  Human *human = malloc(sizeof(Human));
-  if (human == NULL)
-    exit(EXIT_FAILURE);
-  human->color = color;
-  return human;
-}
-
-void Human_delete(Player *player) {
-  free(player->obj);
-  free(player);
-}
-
 Player *Human_make_player(int color) {
-  Human *human = Human_new(color);
   Player *player = malloc(sizeof(Player));
   if (player == NULL)
     exit(EXIT_FAILURE);
 
   player->color = color;
-  player->next = Human_next;
-  player->Player_delete = Human_delete;
-  player->obj = human;
+  player->put_next = Human_next;
 
   return player;
 }

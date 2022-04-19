@@ -6,6 +6,8 @@ extern "C" {
 #include "ai-reversi.h"
 }
 
+extern ::testing::AssertionResult BoxEQ(const int expected[], const int actual[]);
+
 class BoardTest : public ::testing::Test {
 
 protected:
@@ -23,23 +25,18 @@ TEST_F(BoardTest, Initialize) {
   ASSERT_EQ(2, board.white);
   ASSERT_EQ(2, board.black);
 
-  int W = WALL;
-  int E = EMPTY;
-  int O = WHITE;
-  int X = BLACK;
-  int box[] = {
-      W,W,W,W,W,W,W,W,W,
-      W,E,E,E,E,E,E,E,E,
-      W,E,E,E,E,E,E,E,E,
-      W,E,E,E,E,E,E,E,E,
-      W,E,E,E,O,X,E,E,E,
-      W,E,E,E,X,O,E,E,E,
-      W,E,E,E,E,E,E,E,E,
-      W,E,E,E,E,E,E,E,E,
-      W,E,E,E,E,E,E,E,E,
-      W,W,W,W,W,W,W,W,W,W
-  };
-  ASSERT_THAT(board.box, ::testing::ContainerEq(box));
+  Board expect_board;
+  Board_make_box(&expect_board,
+  "........"
+  "........"
+  "........"
+  "...OX..."
+  "...XO..."
+  "........"
+  "........"
+  "........"
+  );
+  ASSERT_TRUE(BoxEQ(expect_board.box, board.box));
 }
 
 TEST_F(BoardTest, MakeBoxError) {
@@ -89,18 +86,5 @@ TEST_F(BoardTest, MakeBoxSuccess) {
                   "........"
                   "........"
                   "........");
-  ASSERT_THAT(box_all_empty, ::testing::ContainerEq(board.box));
-
-  Board_make_box(&board,
-                  "........"
-                  "........"
-                  "........"
-                  "...OX..."
-                  "...XO..."
-                  "........"
-                  "........"
-                  "........");
-  Board init;
-  Board_init(&init);
-  ASSERT_THAT(init.box, ::testing::ContainerEq(board.box));
+  ASSERT_TRUE(BoxEQ(box_all_empty, board.box));
 }

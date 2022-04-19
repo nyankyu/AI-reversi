@@ -33,35 +33,16 @@ int Com_rand_next(Player *player, Board *board) {
   return PLAYER_PUT;
 }
 
-static inline Com_rand *Com_rand_new(int color) {
-  Com_rand *com_rand = malloc(sizeof(Com_rand));
-  if (com_rand == NULL) {
-    printf("ERROR: files malloc() Com_rand\n");
-    exit(EXIT_FAILURE);
-  }
-  com_rand->color = color;
-
-  return com_rand;
-}
-
-void Com_rand_delete(Player *player) {
-  free(player->obj);
-  free(player);
-}
-
 Player *Com_rand_make_player(int color) {
   srand((unsigned int)time(NULL));
 
-  Com_rand *com_rand = Com_rand_new(color);
   Player *player = malloc(sizeof(Player));
   if (player == NULL)
     exit(EXIT_FAILURE);
 
   player->color = color;
   player->name = "Com-Random";
-  player->next = Com_rand_next;
-  player->Player_delete = Com_rand_delete;
-  player->obj = com_rand;
+  player->put_next = Com_rand_next;
   return player;
 }
 

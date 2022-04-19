@@ -4,7 +4,6 @@
 #include "player.h"
 #include "com.h"
 #include "com_rand.h"
-#include "node.h"
 
 #define GAME_SIZE 50
 
@@ -26,10 +25,11 @@ void Measure_start(void) {
     while (game_count--) {
       fprintf(stderr, "\r%10d", game_count);
       Board_init(&board);
-
+int count = 0;
       while (1) {
-        int result = player->next(player, &board);
+        int result = player->put_next(player, &board);
         if (result == PLAYER_PUT) {
+          count++;
           pass = 0;
         } else if (result == PLAYER_PASS) {
           if (pass == 1)
@@ -51,15 +51,14 @@ void Measure_start(void) {
 
     printf("\rWhite[%s]: %d, Black[%s]: %d, Draw: %d\n", white->name, win_white, black->name, win_black, GAME_SIZE - win_white - win_black);
 
-    white->Player_delete(white);
-    black->Player_delete(black);
+    free(white);
+    free(black);
     white = Com_rand_make_player(WHITE);
     black = Com_make_player(BLACK);
     player = black;
   }
-  white->Player_delete(white);
-  black->Player_delete(black);
-  Node_deletePool();
+  free(white);
+  free(black);
 
   //system("leaks ai-reversi");
 }

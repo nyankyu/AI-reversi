@@ -9,15 +9,12 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 add_executable(Google_Tests_run
         BoardTest.cpp
-        NodeTest.cpp
-        TreeTest.cpp
         RuleTest.cpp
         EvaluatorTest.cpp
         Util.cpp
+        ComTest.cpp
         ${ai-reversi_SOURCE_DIR}/src/board.c
-        ${ai-reversi_SOURCE_DIR}/src/node.c
         ${ai-reversi_SOURCE_DIR}/src/rule.c
-        ${ai-reversi_SOURCE_DIR}/src/tree.c
         ${ai-reversi_SOURCE_DIR}/src/com.c
         ${ai-reversi_SOURCE_DIR}/src/evaluator.c)
 

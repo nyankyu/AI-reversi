@@ -196,7 +196,7 @@ TEST_F(RuleTest, CanPass_OK) {
                   );
   ASSERT_EQ(OK, Rule_can_pass(&board, BLACK));
 
-  Board_make_box(&board,
+  Board_make_box(&board, ""
                   "O X X O X X O X"
                   "X O O O O O O X"
                   "X O O O O O O X"
