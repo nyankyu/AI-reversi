@@ -17,10 +17,11 @@ static void usage(void) {
   printf("usage: ai-reversi [option]\n");
   printf("option\n");
   printf("\t(none)      The same as \"black\"\n");
-  printf("\tauto        AI vs AI\n");
+  printf("\tauto        AI vs Random Player\n");
   printf("\twhite       Human vs AI. Human is White. AI is Black.\n");
   printf("\tblack       Human vs AI. Human is Black. AI is White.\n");
   printf("\tvs_human    Human vs Human\n");
+  printf("\tmeasure     Measure AI strength\n");
 }
 
 static void judge(Board *board) {

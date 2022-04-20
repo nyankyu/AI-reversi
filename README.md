@@ -57,4 +57,16 @@ For example, to place a stone in the `C` column, `4` row, enter `C4`. The result
  X > 
 ```
 
-If you want to quit the game midway, enter `q`.
+If you want to quit the game midway, enter `q`. Also, enter `r` to move back.
+
+## Option
+```
+usage: ai-reversi [option]
+option
+        (none)      The same as "black"
+        auto        AI vs Random Player
+        white       Human vs AI. Human is White. AI is Black.
+        black       Human vs AI. Human is Black. AI is White.
+        vs_human    Human vs Human
+        measure     Measure AI strength
+```
