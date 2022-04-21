@@ -3,7 +3,7 @@
 
 #include "player.h"
 
-#define DEPTH_MAX 6
+#define DEPTH_MAX 5
 #define COM_PASS 100
 
 extern int g_print;
