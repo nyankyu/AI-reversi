@@ -8,6 +8,8 @@ class ComTest : public ::testing::Test {
 protected:
   Player *black;
   Player *white;
+  Board board;
+
   void SetUp() {
     black = Com_make_player(BLACK);
     white = Com_make_player(WHITE);
@@ -26,7 +28,6 @@ TEST_F(ComTest, MakeCom) {
 }
 
 TEST_F(ComTest, DonotSetX) {
-  Board board;
   Board_make_box(&board,
                  "........"
                  "..XO...."
@@ -41,7 +42,6 @@ TEST_F(ComTest, DonotSetX) {
 }
 
 TEST_F(ComTest, DonotSetC) {
-  Board board;
   Board_make_box(&board,
                  "..XO...."
                  "........"
@@ -56,7 +56,6 @@ TEST_F(ComTest, DonotSetC) {
 }
 
 TEST_F(ComTest, SetCorner) {
-  Board board;
   Board_make_box(&board,
                  ".XO....."
                  "........"
@@ -71,7 +70,6 @@ TEST_F(ComTest, SetCorner) {
 }
 
 TEST_F(ComTest, EvaluateOfGameover) {
-  Board board;
   Board_make_box(&board,
                  "........"
                  "........"

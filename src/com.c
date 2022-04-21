@@ -7,84 +7,101 @@
 #include "player.h"
 #include "evaluator.h"
 
-static int best_next(Board *board, int next_color, Point *point, int *eval_point, int depth) {
-  if (depth == DEPTH_MAX) {
-    Evaluator_evaluate(board, next_color, eval_point);
+typedef struct {
+  int x;
+  int y;
+} Position;
+
+typedef struct {
+  Board board;
+  int next_color;
+  int depth;
+  int eval_value;
+  Position position;
+  int passed;
+} BoardData;
+
+static int best_next(BoardData *parent_data) {
+  if (parent_data->depth == DEPTH_MAX) {
+    Evaluator_evaluate(&parent_data->board, parent_data->next_color, &parent_data->eval_value);
     return OK;
   }
 
-  Point temp_point = {0, 0};
-  int temp_eval_point;
-  Board temp_board;
-  int other_color = Rule_other_color(next_color);
-  int pass = TRUE;
+  BoardData data;
+  data.board = parent_data->board;
+  data.depth = parent_data->depth + 1;
+  data.next_color = Rule_other_color(parent_data->next_color);
+  data.passed = TRUE;
 
-  *eval_point = INT_MAX;
-  temp_board = *board;
+  parent_data->eval_value = INT_MAX;
 
   for (int y = 1; y <= BOARD_SIZE; y++) {
     for (int x = 1; x <= BOARD_SIZE; x++) {
-      if (Rule_set(&temp_board, x, y, next_color) == 0)
+      if (Rule_set(&data.board, x, y, parent_data->next_color) == 0)
         continue;
-      pass = FALSE;
-      temp_point.x = x;
-      temp_point.y = y;
-      best_next(&temp_board, other_color, &temp_point, &temp_eval_point, depth + 1);
-      temp_board = *board;
+      data.passed = FALSE;
+      best_next(&data);
+      data.board = parent_data->board;
       // save mini evaluator point
-      if (temp_eval_point <= *eval_point) {
-        *eval_point = temp_eval_point;
-        point->x = x;
-        point->y = y;
+      if (data.eval_value <= parent_data->eval_value) {
+        parent_data->eval_value = data.eval_value;
+        parent_data->position.x = x;
+        parent_data->position.y = y;
       }
     }
   }
 
-  if (!pass) {
-    *eval_point *= -1;
+  if (!data.passed) {
+    parent_data->eval_value *= -1;
     return OK;
   }
 
   // the following is the case of pass
 
   // The first move is a pass, the search stops.
-  if (depth == 0) {
+  if (parent_data->depth == 0) {
     return COM_PASS;
   }
 
   // If previous move is also a pass, it's game over
-  if (temp_point.x == 0) {
-    if (board->white > board->black) {
-      if (next_color == WHITE)
-        *eval_point = INT_MAX;
+  if (parent_data->passed == TRUE) {
+    if (data.board.white > data.board.black) {
+      if (parent_data->next_color == WHITE)
+        parent_data->eval_value = INT_MAX;
       else
-        *eval_point = -INT_MAX;
-    } else if (board->white < board->black) {
-      if (next_color == BLACK)
-        *eval_point = INT_MAX;
+        parent_data->eval_value = -INT_MAX;
+    } else if (data.board.white < data.board.black) {
+      if (parent_data->next_color == BLACK)
+        parent_data->eval_value = INT_MAX;
       else
-        *eval_point = -INT_MAX;
+        parent_data->eval_value = -INT_MAX;
+    } else {
+      parent_data->eval_value = 0;
     }
+    // if the game is over, stop the search
     return COM_PASS;
   }
 
-  best_next(board, other_color, &temp_point, eval_point, depth + 1);
+  best_next(&data);
+  parent_data->eval_value = -data.eval_value;
   return COM_PASS;
 }
 
 int Com_next(Player *player, Board *board) {
-  Board temp_board = *board;
-  Point point;
-  int eval_point;
+  BoardData data;
+  data.board = *board;
+  data.depth = 0;
+  data.next_color = player->color;
+  data.passed = FALSE;
 
-  int ret = best_next(&temp_board, player->color, &point, &eval_point, 0);
+  int ret = best_next(&data);
   if (ret == COM_PASS) {
     if (g_print) printf("PASS\n");
     return PLAYER_PASS;
   }
 
-  Rule_set(board, point.x, point.y, player->color);
-  if (g_print) printf("%c%c\n", 'a' + point.x - 1, '1' + point.y - 1);
+  Rule_set(board, data.position.x, data.position.y, player->color);
+  if (g_print) printf("%c%c\n", 'a' + data.position.x - 1, '1' + data.position.y - 1);
 
   return PLAYER_PUT;
 }

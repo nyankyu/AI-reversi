@@ -25,11 +25,10 @@ void Measure_start(void) {
     while (game_count--) {
       fprintf(stderr, "\r%10d", game_count);
       Board_init(&board);
-int count = 0;
+
       while (1) {
         int result = player->put_next(player, &board);
         if (result == PLAYER_PUT) {
-          count++;
           pass = 0;
         } else if (result == PLAYER_PASS) {
           if (pass == 1)
